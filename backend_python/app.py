@@ -497,6 +497,20 @@ def send_predictive_report():
     except Exception as e:
         return jsonify({"success": False, "message": f"SMTP Error: {str(e)}"}), 500
 
+@app.route('/api/email/alert', methods=['POST'])
+def handle_email_alert():
+    data = request.json
+    target_email = data.get('email', TARGET_EMAIL)
+    alert = data.get('alert', {})
+    
+    # Use existing helper
+    success = send_alert_email(alert, target=target_email)
+    
+    if success:
+        return jsonify({"success": True, "message": "Alert dispatched successfully"})
+    else:
+        return jsonify({"success": False, "message": "Failed to send email"}), 500
+
 @app.route('/api/settings/update', methods=['POST'])
 def update_settings():
     return jsonify({"success": True, "message": "System configuration updated successfully"})

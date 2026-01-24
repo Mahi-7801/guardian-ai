@@ -1,7 +1,32 @@
-import { Search, Bell, User, Shield, LogOut, Settings, UserCircle, AlertCircle, CheckCircle2, RefreshCw, Menu, X } from "lucide-react";
+import {
+  Search,
+  Bell,
+  User,
+  Shield,
+  LogOut,
+  Settings,
+  UserCircle,
+  AlertCircle,
+  CheckCircle2,
+  RefreshCw,
+  Menu,
+  X,
+  LayoutDashboard,
+  AlertTriangle,
+  Activity,
+  Network,
+  Brain,
+  MessageSquare,
+  Shield as ShieldIcon,
+  BookOpen,
+  Users,
+  FileText,
+  ChevronDown,
+  MoreHorizontal
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { insforge, AI_STATUS } from "@/lib/insforge";
 import {
@@ -19,8 +44,28 @@ interface HeaderProps {
 
 export function Header({ onMenuClick }: HeaderProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isAiOnline = AI_STATUS.isOnline;
+
+  const navItems = [
+    { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+    { icon: AlertTriangle, label: "Threats", path: "/intrusion-detection" },
+    { icon: Activity, label: "Predictive", path: "/predictive-analytics" },
+    { icon: Network, label: "Network", path: "/network-analysis" },
+    { icon: Brain, label: "Intelligence", path: "/intelligence" },
+    { icon: MessageSquare, label: "Sentiment", path: "/sentiment-analysis" },
+    { icon: Search, label: "Propaganda", path: "/propaganda-monitoring" },
+    { icon: ShieldIcon, label: "AI Framework", path: "/security-framework" },
+    { icon: BookOpen, label: "Taxonomy", path: "/taxonomy" },
+    { icon: Users, label: "Crosint Portal", path: "/crosint-portal" },
+    { icon: FileText, label: "Reports", path: "/reports" },
+  ];
+
+  // Distinguish between main nav and overflow
+  const mainNavItems = navItems.slice(0, 5); // Show first 5 on desktop
+  const overflowNavItems = navItems.slice(5);
 
   const handleResetEngine = () => {
     AI_STATUS.reset();
@@ -103,140 +148,196 @@ export function Header({ onMenuClick }: HeaderProps) {
   }, []);
 
   return (
-    <header className="h-16 border-b border-border bg-card/50 backdrop-blur-xl sticky top-0 z-50">
-      <div className="h-full px-4 sm:px-6 flex items-center justify-between">
-        {/* Left section */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          <button
-            onClick={onMenuClick}
-            className="lg:hidden p-2 -ml-2 hover:bg-secondary rounded-lg transition-colors"
-          >
-            <Menu className="w-5 h-5 text-muted-foreground" />
-          </button>
-          <div>
-            <h1 className="text-lg font-semibold text-foreground">Command Center</h1>
-            <div className="flex items-center gap-2">
-              <p className="text-xs text-muted-foreground">AI-Powered Threat Intelligence</p>
-              <span className={cn("w-1.5 h-1.5 rounded-full animate-pulse", isAiOnline ? "bg-success" : "bg-warning")} />
-              <span className={cn("text-[10px] font-bold tracking-widest uppercase", isAiOnline ? "text-success" : "text-warning")}>
-                {isAiOnline ? "Live Uplink" : "Autonomous Mode"}
-              </span>
+    <header className="h-20 lg:h-16 border-b border-border bg-card/50 backdrop-blur-xl sticky top-0 z-50">
+      <div className="h-full px-4 sm:px-6 flex items-center justify-between gap-4">
+        {/* Left section: Logo & Title (Hidden on small mobile if needed, but keeping unified for now) */}
+        <div className="flex items-center gap-3 lg:gap-6">
+          <Link to="/dashboard" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center glow-primary group-hover:scale-105 transition-transform">
+              <Shield className="w-5 h-5 text-primary" />
             </div>
-          </div>
-        </div>
-
-        {/* Center - Search (Hidden on Mobile) */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
-          <form onSubmit={handleSearch} className="relative w-full">
-            <button
-              type="submit"
-              className="absolute left-3 top-1/2 -translate-y-1/2 p-0 border-none bg-transparent hover:text-primary transition-colors cursor-pointer group z-10"
-            >
-              <Search className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-            </button>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search threats, IPs, locations..."
-              className="w-full h-10 pl-10 pr-4 rounded-lg bg-secondary border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm text-foreground placeholder:text-muted-foreground transition-all focus:bg-sidebar"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-12 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
-              >
-                <X className="w-3 h-3" />
-              </button>
-            )}
-            <kbd className="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded bg-muted text-xs text-muted-foreground font-mono">
-              ⌘K
-            </kbd>
-          </form>
-        </div>
-
-        {/* Right section */}
-        <div className="flex items-center gap-3">
-          {/* Threat level indicator */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-destructive/10 border border-destructive/30 cursor-help" onClick={() => toast.error("System-wide Critical Threat Alert Active")}>
-            <Shield className="w-4 h-4 text-destructive" />
-            <span className="text-sm font-medium text-destructive">HIGH</span>
-          </div>
-
-          {/* Notifications */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors outline-none cursor-pointer">
-                <Bell className="w-5 h-5 text-muted-foreground" />
-                {notifications.length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-destructive text-destructive-foreground text-[10px] rounded-full flex items-center justify-center font-bold animate-pulse-glow">
-                    {notifications.length}
-                  </span>
-                )}
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80 bg-card border-border p-0">
-              <DropdownMenuLabel className="flex justify-between items-center p-4">
-                Active Threats
-                <span className="text-[10px] bg-destructive/10 text-destructive px-1.5 py-0.5 rounded font-bold uppercase tracking-tighter">
-                  {notifications.length} Alerts
+            <div className="hidden sm:block">
+              <h1 className="text-sm font-bold text-foreground leading-tight tracking-tight uppercase">CyberGuard</h1>
+              <div className="flex items-center gap-1.5 flex-nowrap">
+                <span className={cn("w-1 h-1 rounded-full animate-pulse", isAiOnline ? "bg-success" : "bg-warning")} />
+                <span className={cn("text-[9px] font-black tracking-widest uppercase truncate", isAiOnline ? "text-success" : "text-warning")}>
+                  {isAiOnline ? "Live" : "Offline"}
                 </span>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator className="m-0" />
-              <div className="max-h-[400px] overflow-auto">
-                {notifications.length > 0 ? (
-                  notifications.map((notif, idx) => (
-                    <NotificationItem
-                      key={idx}
-                      icon={notif.severity === 'critical' ? <AlertCircle className="w-4 h-4 text-destructive" /> : <Shield className="w-4 h-4 text-warning" />}
-                      title={notif.type}
-                      time="Live"
-                      desc={`${notif.target} targeted from ${notif.source_ip}`}
-                    />
-                  ))
-                ) : (
-                  <div className="py-8 text-center text-xs text-muted-foreground">
-                    <CheckCircle2 className="w-8 h-8 mx-auto mb-2 opacity-20 text-success" />
-                    No active security alerts
-                  </div>
-                )}
               </div>
-              <DropdownMenuSeparator className="m-0" />
-              <DropdownMenuItem
-                className="justify-center text-primary font-bold text-xs cursor-pointer p-3"
-                onClick={() => navigate("/notifications")}
-              >
-                View All Intelligence Logs
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </div>
+          </Link>
 
-          {/* User / Admin */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 p-1.5 pr-3 rounded-lg hover:bg-secondary transition-colors outline-none cursor-pointer">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-                  <User className="w-4 h-4 text-primary" />
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1">
+            <div className="h-8 w-[1px] bg-border mx-2" />
+            {mainNavItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.path}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2",
+                  location.pathname === item.path
+                    ? "bg-primary/10 text-primary border border-primary/20"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                )}
+              >
+                <item.icon className="w-3.5 h-3.5" />
+                <span>{item.label}</span>
+              </Link>
+            ))}
+
+            {/* Overflow Dropdown */}
+            {overflowNavItems.length > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="px-3 py-1.5 rounded-lg text-xs font-bold text-muted-foreground hover:text-foreground hover:bg-secondary transition-all flex items-center gap-1 outline-none">
+                    More <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 bg-card border-border p-1">
+                  <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground px-2 py-1.5">Extended Modules</DropdownMenuLabel>
+                  {overflowNavItems.map((item) => (
+                    <DropdownMenuItem
+                      key={item.label}
+                      onClick={() => navigate(item.path)}
+                      className={cn(
+                        "gap-3 cursor-pointer py-2",
+                        location.pathname === item.path && "bg-primary/10 text-primary font-bold"
+                      )}
+                    >
+                      <item.icon className="w-4 h-4" />
+                      <span className="text-sm">{item.label}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </nav>
+        </div>
+
+        {/* Search & Actions */}
+        <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-end">
+          <div className="hidden xl:flex flex-1 max-w-[280px] relative">
+            <form onSubmit={handleSearch} className="w-full relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Secure Scan..."
+                className="w-full h-9 pl-9 pr-4 rounded-full bg-secondary/50 border border-border focus:border-primary/50 outline-none text-[11px] text-foreground transition-all"
+              />
+            </form>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {/* Mobile Menu Trigger */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="lg:hidden p-2.5 rounded-xl bg-secondary hover:bg-secondary/80 text-muted-foreground transition-all">
+                  <Menu className="w-5 h-5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[calc(100vw-2rem)] mt-2 bg-card border-border overflow-y-auto max-h-[70vh]">
+                <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground p-3">Intelligence Network</DropdownMenuLabel>
+                <div className="grid grid-cols-2 gap-1 p-2">
+                  {navItems.map((item) => (
+                    <DropdownMenuItem
+                      key={item.label}
+                      onClick={() => navigate(item.path)}
+                      className={cn(
+                        "flex flex-col items-center justify-center p-3 gap-2 rounded-xl text-center",
+                        location.pathname === item.path ? "bg-primary/10 text-primary border border-primary/20" : "bg-secondary/30"
+                      )}
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <span className="text-[10px] font-bold uppercase tracking-tighter">{item.label}</span>
+                    </DropdownMenuItem>
+                  ))}
                 </div>
-                <span className="text-sm font-medium text-foreground">Admin</span>
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-card border-border">
-              <DropdownMenuLabel>My Security Profile</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => navigate("/settings")}>
-                <Settings className="w-4 h-4" /> Security Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem className="gap-2 cursor-pointer text-primary" onClick={handleResetEngine}>
-                <RefreshCw className="w-4 h-4" /> Reset Intel Node
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive cursor-pointer" onClick={handleLogout}>
-                <LogOut className="w-4 h-4" /> Terminate Session
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Quick Actions (Desktop only for some) */}
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-destructive/5 rounded-full border border-destructive/20 cursor-help" onClick={() => toast.error("System-wide Critical Threat Alert Active")}>
+              <ShieldIcon className="w-3.5 h-3.5 text-destructive animate-pulse" />
+              <span className="text-[10px] font-black text-destructive tracking-widest">THREAT: HIGH</span>
+            </div>
+
+            {/* Notifications */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors outline-none cursor-pointer">
+                  <Bell className="w-5 h-5 text-muted-foreground" />
+                  {notifications.length > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-destructive text-destructive-foreground text-[10px] rounded-full flex items-center justify-center font-bold animate-pulse-glow">
+                      {notifications.length}
+                    </span>
+                  )}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80 bg-card border-border p-0">
+                <DropdownMenuLabel className="flex justify-between items-center p-4">
+                  Active Threats
+                  <span className="text-[10px] bg-destructive/10 text-destructive px-1.5 py-0.5 rounded font-bold uppercase tracking-tighter">
+                    {notifications.length} Alerts
+                  </span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="m-0" />
+                <div className="max-h-[400px] overflow-auto">
+                  {notifications.length > 0 ? (
+                    notifications.map((notif, idx) => (
+                      <NotificationItem
+                        key={idx}
+                        icon={notif.severity === 'critical' ? <AlertCircle className="w-4 h-4 text-destructive" /> : <Shield className="w-4 h-4 text-warning" />}
+                        title={notif.type}
+                        time="Live"
+                        desc={`${notif.target} targeted from ${notif.source_ip}`}
+                      />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center text-xs text-muted-foreground">
+                      <CheckCircle2 className="w-8 h-8 mx-auto mb-2 opacity-20 text-success" />
+                      No active security alerts
+                    </div>
+                  )}
+                </div>
+                <DropdownMenuSeparator className="m-0" />
+                <DropdownMenuItem
+                  className="justify-center text-primary font-bold text-xs cursor-pointer p-3"
+                  onClick={() => navigate("/notifications")}
+                >
+                  View All Intelligence Logs
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* User / Admin */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 p-1.5 pr-3 rounded-lg hover:bg-secondary transition-colors outline-none cursor-pointer">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                    <User className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground">Admin</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 bg-card border-border">
+                <DropdownMenuLabel>My Security Profile</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => navigate("/settings")}>
+                  <Settings className="w-4 h-4" /> Security Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem className="gap-2 cursor-pointer text-primary" onClick={handleResetEngine}>
+                  <RefreshCw className="w-4 h-4" /> Reset Intel Node
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive cursor-pointer" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4" /> Terminate Session
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </header>

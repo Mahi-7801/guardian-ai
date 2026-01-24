@@ -67,14 +67,14 @@ export function AIAssistantWidget() {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100]">
+        <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 lg:bottom-10 lg:left-10 z-[100]">
             {/* Chat Window */}
             <div className={cn(
-                "absolute bottom-16 right-0 w-[calc(100vw-2rem)] sm:w-[380px] h-[500px] sm:h-[600px] max-h-[calc(100vh-120px)] flex flex-col glass-card border-glow transition-all duration-500 origin-bottom-right shadow-2xl",
-                isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-0 opacity-0 translate-y-20 pointer-events-none"
+                "absolute bottom-16 sm:bottom-20 left-0 w-[calc(100vw-2rem)] sm:w-[350px] h-[450px] sm:h-[500px] max-h-[calc(100vh-120px)] flex flex-col glass-card border-glow transition-all duration-500 origin-bottom-left shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]",
+                isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-95 opacity-0 translate-y-10 pointer-events-none"
             )}>
                 {/* Header */}
-                <div className="p-3 sm:p-4 border-b border-border flex items-center justify-between bg-primary/5">
+                <div className="p-3 sm:p-4 border-b border-border flex items-center justify-between bg-primary/5 rounded-t-2xl shrink-0">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center glow-primary">
                             <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
@@ -84,29 +84,29 @@ export function AIAssistantWidget() {
                                 Guardian AI
                                 <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
                             </h3>
-                            <p className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest font-mono">Intel Co-Processor</p>
+                            <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono">Tactical Co-Pilot</p>
                         </div>
                     </div>
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="p-1.5 sm:p-2 hover:bg-secondary rounded-lg transition-colors"
+                        className="p-2 hover:bg-secondary rounded-lg transition-colors group"
                     >
-                        <X className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
+                        <X className="w-5 h-5 text-muted-foreground group-hover:text-foreground" />
                     </button>
                 </div>
 
                 {/* Messages */}
-                <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 scrollbar-thin">
+                <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 scrollbar-thin bg-card/30 min-h-0">
                     {messages.map((msg, i) => (
                         <div key={i} className={cn(
-                            "flex max-w-[90%] animate-fade-in",
+                            "flex max-w-[85%] animate-fade-in",
                             msg.role === 'user' ? "ml-auto" : "mr-auto"
                         )}>
                             <div className={cn(
-                                "p-2.5 sm:p-3 rounded-2xl text-[12px] sm:text-sm leading-relaxed break-words whitespace-pre-wrap overflow-hidden",
+                                "p-3.5 rounded-2xl text-[13px] sm:text-sm leading-relaxed shadow-sm",
                                 msg.role === 'user'
-                                    ? "bg-primary text-primary-foreground rounded-tr-none shadow-[0_4px_12px_rgba(var(--primary),0.2)]"
-                                    : "bg-secondary/80 border border-border rounded-tl-none text-foreground"
+                                    ? "bg-primary text-primary-foreground rounded-tr-none shadow-[0_4px_15px_rgba(var(--primary),0.3)]"
+                                    : "bg-secondary/90 border border-border/50 rounded-tl-none text-foreground backdrop-blur-md"
                             )}>
                                 {msg.content}
                             </div>
@@ -114,62 +114,69 @@ export function AIAssistantWidget() {
                     ))}
                     {isLoading && (
                         <div className="flex mr-auto animate-fade-in">
-                            <div className="bg-secondary/80 border border-border p-3 rounded-2xl rounded-tl-none flex gap-1">
-                                <span className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                                <span className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                                <span className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce" />
+                            <div className="bg-secondary/90 border border-border/50 p-4 rounded-2xl rounded-tl-none flex gap-1.5 items-center">
+                                <Loader2 className="w-4 h-4 text-primary animate-spin" />
+                                <span className="text-xs text-muted-foreground font-mono animate-pulse">Syncing...</span>
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* Quick Actions - Scrollable on small screens */}
-                <div className="p-2 sm:p-3 bg-secondary/30 flex gap-2 overflow-x-auto no-scrollbar border-t border-border snap-x">
-                    <button onClick={() => setInput("Show latest threats")} className="snap-start whitespace-nowrap px-2.5 py-1.5 rounded-full bg-background border border-border text-[9px] sm:text-[10px] font-bold hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center gap-1">
-                        <Zap className="w-3 h-3 text-warning" /> THREAT SCAN
-                    </button>
-                    <button onClick={() => setInput("Explain current risk level")} className="snap-start whitespace-nowrap px-2.5 py-1.5 rounded-full bg-background border border-border text-[9px] sm:text-[10px] font-bold hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center gap-1">
-                        <Shield className="w-3 h-3 text-primary" /> RISK XAI
-                    </button>
-                    <button onClick={() => setInput("Analyze network anomalies")} className="snap-start whitespace-nowrap px-2.5 py-1.5 rounded-full bg-background border border-border text-[9px] sm:text-[10px] font-bold hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3 text-destructive" /> NET ANALYZE
-                    </button>
+                {/* Quick Actions */}
+                <div className="px-4 py-3 bg-secondary/20 flex gap-2 overflow-x-auto scrollbar-hide border-y border-border/50 snap-x mask-fade-sides">
+                    {[
+                        { label: "THREAT SCAN", icon: Zap, prompt: "Show latest threats", variant: "text-warning" },
+                        { label: "RISK XAI", icon: Shield, prompt: "Explain current risk level", variant: "text-primary" },
+                        { label: "NET ANALYZE", icon: AlertCircle, prompt: "Analyze network anomalies", variant: "text-destructive" }
+                    ].map((act) => (
+                        <button
+                            key={act.label}
+                            onClick={() => { setInput(act.prompt); handleSendMessage(); }}
+                            className="snap-start whitespace-nowrap px-3 py-1.5 rounded-full bg-background/50 border border-border text-[10px] font-bold hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center gap-1.5 shrink-0"
+                        >
+                            <act.icon className={cn("w-3 h-3", act.variant)} /> {act.label}
+                        </button>
+                    ))}
                 </div>
 
-                {/* Input */}
-                <form onSubmit={handleSendMessage} className="p-3 sm:p-4 bg-card">
-                    <div className="relative">
+                {/* Input Area */}
+                <form onSubmit={handleSendMessage} className="p-4 bg-card/80 backdrop-blur-md rounded-b-2xl">
+                    <div className="relative group">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder="Interface with system..."
-                            className="w-full bg-secondary border border-border rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary pr-10 sm:pr-12 transition-all transition-all"
+                            placeholder="Execute command or query AI..."
+                            className="w-full bg-secondary border border-border/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary pr-12 transition-all placeholder:text-muted-foreground/50"
                         />
                         <button
                             type="submit"
                             disabled={!input.trim() || isLoading}
-                            className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 bg-primary text-primary-foreground rounded-lg disabled:opacity-50 hover:glow-primary transition-all"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-primary text-primary-foreground rounded-lg disabled:opacity-50 hover:glow-primary transition-all active:scale-95"
                         >
-                            <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                            <Send className="w-4 h-4" />
                         </button>
                     </div>
+                    <p className="text-[9px] text-center text-muted-foreground mt-2 uppercase tracking-[0.2em] opacity-50">Authorized Personnel Only</p>
                 </form>
             </div>
 
-            {/* Floating Bubble */}
+            {/* Floating Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                    "w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-500 shadow-2xl relative group",
-                    isOpen ? "bg-card text-foreground rotate-90 scale-110" : "bg-primary text-primary-foreground hover:scale-110 glow-primary"
+                    "w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-500 shadow-2xl relative group",
+                    isOpen ? "bg-secondary text-foreground rotate-90 scale-110 border border-border" : "bg-primary text-primary-foreground hover:scale-110 glow-primary"
                 )}
             >
-                {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />}
+                {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
                 {!isOpen && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-destructive text-white text-[9px] sm:text-[10px] font-black rounded-full flex items-center justify-center border-2 border-background animate-bounce">
-                        1
-                    </span>
+                    <>
+                        <span className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-background animate-bounce z-10">
+                            1
+                        </span>
+                        <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20 group-hover:opacity-40" />
+                    </>
                 )}
             </button>
         </div>

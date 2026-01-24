@@ -79,7 +79,8 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
     { icon: Search, label: "Propaganda", path: "/propaganda-monitoring" },
     { icon: Shield, label: "AI Framework", path: "/security-framework" },
     { icon: BookOpen, label: "Taxonomy", path: "/taxonomy" },
-    { icon: FileText, label: "Crosint Portal", path: "/crosint-portal" },
+    { icon: Users, label: "Crosint Portal", path: "/crosint-portal" },
+    { icon: FileText, label: "Intelligence Reports", path: "/reports" },
   ];
 
   const dynamicBottomItems: NavItem[] = [

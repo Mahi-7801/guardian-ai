@@ -1,5 +1,4 @@
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Bell, AlertTriangle, Shield, CheckCircle2, Trash2, MoreVertical, Filter, Terminal, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -60,85 +59,79 @@ const Notifications = () => {
     };
 
     return (
-        <div className="flex h-screen bg-background text-foreground overflow-hidden">
-            <Sidebar />
-            <div className="flex-1 flex flex-col h-full overflow-hidden">
-                <Header />
-                <main className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-thin">
-                    <div className="max-w-4xl mx-auto space-y-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div>
-                                <h1 className="text-3xl font-bold tracking-tight">System Notifications</h1>
-                                <p className="text-muted-foreground text-sm">Review critical security events and system status updates.</p>
-                            </div>
-                            <div className="flex flex-wrap items-center gap-2">
-                                <button
-                                    onClick={markAllRead}
-                                    className="px-4 py-2 text-xs font-bold text-primary hover:bg-primary/10 rounded-lg transition-all"
-                                >
-                                    Mark all as Read
-                                </button>
-                                <button
-                                    onClick={clearAll}
-                                    className="p-2 text-muted-foreground hover:text-destructive transition-colors"
-                                    title="Clear all"
-                                >
-                                    <Trash2 className="w-5 h-5" />
-                                </button>
-                            </div>
+        <DashboardLayout>
+            <div className="max-w-4xl mx-auto space-y-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight">System Notifications</h1>
+                        <p className="text-muted-foreground text-sm">Review critical security events and system status updates.</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                        <button
+                            onClick={markAllRead}
+                            className="px-4 py-2 text-xs font-bold text-primary hover:bg-primary/10 rounded-lg transition-all"
+                        >
+                            Mark all as Read
+                        </button>
+                        <button
+                            onClick={clearAll}
+                            className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                            title="Clear all"
+                        >
+                            <Trash2 className="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
+                {loading && notifications.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center p-12 space-y-4">
+                        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                        <p className="text-sm text-muted-foreground animate-pulse font-mono tracking-widest uppercase">Syncing Neural Signal Logs...</p>
+                    </div>
+                ) : notifications.length === 0 ? (
+                    <div className="glass-card p-12 text-center space-y-4 border-dashed">
+                        <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto opacity-50">
+                            <Bell className="w-8 h-8 text-muted-foreground" />
                         </div>
-                        {loading && notifications.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center p-12 space-y-4">
-                                <Loader2 className="w-8 h-8 text-primary animate-spin" />
-                                <p className="text-sm text-muted-foreground animate-pulse font-mono tracking-widest uppercase">Syncing Neural Signal Logs...</p>
-                            </div>
-                        ) : notifications.length === 0 ? (
-                            <div className="glass-card p-12 text-center space-y-4 border-dashed">
-                                <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto opacity-50">
-                                    <Bell className="w-8 h-8 text-muted-foreground" />
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-bold">No active alerts</h3>
-                                    <p className="text-sm text-muted-foreground">The system is currently operating within baseline parameters.</p>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="space-y-3">
-                                {notifications.map((notification) => (
-                                    <NotificationCard key={notification.id} notification={notification} />
-                                ))}
-                            </div>
-                        )}
-
-                        <div className="glass-card p-6 border-primary/20 bg-primary/5 mt-8">
-                            <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
-                                <Terminal className="w-5 h-5 text-primary" />
-                                Alert Routing Preferences
-                            </h3>
-                            <p className="text-sm text-muted-foreground mb-4">Critical alerts are currently routed via Encrypted SMS and Secure Push.</p>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div className="p-3 rounded bg-secondary/50 border border-border text-center">
-                                    <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest">SMS</p>
-                                    <p className="text-xs font-bold text-success font-mono">ACTIVE</p>
-                                </div>
-                                <div className="p-3 rounded bg-secondary/50 border border-border text-center">
-                                    <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest">Email</p>
-                                    <p className="text-xs font-bold text-success font-mono">ACTIVE</p>
-                                </div>
-                                <div className="p-3 rounded bg-secondary/50 border border-border text-center">
-                                    <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest">Slack</p>
-                                    <p className="text-xs font-bold text-muted-foreground font-mono">DISABLED</p>
-                                </div>
-                                <div className="p-3 rounded bg-secondary/50 border border-border text-center">
-                                    <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest">UHF Link</p>
-                                    <p className="text-xs font-bold text-warning font-mono">STANDBY</p>
-                                </div>
-                            </div>
+                        <div>
+                            <h3 className="text-lg font-bold">No active alerts</h3>
+                            <p className="text-sm text-muted-foreground">The system is currently operating within baseline parameters.</p>
                         </div>
                     </div>
-                </main>
+                ) : (
+                    <div className="space-y-3">
+                        {notifications.map((notification) => (
+                            <NotificationCard key={notification.id} notification={notification} />
+                        ))}
+                    </div>
+                )}
+
+                <div className="glass-card p-6 border-primary/20 bg-primary/5 mt-8">
+                    <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+                        <Terminal className="w-5 h-5 text-primary" />
+                        Alert Routing Preferences
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4">Critical alerts are currently routed via Encrypted SMS and Secure Push.</p>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="p-3 rounded bg-secondary/50 border border-border text-center">
+                            <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest text-center">SMS</p>
+                            <p className="text-xs font-bold text-success font-mono text-center">ACTIVE</p>
+                        </div>
+                        <div className="p-3 rounded bg-secondary/50 border border-border text-center">
+                            <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest text-center">Email</p>
+                            <p className="text-xs font-bold text-success font-mono text-center">ACTIVE</p>
+                        </div>
+                        <div className="p-3 rounded bg-secondary/50 border border-border text-center">
+                            <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest text-center">Slack</p>
+                            <p className="text-xs font-bold text-muted-foreground font-mono text-center">DISABLED</p>
+                        </div>
+                        <div className="p-3 rounded bg-secondary/50 border border-border text-center">
+                            <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-widest text-center">UHF Link</p>
+                            <p className="text-xs font-bold text-warning font-mono text-center">STANDBY</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </DashboardLayout>
     );
 };
 
@@ -181,14 +174,14 @@ function NotificationCard({ notification }: { notification: Notification }) {
                     <span className="text-[10px] font-mono text-muted-foreground uppercase">{notification.time}</span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">{notification.description}</p>
-                <div className="mt-3 flex items-center gap-2">
+                <div className="mt-3 flex flex-wrap items-center gap-2">
                     <button
                         onClick={() => toast.info(`Accessing forensic data for ${notification.id}...`)}
                         className="text-[10px] uppercase font-bold text-primary hover:underline"
                     >
                         View Forensic Details
                     </button>
-                    <span className="text-muted-foreground text-[10px]">•</span>
+                    <span className="text-muted-foreground text-[10px] hidden sm:block">•</span>
                     <button
                         onClick={() => toast.warning(`Node from ${notification.time} added to ignore list.`)}
                         className="text-[10px] uppercase font-bold text-muted-foreground hover:text-foreground"
@@ -197,7 +190,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
                     </button>
                 </div>
             </div>
-            <button className="p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button className="p-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
                 <MoreVertical className="w-4 h-4 text-muted-foreground" />
             </button>
         </div>

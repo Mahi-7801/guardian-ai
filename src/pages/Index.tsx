@@ -1,5 +1,4 @@
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { ThreatAlerts } from "@/components/dashboard/ThreatAlerts";
 import { ThreatMap } from "@/components/dashboard/ThreatMap";
@@ -8,15 +7,13 @@ import { SystemStatus } from "@/components/dashboard/SystemStatus";
 import { ThreatIntelFeed } from "@/components/dashboard/ThreatIntelFeed";
 import { TacticalCommandFeed } from "@/components/dashboard/TacticalCommandFeed";
 import { AIAssistantWidget } from "@/components/dashboard/AIAssistantWidget";
-import { Shield, AlertTriangle, Activity, Zap, Bug, Network, X, Info, Menu, CheckCircle, Brain } from "lucide-react";
+import { Shield, AlertTriangle, Activity, Zap, Network, X, Info, CheckCircle, Brain } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [selectedThreat, setSelectedThreat] = useState<any>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleStatClick = (title: string) => {
@@ -48,112 +45,79 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen bg-background relative overflow-hidden">
-      {/* Responsive Sidebar */}
-      <div className={cn(
-        "fixed inset-y-0 left-0 z-[60] lg:relative lg:block transition-transform duration-300 h-full",
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      )}>
-        <Sidebar onClose={() => setIsSidebarOpen(false)} />
+    <DashboardLayout>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div onClick={() => handleStatClick("Active Threats")}>
+          <StatCard
+            title="Active Threats"
+            value={23}
+            icon={AlertTriangle}
+            variant="critical"
+            change="+12%"
+            changeType="increase"
+          />
+        </div>
+        <div onClick={() => handleStatClick("Blocked Attacks")}>
+          <StatCard
+            title="Blocked Attacks"
+            value={142}
+            icon={Shield}
+            variant="success"
+            change="+5%"
+            changeType="decrease"
+          />
+        </div>
+        <div onClick={() => handleStatClick("Network Anomalies")}>
+          <StatCard
+            title="Network Anomalies"
+            value={7}
+            icon={Network}
+            variant="warning"
+            change="Stable"
+          />
+        </div>
+        <div onClick={() => handleStatClick("System Health")}>
+          <StatCard
+            title="System Health"
+            value="98.2%"
+            icon={Activity}
+            variant="default"
+          />
+        </div>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[55] lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-        <Header onMenuClick={() => setIsSidebarOpen(true)} />
-
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-thin overflow-x-hidden">
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div onClick={() => handleStatClick("Active Threats")}>
-              <StatCard
-                title="Active Threats"
-                value={23} // Connected to mock
-                icon={AlertTriangle}
-                variant="critical"
-                change="+12%"
-                changeType="increase"
-              />
-            </div>
-            <div onClick={() => handleStatClick("Blocked Attacks")}>
-              <StatCard
-                title="Blocked Attacks"
-                value={142}
-                icon={Shield}
-                variant="success"
-                change="+5%"
-                changeType="decrease"
-              />
-            </div>
-            <div onClick={() => handleStatClick("Network Anomalies")}>
-              <StatCard
-                title="Network Anomalies"
-                value={7}
-                icon={Network}
-                variant="warning"
-                change="Stable"
-              />
-            </div>
-            <div onClick={() => handleStatClick("System Health")}>
-              <StatCard
-                title="System Health"
-                value="98.2%"
-                icon={Activity}
-                variant="default"
-              />
-            </div>
-          </div>
-
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            {/* Threat Map - Takes 2 columns */}
-            <div className="lg:col-span-2">
-              <ThreatMap />
-            </div>
-
-            {/* Network Graph */}
-            <div>
-              <NetworkGraph />
-            </div>
-          </div>
-
-          {/* Lower Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Tactical Command - 1 Column */}
-            <div className="lg:col-span-1">
-              <TacticalCommandFeed />
-            </div>
-
-            {/* Threat Alerts - Takes 2 columns */}
-            <div className="lg:col-span-2" id="threat-alerts-section">
-              <ThreatAlerts onSelectAlert={(alert) => setSelectedThreat(alert)} />
-            </div>
-
-            {/* Right column */}
-            <div className="space-y-6" id="system-status-section">
-              <SystemStatus />
-              <ThreatIntelFeed />
-            </div>
-          </div>
-        </main>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <ThreatMap />
+        </div>
+        <div>
+          <NetworkGraph />
+        </div>
       </div>
 
-      {/* Persistent AI Assistant */}
+      {/* Lower Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-1">
+          <TacticalCommandFeed />
+        </div>
+        <div className="lg:col-span-2" id="threat-alerts-section">
+          <ThreatAlerts onSelectAlert={(alert) => setSelectedThreat(alert)} />
+        </div>
+        <div className="space-y-6" id="system-status-section">
+          <SystemStatus />
+          <ThreatIntelFeed />
+        </div>
+      </div>
+
       <AIAssistantWidget />
 
       {/* Threat Detail Modal */}
       {selectedThreat && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-fade-in">
           <div className="w-full max-w-2xl glass-card p-8 border-glow relative overflow-hidden">
-            {/* Security Grid Background */}
             <div className="absolute inset-0 cyber-grid opacity-10 pointer-events-none" />
-
             <button
               onClick={() => setSelectedThreat(null)}
               className="absolute top-4 right-4 p-2 hover:bg-secondary rounded-lg transition-colors z-10"
@@ -236,7 +200,7 @@ const Index = () => {
           </div>
         </div>
       )}
-    </div>
+    </DashboardLayout>
   );
 };
 

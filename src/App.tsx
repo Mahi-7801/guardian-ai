@@ -20,6 +20,7 @@ import CrosintPortal from "./pages/CrosintPortal";
 import Taxonomy from "./pages/Taxonomy";
 import PropagandaMonitoring from "./pages/PropagandaMonitoring";
 import SecurityFramework from "./pages/SecurityFramework";
+import Reports from "./pages/Reports";
 
 import { useEffect, useState } from "react";
 import { insforge } from "@/lib/insforge";
@@ -35,10 +36,23 @@ const App = () => {
     const checkSession = async () => {
       try {
         const { data, error } = await insforge.auth.getCurrentSession();
-        if (error) console.error("Session check error:", error);
-        setSession(data?.session || null);
-      } catch (err) {
-        console.error("Session check failed:", err);
+        if (error) {
+          // If it's just a missing token or unauthorized, it means user is logged out.
+          // Handle gracefully without a loud error unless it's something unexpected.
+          const errorMsg = error.toString().toLowerCase();
+          if (!errorMsg.includes("no refresh token") && !errorMsg.includes("401")) {
+            console.error("Session check error:", error);
+          }
+          setSession(null);
+        } else {
+          setSession(data?.session || null);
+        }
+      } catch (err: any) {
+        const errMsg = err.toString().toLowerCase();
+        if (!errMsg.includes("no refresh token") && !errMsg.includes("401")) {
+          console.error("Session check failed:", err);
+        }
+        setSession(null);
       } finally {
         setLoading(false);
       }
@@ -99,6 +113,7 @@ const App = () => {
             <Route path="/taxonomy" element={session ? <Taxonomy /> : <Navigate to="/auth" />} />
             <Route path="/propaganda-monitoring" element={session ? <PropagandaMonitoring /> : <Navigate to="/auth" />} />
             <Route path="/security-framework" element={session ? <SecurityFramework /> : <Navigate to="/auth" />} />
+            <Route path="/reports" element={session ? <Reports /> : <Navigate to="/auth" />} />
 
             {/* Catch-all */}
             <Route path="*" element={<NotFound />} />
