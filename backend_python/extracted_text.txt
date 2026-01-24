@@ -1,0 +1,2496 @@
+
+--- Page 1 ---
+Received 5 May 2025, accepted 18 May 2025, date of publication 21 May 2025, date of current version 2 June 2025.
+Digital Object Identifier 10.1 109/ACCESS.2025.3572348
+A Comprehensive Survey on AI in
+Counter-Terrorism and Cybersecurity: Challenges
+and Ethical Dimensions
+IOANNIS SYLLAIDOPOULOS
+ , KLIMIS S. NTALIANIS, AND IOANNIS SALMON
+Department of Business Administration, University of West Attica, 122 43 Athens, Greece
+Corresponding author: Ioannis Syllaidopoulos (isyllaidopoulos@uniwa.gr)
+ABSTRACT The advanced capabilities in threat detection and mitigation brought about by the rapid
+development of Artificial Intelligence (AI) significantly impact the fight against terrorism and cybersecurity
+threats. However, critical concerns such as algorithmic bias, data quality limitations, and governance
+challenges introduce significant obstacles to their deployment. This paper provides a comprehensive
+overview of AI methodologies, such as predictive analytics, Natural Language Processing (NLP), and
+machine learning architectures (e.g., Support V ector Machines – SVM and Long Short-Term Memory
+– LSTM), and optimization algorithms (e.g., Particle Swarm Optimization – PSO), assessing their
+effectiveness in security applications. Additionally, AI-based approaches to surveillance, misinformation
+management, and anomaly detection are explored, focusing on their impacts on national security. Beyond the
+technical aspects, the paper highlights ethical concerns and policy issues, putting forward frameworks such as
+Explainable Artificial Intelligence (XAI) and crowdsourced intelligence (Crosint) to ensure the responsible
+and transparent deployment of AI. The integration of the technical, ethical, and operational perspectives
+addressed in this research contributes to a holistic understanding of the potential of AI in cybersecurity,
+while also ensuring adherence to AI governance standards.
+INDEX TERMS Artificial intelligence, counter-terrorism, cybersecurity, machine learning, explainable
+artificial intelligence (XAI), misinformation management, natural language processing (NLP), threat
+detection.
+I. INTRODUCTION
+A. BACKGROUND
+AI in national security and counter-terrorism includes surveil-
+lance and threat detection, military and defense applications,
+and countering cyberterrorism. Threat surveillance and detec-
+tion are implemented through techniques such as Machine
+Learning (ML), Deep Learning (DL), and Reinforcement
+Learning (RL) [1], which significantly improve the ability to
+analyze large volumes of data, metadata, online archives, and
+social networking activity. This drives the security agencies
+to identify individuals and potential terrorist threats [2].
+Military and defense applications enhance the military’s
+ability to respond to threats and maintain national security
+through the conduct of operations with autonomous vehicles
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Wei Wei
+.
+or weapons systems [3], [4]. In cyberterrorism, AI plays
+a critical role, in particular in preventing and countering
+cyber-attacks, as well as controlling extremist and terrorist
+propaganda delivered via the internet [5].
+B. LITERATURE REVIEW
+AI-based predictive analytics enhance counter-terrorism and
+accurately predict extremist activities. Techniques such as
+Machine Learning (ML) and algorithms such as Random
+Forest and Extreme Gradient Boosting (XGBoost) have
+shown high accuracy in weapon classifications and casualty
+prediction in Pakistan, India, and Afghanistan [6].
+Due to the increasing sophistication of cyberattacks, these
+technologies are being integrated into cybersecurity systems
+to protect data from malicious activities. Such algorithms
+detect and respond effectively to intrusion and malware
+threats. Particularly, Deep Learning (DL) has achieved
+91740
+
+ 2025 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License.
+For more information, see https://creativecommons.org/licenses/by/4.0/ VOLUME 13, 2025
+--- Page 2 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+significant advances due to its ability to process large
+amounts of data and extract patterns of insights [7]. Further-
+more, it is particularly effective in protecting cyber-physical
+systems (CPS), which, due to their dependence on com-
+munication networks, make them vulnerable [8]. Deep
+Learning also underpins the applications that have been
+developed to detect and automatically react to threats in
+IoT networks, significantly enhancing the defense of these
+environments [9].
+Another area of application of AI in counter-terrorism that
+focuses on detecting and dismantling extremist networks is
+Social Network Analysis (SNA). Utilizing centrality metrics,
+key nodes of a network can be identified and eliminated,
+leading to the weakening and destruction of its cohesion
+during periods of crisis[10]. Large Language Models (LLMs)
+are used to create dynamic simulations and scenarios of
+cybersecurity exercises, preparing the operators of these sys-
+tems to deal with a diversity of challenges [11]. Specialized
+LLMs such as SecurityBERT go beyond traditional models
+and are leveraged in IoT environments, detecting threats
+with high accuracy and efficiency [12]. In addition, they are
+applied to malware decryption detection processes [13].
+C. RESEARCH GAP & MOTIVATION
+In recent years, the academic community has extensively
+explored the potential of AI in cybersecurity. The techniques
+that have been mentioned so far and those that will follow
+in the paper offer improved capabilities in threat detection,
+malware detection, and so on. However, newer techniques
+will have to be explored and developed beyond the usual
+ones in order to deal effectively with new types of threats.
+IoT applications supported by AA Vs will need to rely on
+modern and sophisticated Artificial Intelligence algorithms to
+successfully address contemporary challenges [14]. Human
+collaboration with intelligence-generating AI systems is
+critical to ensure the provision of knowledge and analysis
+beyond human capabilities, leading to more effective threat
+detection and response strategies [15].
+The use of machine learning, Deep Learning, and Natural
+Language Processing (NLP) is an area that is constantly
+evolving and being researched as they are proven to improve
+the accuracy and speed of threat detection and response [16].
+To ensure the above, the development of integrated frame-
+works with protocols specifically designed for AI that
+address the ethical and regulatory challenges associated with
+AI is essential. Furthermore, encouraging interdisciplinary
+collaboration will promote the development of innovative
+security solutions that integrate knowledge from a variety
+of disciplines, not necessarily technical [17]. A significant
+issue is the development of robust AI systems to prevent
+adversarial AI threats in both cybersecurity and counter-
+terrorism applications. Current methods like the RADAR
+framework [18] improve the robustness of cyber defense
+systems, but there is a need to continue the development
+of comprehensive and innovative methodologies to address
+these threats and create more effective defenses. An important
+area for future research, particularly in the phases of
+design, development, and deployment of AI systems [19],
+is Explainable Artificial Intelligence (XAI), which aims
+to enhance the understanding of the decisions made by
+models incorporating AI techniques and methods [20].
+By providing transparency and interpretability in AI models,
+mutual trust between operators and analysts, and systems is
+achieved [21], significantly increasing the effectiveness of
+security operations [22].
+D. CHALLENGES IN AI-DRIVEN SECURITY SYSTEMS
+Artificial Intelligence systems are not foolproof. On the
+contrary, they are vulnerable to various security threats at
+every stage of the process, including data collection, training,
+and deployment [23].
+The most common attacks involve sensor tampering,
+poisoning, and data quality corruption by adversarial attacks,
+putting the reliability and integrity of the models at seri-
+ous risk [24]. The complexity and diversity of data and
+AI technologies prevent the standardized development of
+security models and practices. In addition, the need to
+comply with regulatory requirements that vary from country
+to country makes it difficult to a significant extent to develop
+effective models as strong safety measures are required for
+AI systems [25].
+Another important challenge of many AI models is
+their opaque model nature, making it difficult for users
+to understand and trust their decisions. Current methods
+limit the provision of clear explanations, negatively affecting
+decision-making and crisis management, making the systems
+vulnerable to attack [26].
+A particularly critical technical issue is adversarial attacks,
+especially in cybersecurity applications [27]. The speci-
+ficity of the problem lies in the fact that attackers are
+constantly adapting their strategies using AI to enhance
+the effectiveness of attacks and lead to the manipulation
+and deception of AI-based security systems [28]. Another
+significant challenge is ransomware detection. Machine
+learning algorithms are increasingly being used to detect
+ransomware by exploiting the ability to handle large amounts
+of data and analyzing behavioral patterns [29]. Examples of
+successful and highly accurate detection are the End-to-End
+Ransomware Detection System (E2E-RDS) frameworks and
+the AIRaD tool [30]. However, one of the most important
+challenges in AI-based ransomware detection is the ability to
+adapt to new variants of these threats[31] and reduce the false
+positive rates produced by security systems [32]. Through
+the analysis of the behavior and mechanisms of ransomware
+attacks, it is possible to identify trends in the way they evolve
+and, using machine learning models, to detect and mitigate
+the consequences [33].
+E. CONTRIBUTION OF THIS STUDY
+The paper explores the multifaceted applications of AI in the
+fight against terrorism and cybersecurity. More specifically,
+VOLUME 13, 2025 91741
+--- Page 3 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+the reader receives a comprehensive overview of the most
+recent and existing methodologies, technologies, and mod-
+els. Indicatively, predictive AI models, Natural Language
+Processing (NLP), biometric surveillance, and intrusion
+detection systems (IDS) are examined, and the advantages
+and limitations of these technologies are highlighted [34].
+In addition, the economic implications of the integration of
+AI, issues arising from real-time data extraction, and the
+issue of misinformation [35], which poses significant risks of
+‘‘poisoning’’ during the information collection process, will
+be discussed.
+The key contributions of this study are as follows:
+• A systematic approach to applications, ethical issues,
+and challenges in counter-terrorism, cybersecurity, and
+intelligence gathering.
+• Insights into the economic impact and real-world
+effectiveness of AI in enhancing security and efficiency.
+• Examination of ethical and legal frameworks, with a
+focus on privacy, accountability, and EU regulations.
+• Introduction of governance models and crowdsourced
+intelligence (Crosint) for crisis response, with a focus
+on data verification.
+• Analysis of AI’s role in countering disinformation and
+identifying malicious narratives.
+• Presentation of recent ML/DL advancements in cyberat-
+tack prevention.
+• Identification of future research needs, including
+explainability, open models, cross-sector cooperation,
+and emotion analysis for extremist behavior understand-
+ing.
+FIGURE 1. Research papers used for this survey, categorized by year.
+It illustrates the distribution of sources across various publication years,
+highlighting the temporal scope of the references utilized in the analysis.
+F. PAPER ORGANIZATION
+The key themes discussed in this paper underline the domi-
+nant role of Artificial Intelligence and advanced technologies
+in addressing cyber threats and the intricate relationships
+between these critical sectors. These insights will guide the
+understanding of the potential and challenges of harnessing
+AI in current and future security systems.
+The remainder of this paper is structured as follows:
+• Section II presents a thematic review of related work,
+organizing prior research on AI applications across
+cybersecurity, explainability, surveillance, disinforma-
+tion, and AI governance.
+• Section III outlines AI techniques for threat detection
+and security applications, including predictive analytics,
+machine learning models, NLP-based analysis, and
+cybersecurity frameworks.
+• Section IV addresses ethical, legal, and governance con-
+siderations, with a focus on privacy risks, explainability,
+and international regulatory divergence.
+• Section V provides real-world case studies showcasing
+the implementation of AI in practical security and
+counter-terrorism scenarios.
+• Section VI summarizes challenges and open issues,
+spanning technical, operational, and societal dimen-
+sions.
+• Section VII concludes with key takeaways and future
+research directions, emphasizing cross-sector collabora-
+tion and responsible AI development.
+FIGURE 2. The figure outlines the progression from prior research
+(Section II), AI techniques (Section III), and governance issues
+(Section IV), to real-world applications (Section V), and implementation
+challenges (Section VI).
+II. RELATED WORK
+Artificial Intelligence (AI) is widely investigated in the
+context of counter-terrorism and cybersecurity, and several
+studies focus on its role in predictive threat analysis, early
+intrusion detection, and disinformation mitigation. However,
+although most studies contribute significantly to the field by
+thoroughly analyzing AI-based security methodologies, most
+of them focus on the technical aspects rather than providing a
+comprehensive and integrated view of the applications of AI
+across the broader national and cybersecurity landscape. This
+section highlights the differences between the present study
+and existing research by providing a review of previous work.
+The use of Machine Learning (ML) and Deep Learning
+(DL) has been widely explored in the context of research
+on their application to cybersecurity, anomaly and intrusion
+91742 VOLUME 13, 2025
+--- Page 4 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+detection, and malware classification [1], [7], [9]. Such
+research explores the performance of models such as Support
+V ector Machines (SVMs), Decision Trees, and Neural
+Networks [6], [36], while Deep Learning stands out for
+its potential in modeling complex system attacks (CPS)
+[8], [37]. Notable contributions such as Ozkan-Okay et al.
+[1] and Khan et al. [6] offer comprehensive evaluations
+of AI techniques in cybersecurity. Halbouni et al. [7] and
+Al-Hawawreh et al. [9] focus on IoT hybrid models, while
+Skraparlis et al. [38] and Saddi et al. [39] present frameworks
+for proactive defense. Shahana et al. [40] examine balanced
+approaches to secure AI-enhanced systems. However, many
+of these works overlook ethical challenges and adversarial
+vulnerabilities, which this study addresses by proposing
+integrative frameworks.
+As AI models are increasingly integrated into critical secu-
+rity infrastructures, concerns about transparency and trust
+emerge. Explainable AI (XAI) aims to address these through
+model interpretability [8], [19], [22], [41]. Zhang et al. [8]
+emphasize interpretability in intrusion detection for IoT,
+while Saeed and Omlin [19] analyze explanatory gaps.
+Gaspar et al. [42] compare LIME and SHAP , revealing
+enhanced feature-level clarity. Meanwhile, adversarial AI
+research explores poisoning threats and model resilience[27],
+[43]. Hamon et al. [25] provide a regulatory lens on
+robustness, while Zolanvari et al. [44] and Arreche et al. [45]
+uncover privacy concerns even in advanced XAI systems.
+Disinformation and online radicalization pose serious
+threats to national security. Research on NLP , ML, and DL
+contributes to detecting radicalization and combating fake
+news [46], [47], [48]. Patil [46] applies GloV e and USE in
+hybrid models, while Alzahrani et al. [47] present hybrid
+deep networks. Zhou et al. [35] investigate LLM misuse in
+misinformation generation, and Raman et al. [49] analyze
+broader impacts. Cartwright et al. [50] and Pacheco et al.
+[51] explore foreign influence operations. Techniques such
+as crowd-sourced moderation are also considered. Berjawi et
+al. [48] provide a review of radicalization detection methods,
+while Kaliyar et al. [52] and Ahmed et al. [53] utilize
+BERT-based models for semantic inference.
+AI technologies are used in surveillance, object recogni-
+tion, and behavior analysis to improve national security [2],
+[3], [4]. Sharma et al. [2] analyze metadata and social network
+monitoring, while PEEC [3] and Sfetcu [4] highlight integra-
+tion in decision-making. Ionescu et al. [54] show DL’s ability
+to detect threats in crowded areas. Bridgelall [55] applies
+unsupervised ML to terrorist event data, and Montasari [56]
+proposes DL frameworks for cyberterrorism. Zhang et al.
+[57], Hou et al. [58], and Adil et al. [14] tackle AA V threats
+and IoT infrastructure defense using AI.
+Despite AI’s value, ethical concerns and regulatory gaps
+persist. Taddeo et al. [59] and Gervais [60] advocate for
+human oversight in military AI systems. Y eung et al.[61] and
+Almeida et al. [62] propose rights-based and philosophical
+frameworks. Pehlivan explores the EU’s AI Act [63] and
+Kalodanis et al. [64], who expose misalignments with
+existing security mechanisms. Díaz-Rodríguez et al. [65]
+suggest ‘‘responsible AI systems’’ through sandbox regula-
+tion. Choung et al. [66] and Hammouchi and Ghogho [67]
+call for multi-stakeholder governance. Porter and Wood [68]
+highlight the need for fact-checking and verification for
+public resilience against AI-driven misinformation.
+The next section extends the previous research in the field
+of security and presents a detailed review of the AI techniques
+applied to counter-terrorism and cybersecurity, addressing the
+gaps identified and providing a comprehensive framework for
+AI-based security operations.
+III. COMPREHENSIVE FRAMEWORK OF AI TECHNIQUES
+FOR THREAT DETECTION AND CYBERSECURITY
+A. GLOSSARY OF TERMS AND ACRONYMS
+For a better understanding of the present section, due to the
+technical nature and the approaches analyzed, a concise table
+in alphabetical order of the main technologies and models of
+AI is provided in Appendix A (Table 1). The glossary serves
+as a reference to help readers more efficiently navigate the
+subsections that follow.
+B. TAXONOMY OF AI IN COUNTER-TERRORISM AND
+CYBERSECURITY
+This section provides a structured taxonomy of AI method-
+ologies applied to security, categorizing them into key
+functional areas.
+1. Predictive AI Models for Threat Detection AI-
+powered predictive models analyze historical and real-time
+data to anticipate cyberattacks, extremist threats, and terrorist
+activities.
+• Techniques: Machine Learning (SVM, Random Forest,
+XGBoost), Deep Learning (LSTM, CNN), Optimization
+(PSO)
+• Applications: Terrorism risk prediction, threat detection,
+behavioral threat profiling
+2. AI in Cybersecurity and Intrusion Detection AI
+enhances cybersecurity by detecting and mitigating cyber
+threats such as ransomware and malware.
+• Techniques: Intrusion Detection Systems (IDS),
+Bayesian Networks, LSTM and Autoencoder models
+• Applications: Real-time anomaly detection, malware
+detection, IoT security
+3. NLP for Threat Intelligence and Extremism Analysis
+Natural Language Processing (NLP) helps detect radicalized
+speech, extremist propaganda, and misinformation.
+• Techniques: Sentiment Analysis, BERT-based models,
+Topic Modeling
+• Applications: Identifying extremist recruitment, fake
+news detection, threat classification
+4. Explainable AI (XAI) for Cybersecurity XAI ensures
+transparency in AI-driven security decisions by providing
+interpretability in machine learning models.
+VOLUME 13, 2025 91743
+--- Page 5 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+FIGURE 3. Taxonomy of AI Techniques in Counter-Terrorism and Cybersecurity: This figure categorizes major AI-driven
+approaches, including predictive modeling, intrusion detection, NLP for threat intelligence, explainable AI, social network
+analysis, misinformation detection, crowdsourced intelligence, and data fusion.
+91744 VOLUME 13, 2025
+--- Page 6 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+• Techniques: SHAP , LIME, TRUST Framework
+• Applications: Improving AI model transparency, bias
+mitigation, enhancing decision-making in cybersecurity
+5. Social Network Analysis for Extremist Group Detec-
+tion Network analysis helps map out extremist organizations
+and their recruitment strategies.
+• Techniques: Graph Neural Networks (GNN), Between-
+ness Centrality, Spatiotemporal Graph Convolutional
+Networks (STGCN)
+• Applications: Identifying radical networks, mapping
+terrorist influence structures
+6. AI for Disinformation and Misinformation Detection
+AI is used to counteract extremist propaganda, misinforma-
+tion campaigns, and fake news.
+• Techniques: FakeBERT, Human-in-the-Loop Systems,
+Matrix Factorization
+• Applications: Propaganda detection, fake news filtering,
+countering misinformation
+7. Crowdsourced Intelligence and Real-Time Threat
+Reporting Crowdsourcing, combined with AI, improves
+real-time threat detection and situational awareness.
+• Techniques: AI-powered crowdsourcing platforms,
+Social Media Intelligence (SOCMINT)— a subset of
+OSINT
+• Applications: Real-time security alerts, crisis event
+monitoring, data verification
+8. AI-Driven Data Fusion for Intelligence Gathering AI
+enhances intelligence gathering by integrating multi-source
+data for threat assessment.
+• Techniques: Multi-Sensor Data Fusion (MSDF),
+CNN+RNN for image/pattern recognition
+• Applications: AI-supported reconnaissance operations,
+border security, AI-driven decision-making
+C. PREDICTIVE FRAMEWORKS, THREAT DETECTION, AND
+STRATEGIC PLANNING
+The contribution of Artificial Intelligence to counter-
+terrorism efforts aims to enhance predictive accuracy, threat
+detection, and strategic planning. Such technologies work
+together through supervised learning methods, deep learning,
+machine learning, data mining, and other methods and
+techniques to detect and analyze extremist content of large
+volumes of data leading to the identification of possible
+terrorist activities online [48]. A typical example of of
+accurate predictive evaluation was the results of a model
+trained on data from 1970 to 2015 that predicts new terrorist
+attack locations at a rate of 96.6% [69].
+AI-based predictive models and methodologies attempt
+to achieve more accurate predictions of terrorist activities
+such as the combination of Support V ector Machine (SVM)
+and K-Nearest Neighbors (KNN) algorithms, combined
+in ensemble machine learning models, which yield high
+accuracy rates in predicting areas prone to terrorist activities,
+thus enhancing efforts to combat terrorism[70]. Furthermore,
+by exploiting the computational capabilities of Particle
+Swarm Optimization (PSO) meta-heuristic algorithms, the
+optimal weight assignments for the key learners, namely
+Random Forest and Extreme Gradient Boosting (XGBoost),
+are determined [55] to process structured, semi-structured,
+and unstructured data features aiming to predict and mitigate
+these incidents [71].
+Additionally, techniques such as unsupervised machine
+learning, exploratory data analysis and statistical test-
+ing are used to discover features that evaluate terrorist
+motives [6]. Another deep learning architecture, used to
+manage terrorism-related behavioral patterns and optimize
+the evaluation model through convolutional neural networks,
+determines the risk level of suspected individuals, applies
+‘Top-k’ selection [72]. An important application of deep
+neural networks related to the automatic recognition of
+individuals and objects, the retrieval of mental speech, and
+the analysis of desensitized behavior emerges from research
+conducted at the CAMPUS research center, the University
+‘‘Politehnica’’ of Bucharest. Such Artificial Intelligence
+systems have the potential to process huge amounts of data
+from surveillance cameras, satellite data, drones, and other
+portable recording devices. The results provide human-level
+accuracy in the field of identification and detection of
+potential threats [54].
+Furthermore, using reinforcement learning algorithms
+such as GCPDDQN enables the successful countering of
+armed autonomous clusters of autonomous aerial vehicles
+(AA Vs). The GCPDDQN algorithm decays and disrupts
+cluster communications, thus neutralizing threats [38], [57].
+Another application of Artificial Intelligence and machine
+learning is in enhancing the wireless connectivity of
+Cyber-Physical Systems (CPS) and the Internet of Things,
+with techniques such as transfer learning, and distributed
+and federated learning. This process is particularly critical
+as it ensures the seamless collection and analysis of data in
+real-time during counter-terrorism operations, improving the
+effectiveness and responsiveness of systems [73].
+One of the techniques used in extremism detection is
+Natural Language Processing (NLP), where a collection
+of techniques allows systems to understand the natural,
+unprocessed language that people use to communicate [74].
+NLP techniques detect suspicious patterns and semantic
+elements within texts, as models such as Naive Bayes,
+Logistic Regression, or Support V ector Machines (SVM),
+are trained on data to categorize texts as legitimate or
+phishing. Features such as email metadata, message content,
+URL structures, and keywords help to distinguish them [75].
+Monitoring and analysis of social media content is of
+key importance since detailed recording and processing of
+extracted data helps to identify potential recruitment and
+propaganda activities by terrorist groups [76]. NLP and topic
+modeling techniques, powered by machine learning, are also
+used to understand the motivations of terrorist groups that
+categorize targets through narrative texts [55]. Furthermore,
+by using data from social networks such as tweets and
+messages, radical, extremist, and terrorist content is identified
+VOLUME 13, 2025 91745
+--- Page 7 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+and classified [77], while the use of temporal meta-graphs
+and specifically bi-directional Long Short-Term Memory
+(LSTM) networks predicts future terrorist targets by mapping
+connections between temporally close attacks and recording
+similarities [78].
+Finally, AI is being applied to biometric systems, border
+security, surveillance systems, communication encryption
+techniques, and the use of drones, which enhances the
+counter-terrorism strategies of states to better protect them-
+selves from evolving threats [79], [80]. Just as predictive
+frameworks enhance counter-terrorism efforts through the
+timely identification of potential threats, so in cybersecurity,
+the detection and response to threats in real time is a
+critical process for risk mitigation. The following section
+examines how AI models protect systems from all forms of
+cyberattacks.
+FIGURE 4. The figure illustrates key domains where AI contributes to
+combating terrorism, including cyber-physical systems, threat
+identification, NLP for extremism detection, predictive modeling,
+surveillance, autonomous mitigation, and border security.
+D. ARTIFICIAL INTELLIGENCE TECHNIQUES IN
+CYBERSECURITY
+Undoubtedly, in modern cybersecurity environments, the role
+of Artificial Intelligence is becoming increasingly necessary.
+From a technical point of view, statistical models, such as
+Bayesian networks, which model probabilistic dependencies,
+are used to detect and counter threats in real-time. First,
+they automate the retrieval of knowledge from previous
+studies, and then systematize the course of action taken by
+the attackers in a framework. This enhances the efforts of
+security analysts to more easily identify the most influential
+actors in a global threat [81]. The prediction of potential
+cybersecurity attacks and breaches of organizations’ security
+systems can be based on historical data and emerging trends,
+and in the context of smart cities, the possibilities offered by
+the integration of Artificial Intelligence at the cybersecurity
+level significantly enhance the resilience of cities against
+digital threats [82].
+Enhancing cybersecurity includes applications of Artificial
+Intelligence with machine learning algorithms, decision trees,
+neural networks, and support vector machines [40], as well
+as the development of hybrid systems that leverage deep
+learning, through multi-agent systems, to help mitigate
+cyber-attacks on critical infrastructure, protecting critical
+assets while maintaining organizations’ trust in digital
+ecosystems [83]. Furthermore, machine learning algorithms
+identify suspicious activities of users and entities in a network
+by analyzing their behavior. Identifying abnormal or high-
+risk behaviors, which may indicate a cyber-attack, reduces
+the risk of data and system breaches and enhances the overall
+security infrastructure of an organization [84]. Such systems,
+known as Intrusion Detection Systems (IDS), are believed to
+be able to fill the gap in traditional security methods as they
+can detect different threats and attacks in cyberspace and can
+respond in real-time [16], [56].
+These techniques provide advanced capabilities for threat
+detection, process automation such as incident response,
+and predictive analysis, helping to mitigate cyber threats
+in cyberspace from terrorist activities. This allows security
+systems to analyze vast amounts of data in real time and
+detect early indications of malicious activities and threatening
+events [85]. At the same time, recent research findings
+propose a new two-stage deep learning technique based on
+the hybridization of Long-Short Term Memory (LSTM) and
+Auto-Encoders (AE) for accurate and timely detection of
+network intrusions [86]. Artificial neural network (ANN)
+algorithms demonstrate significant effectiveness in detecting
+security breaches and unwanted messages, thus protecting
+systems from vulnerabilities and data from potential loss[87].
+Moreover, automation of daily security tasks reduces human
+intervention, results in less human overhead, and minimizes
+human errors, thus improving overall performance and
+response times.
+Enhancing the transparency and interpretability of cyber-
+security systems is a critical issue of particular importance
+for reducing false positives [36]. This can be addressed by
+Explainable Artificial Intelligence (XAI), which provides
+security analysts with the understanding necessary to lead
+to more effective decision making. V arious XAI methods
+and techniques, including LIME, SHAP [42], MetaCluster,
+and TRUST [44], are used to make machine learning
+models more interpretable by providing feature importance
+scores and interpretable reports that support decision makers.
+Furthermore, in contexts such as those of IoT, XAI enhances
+intrusion detection systems (IDS) by detecting anoma-
+lies [22], while addressing the opaque nature of AI models
+by increasing the trust and confidence of system users [41].
+The increasing role of XAI in improving interpretability
+is critical in different domains where decision bias is
+crucial [53], [88].
+A particularly beneficial technology is generative Artificial
+Intelligence. Its novelty lies in the fact that this form of
+Artificial Intelligence creates synthetic data, in addition to
+existing data, thus helping to identify threats from different
+91746 VOLUME 13, 2025
+--- Page 8 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+sources and data points, terrorists, hackers, or malicious
+actors [89]. This technology is crucial for Security Operations
+Centers (SOCs), as it continuously identifies threats and
+defense strategies [39].
+Large Language Models (LLMs) contribute significantly
+to the field of cybersecurity and are exploited by various
+applications such as threat detection, phishing detection,
+misinformation management, adversarial attacks, and expla-
+nation. In particular, LLMs such as GPT-4 achieve higher
+levels of malicious attack detection compared to human
+detection capabilities [90]. BERT-based models, such as
+SecurityBERT, also claim high effectiveness, especially in
+IoT environments and networks [91]. In addition, LLMs
+can also be misused in adversarial contexts, such as the
+production of fake news and the manipulation of public
+opinion. Systems such as AdversaFlow have been developed
+to counter such actions, providing information on the
+dynamics of adversaries through operational analysis [92].
+Moreover, the integration of human-like cognitive capa-
+bilities into machines allows for approaches to the decision-
+making [93] process that resemble human cognitive abilities
+in the field of counter-terrorism and national security pro-
+tection [94]. Therefore, AI contributes significantly to threat
+detection and response by automating complex tasks without
+direct supervision, and combining multiple AI techniques to
+deliver robust and accurate cybersecurity outcomes, improv-
+ing the effectiveness of cybersecurity operations[95]. Despite
+the numerous advantages that Artificial Intelligence offers for
+enhancing cybersecurity systems, significant challenges such
+as technical limitations and ethical concerns are emerging.
+The next section discusses these key challenges with a view
+to ensuring the effectiveness and legitimacy of AI systems in
+counter-terrorism and cybersecurity operations.
+FIGURE 5. This figure summarizes the integration of AI across critical
+areas, including threat detection, intrusion detection, cyber threat
+intelligence, explainable AI, generative AI, and large language models.
+E. CHALLENGES AND LIMITATIONS OF AI IN
+CYBERSECURITY
+The ever-increasing frequency of attacks and threats in
+cyberspace makes the use of Artificial Intelligence in cyber-
+security systems a necessity; however, apart from the obvious
+benefits derived from its use in combating terrorism and
+cybersecurity, significant challenges and limitations emerge,
+including technical, ethical, and operational areas [96].
+Accuracy and transparency are the most important challenges
+of systems that use content monitoring algorithms, as there
+is often difficulty in distinguishing between legitimate and
+illegitimate content. This has the effect of both removing
+legal content and leaving illegal content online [97]. The
+accuracy degradation of the systems makes it difficult to
+reliably identify threats through mass surveillance, as issues
+such as class imbalance, the curse of dimensionality, and false
+claims arise.
+Furthermore, the irregular and isolated digital fingerprints
+of terrorist acts derived from lone wolf attacks complicate
+the effectiveness of machine learning algorithms [98]. It is
+a fact that the use of technical intelligence in the fight
+against terrorism and cybersecurity requires the alignment
+of systems with constitutional norms to avoid phenomena
+of suppression of freedom of speech by equating ideas
+from social networking sites with extremist propaganda,
+violence, and radicalization [99]. A consequence of this is
+an increase in the possibility of bias from systems such as
+Augmented Target Recognition (A TR), which can lead to
+false alarms and a degradation of the reliability of threat
+detection systems [100].
+A particularly critical issue is the attacks on AI through
+the manipulation of AI models and achieved by introducing
+misleading inputs to induce false results [101]. Cyber
+criminals seek to induce errors and undermine the robustness
+and performance of AI-based systems by inadvertently
+modifying data that defies human observability and causes
+significant errors, especially in predictive and forecasting
+models [33]. The stages and targets of the attack can occur
+at any stage of the AI life cycle, and the most common types
+of attacks include evasion attacks and poison attacks [102].
+The impact of such attacks on fragile and vulnerable systems
+is particularly critical considering that systems such as
+healthcare, autonomous vehicles, and IoT systems [103] are
+in the spotlight.
+Other critical constraints are the lack of sufficient data
+and resources, the lack of effectiveness, the need for
+multidisciplinary collaboration, and investment in education
+and training in new techniques and methods of protection
+against digital threats [5]. At the same time, traditional
+security measures are proving inadequate as the constant
+advances in information technology lead to an increase in
+digital criminal activity, requiring the development of more
+sophisticated models that more effectively identify anomalies
+in security systems [104].
+Finally, it is worth mentioning that some researchers
+believe that the development of AI can have counterproduc-
+tive or even harmful effects, as it can affect the world both
+positively and negatively. Therefore, ensuring that AI systems
+do not compromise the privacy rights of individuals [105]
+while ensuring that excessive use in cybersecurity, on the
+VOLUME 13, 2025 91747
+--- Page 9 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+FIGURE 6. The figure highlights key barriers including privacy concerns,
+data scarcity, detection limitations, adversarial AI attacks, and
+transparency issues.
+other hand, does not increase the vulnerability of a complex
+socio-technical system, are critical parameters that need to
+be taken seriously. This means that human oversight must
+remain integral to decision-making processes to ensure that
+the protection of sensitive information maintains the trust of
+citizens [106].
+F. AI-DRIVEN SECURITY CONSUL TING AND ECONOMIC
+IMPACT
+While the challenges associated with the use of Artificial
+Intelligence are causing skepticism, more and more busi-
+nesses and governments are adopting solutions based on
+these technologies to enhance both security and operational
+effectiveness. Clearly, this increasing reliance on AI is
+reshaping the way organizations operate, with significant
+implications for the financial sector [107]. This section
+discusses the implications of the integration of AI and its
+contribution to increasing efficiency and the emergence of
+new market opportunities.
+To address emerging risks in cyberspace and enhance secu-
+rity measures, leading organizations such as Anthropic, AWS,
+Cohere, Darktrace, Google DeepMind, Meta, Microsoft,
+NVIDIA, OpenAI, OW ASP , Palo Alto, and Rapid7 are
+developing innovative strategies and methodologies to mit-
+igate or eliminate them [19]. Moreover, as AI interacts
+more and more with traditional information methods, the
+efficiency and accuracy in various aspects of the economy
+are enhanced [108]. This interaction enables data analysis,
+contributes to predictive diagnostics and automation, so that
+ultimately a high level of competitiveness and access to
+new markets can be achieved [109]. It is no coincidence
+that estimates suggest that the use of Artificial Intelligence
+could add up to 11% or about $9 trillion to global GDP by
+2030, contributing significantly to economic growth [110].
+As far as cybersecurity is concerned, at a proactive level,
+interaction with traditional methods offers protection against
+sophisticated cyberattacks. In fact, AI can detect and prevent
+malware that has never been observed before, unlike the
+signature-based model of protection based on particle or
+byte matching, improving the accuracy and efficiency of
+systems [111].
+All the above push companies and organizations, aiming
+to improve their business operations and security, to seek
+transformation by integrating AI-based solutions into existing
+digital systems. Platforms such as Customer Relationship
+Management (CRM) and Enterprise Resource Planning
+(ERP) [112], and solutions involving domains such as the
+Internet of Everything (IoE), are the cornerstones to develop
+autonomous systems that integrate people, tools and data in
+a secure and fully interconnected digital environment [113].
+Security consultancies play a key role in the transformation
+of organizations that are interested in using AI in their
+environment, as they offer solutions to emerging risks and act
+at a mainly preventive level.
+What makes these companies able to offer their services
+is a deep knowledge of techniques and methods, such as
+those mentioned in the previous chapter, including Machine
+Learning (ML), Deep Learning (DL), Natural Language Pro-
+cessing (NLP), Knowledge Representation and Reasoning
+(KRR), and knowledge-based or rule-based modelling of
+Expert Systems (ES) [114]. These techniques demonstrate
+superior performance in efficiency and accuracy and aim
+to eliminate risks through behavioral analysis and anomaly
+detection, situations that, in most cases, indicate critical
+security threats. In this way, the overall resilience of security
+infrastructures is achieved by significantly reducing response
+times to security incidents [115].
+Additional benefits from the application of the above
+include financial stability and enhanced confidence index in
+the markets, which implies increased cash flows, significantly
+reduced operational costs, and improved efficiency of the
+organizations’ internal operations [116]. Furthermore, the
+use of Artificial Intelligence ensures, to a significant extent,
+the integrity of financial transactions and, by extension, the
+overall security of financial institutions against any potential
+cyber threat. At the same time, by ensuring the above, the
+ability to detect and respond in a timely manner is ensured,
+crucially, the protection of sensitive personal data from
+unauthorized access and breaches [117].
+The economic benefits of using AI-based technologies in
+the security sector are significant. Particularly in the fight
+against terrorism and border safety, there are case studies
+from different regions that demonstrate this. In the Middle
+East and North Africa (MENA) region, technologies such
+91748 VOLUME 13, 2025
+--- Page 10 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+as automated border control and smart fencing are applied.
+Furthermore, the AI solutions implemented contribute to
+enhancing border security, managing migration flows, and
+ultimately reducing the cost of surveillance and the economic
+burden of extensive human labor [118], through the ability of
+these technologies to automate repetitive tasks, predict future
+terrorist events, and detect unusual and suspicious financial
+transactions [119].
+Another case study demonstrating the benefits of using AI
+in enhancing social resilience and mitigating the economic
+costs associated with extremism and propaganda is the tools
+designed in Pakistan. The tools are adapted to the local lan-
+guage and cultural environment and help to combat situations
+that threaten national security and social cohesion, such as the
+spread of extremist ideologies and false information [120].
+FIGURE 7. The figure outlines key advantages including market growth,
+enhanced threat detection, cost reduction, and data
+protection—demonstrating AI’s role in improving operational efficiency
+and cybersecurity outcomes.
+G. SENTIMENT ANAL YSIS FOR THREAT DETECTION AND
+HATE SPEECH
+Sentiment analysis plays an important role in the identifi-
+cation and prevention of extremist behavior, as it provides
+information on the emotional state of internet users and
+predicts expressions often associated with radicalization.
+Emotions such as hatred and resistance reinforce and
+shape the extremist profile of users and provide clear
+indications of offending activities [121]. Thus, in the context
+of counter-terrorism and intelligence gathering, sentiment
+analysis can be used to monitor social media, forums, or other
+types of online channels [122]. Moreover, the rapid spread
+and use of social networking media exacerbate the spread
+of hate speech. Therefore, sophisticated tools are needed
+to detect and mitigate the negative consequences of online
+aggression.
+V arious studies propose a variety of methodologies and
+techniques, such as parallelized versions of bagging, A-
+stacking, and random subspace algorithms, which demon-
+strate high success rates and accuracy, especially when the
+data set to be processed is particularly large [123]. Similarly,
+techniques such as Natural Language Processing (NLP) allow
+for the automated processing of large volumes of data on web
+platforms by efficiently identifying rhetorical content [124].
+Furthermore, for classifying harmful content and predicting
+rhetorical hate speech in social networking media, the use of
+attentional multi-channel convolutional-BiLSTM networks
+that combine word representation techniques, multi-channel
+convolution, and bidirectional LSTM cells is proposed [125].
+Another technique is to use HyperNetworks at a feature level
+that is smaller in size than other popular pre-trained language
+models [126], while another half-speech detection model,
+pattern-based speech recognition (PDHS), uses pre-trained
+language models and aspects such as term frequency, labels
+of parts of speech, and scores from sentiment analysis [127].
+An interesting approach proposes the use of translations
+and paraphrases for rhetorical misinformation detection,
+with the main idea being to improve the processed dataset,
+offering training in a diverse and integrated dataset [128].
+Furthermore, the application of traditional algorithms, such
+as recurrent neural networks (RNN) and BERT-based models,
+is effective in detecting racist and xenophobic hate speech
+online [129]. A hybrid analysis approach based on dictionary
+and ML techniques, such as Decision Tree, Naive Bayes,
+and Support V ector Machine, contributes to the identification
+of excessive sentiment, i.e. early signs of unrest or other
+potential threats to public and national security [130].
+FIGURE 8. The figure highlights key components, including NLP
+techniques, AI models, sentiment analysis, and hybrid approaches, used
+to classify extremist content, detect emotional cues, and mitigate
+radicalization online.
+VOLUME 13, 2025 91749
+--- Page 11 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+However, despite the undeniable contribution of sentiment
+analysis in combating terrorism and extremism through the
+detection of hate speech online, challenges such as linguistic
+diversity, context-based nuances, and inherent biases in the
+data and models used for collection, processing, and analysis
+are emerging [131]. Furthermore, the evaluation of models
+used to identify and detect hate speech online may require
+more sophisticated measures than those already available,
+as there is a possibility that they may not accurately capture
+the performance of the model [132].
+A major concern is that Artificial Intelligence, particularly
+generative Artificial Intelligence, may be used by extremist
+and terrorist groups to produce content that contributes to the
+dissemination of extremist ideologies and the manipulation
+of a wider audience online [133]. Reports and studies
+estimate that by 2025, generative Artificial Intelligence will
+provide extremist organizations with advanced capabilities
+for propaganda, radicalization, recruitment, facilitating the
+concealment of funding streams, weapons development, and
+generally significant assistance in planning attacks [134].
+Indeed, the ability of this technology to create realistic and
+convincing content makes it easier for extremist groups to
+improve their recruitment strategies by adapting the content
+in this way, so that extreme behaviors and attitudes are
+not detected through sentiment analysis, thus attracting
+the attention and interest of a specific audience prone to
+radicalization without being perceived by the authorities in
+charge of this work [135].
+H. PROPOSED FRAMEWORK FOR ENHANCING
+SENTIMENT ANAL YSIS IN COUNTER-TERRORISM
+Modern sentiment analysis techniques, although often
+focused on real-time data, contribute effectively to efforts
+to identify extremist behavior and hate speech online [136].
+However, the analysis of instantaneous data significantly
+limits the ability of models to capture the dynamic nature of
+rapidly evolving emotions that arise in response to changing
+conditions and situations, such as political instability, various
+types of social unrest, and economic pressures.
+A solution to these issues may be found by integrating
+temporal, spatial, and socio-political variables into existing
+techniques and methods of sentiment analysis. This, in turn,
+will improve the accuracy of predictive analysis by taking
+into account the way in which emotions change over time,
+location, and the wider socio-political context, leading to
+a more holistic approach to the process. More specifically,
+temporal analysis captures the way in which emotions change
+over time, spatial analysis links specific geographical regions
+to emotions, and socio-political context analysis accounts for
+variables such as news events and political dynamics.
+In summary, the hypothesis that negative sentiment in
+a region escalates during periods of political instability or
+social unrest, combined with the integration of real-time data
+streams from social networking media, news sources and
+different types of platforms, can provide a more complete pic-
+ture of the factors leading, first to social destabilization and
+radicalization, and then to extremist and terrorist activity. The
+application of the above during the critical phase of machine
+learning algorithm design will enhance the capacity for better
+decision-making, particularly in areas where rapidly evolving
+environments require more accurate predictions of potential
+extremist behavior, and which traditional sentiment analysis
+can overlook.
+FIGURE 9. The figure highlights key limitations—including linguistic
+diversity, contextual nuances, and data biases—as well as risks from
+generative AI misuse. It also outlines a proposed framework
+incorporating real-time data and socio-political variables to improve
+sentiment-based threat detection.
+I. NETWORK ANAL YSIS IN THE IDENTIFICATION OF
+EXTREMIST GROUPS
+Equally important and closely related to sentiment analysis,
+which provides important information about the behavior and
+rhetoric of individuals, is the examination of the way in which
+individuals interact with each other in a network. Network
+analysis is a critical stage in understanding and identifying
+extremist groups, as it provides important information about
+their structure, communication patterns, and overall dynam-
+ics, and is instrumental in mapping groups, detecting the core
+of the network, and clarifying the roles of key individuals
+within it [137]. This approach is particularly effective in
+online environments, where identifying key players and
+understanding organizational structure and influences is
+crucial for countering and deconstructing extremist networks.
+Artificial Intelligence contributes significantly to network
+analysis. Different theories, such as that of social learning,
+can contribute to a better understanding of the mechanism of
+radicalization of the members of a group [138]. But also on a
+practical level, the mapping of relationships between entities
+related to terrorism can be achieved by using neural networks,
+in particular the Bert-A TT model, which extracts efficient
+graphs [58]. Another effective technique used to translate
+the risk of spreading terrorism is the Spatiotemporal Graph
+Convolutional Network (STGCN). Indeed, when combined
+with LSTM networks, it has achieved high rates of prediction
+and predictive analysis [139]. In addition, techniques such
+as the unsupervised extreme situation detection method,
+91750 VOLUME 13, 2025
+--- Page 12 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+which incorporates a behaviorally aware network (OSNE),
+have been proposed, allowing the model to distinguish
+terrorists among potential criminals located in heterogeneous
+networks [140]. Another study proposes examining hashtags,
+graphics, and texts to highlight the different strategies and
+digital tactics that extremist groups use on social media to
+spread their propaganda and recruit followers [141].
+Identifying key influencers, radicalization methods, and
+recruitment tactics used by various extremist groups can be
+revealed by examining patterns in online interactions using
+machine learning techniques such as BERT, Roberta, and
+DistilBERT [142].
+Several interesting case studies highlight the importance
+of integrating AI to discover the complex structures of an
+extremist network. One of them uses PLA TO algorithm,
+which combines machine learning techniques, graph theory,
+and social network analysis on an Al Qaeda and ISIS
+dataset to predict the number of attacks [143]. Another case
+study revealing information about how individuals within
+the radicalized network are connected and the influence of
+leaders is that of the Dutch Salafi-Jihadi networks [144].
+Studies have also been carried out on how hate speech spreads
+and how communities evolve, revealing that over time groups
+become smaller, more isolated and hierarchical - conditions
+suitable for the further radicalization of their members [145].
+Measures of centrality can also reveal important infor-
+mation, such as understanding the structure and coherence
+of the network [10]. The key centrality measure used
+to successfully counter and combat extremist groups is
+betweenness centrality between nodes, which measures the
+degree of a node acting as a bridge within the network [146].
+This is a vital characteristic for maintaining the flow of
+information between different parts of the network. This
+method reveals the critical nodes of a network, as individuals
+with a high degree of centrality tend to facilitate or coordinate
+communication between members of an extremist network
+and thus occupy a leading position in it [147].
+FIGURE 10. The figure presents key components, including AI
+contributions (e.g., BERT-ATT, STGCN), machine learning models, centrality
+measures, and case studies. These approaches enhance the detection of
+core influencers and communication patterns within radical networks.
+On the other hand, significant challenges arise despite the
+significant advantages provided by the application of network
+analysis techniques for the identification and understanding
+of extremist groups, mainly in online environments. Issues
+related to data quality, bias in AI systems, and issues related
+to incomplete and noisy data raise concerns and affect the
+accuracy of network analysis to a significant degree. Thus,
+the overall effort to identify and understand an extremist
+network is compromised, and thus ensuring quality data is
+a vital parameter in the overall process [148]. In addition, the
+difficulty of accessing and obtaining reliable data is hampered
+by the methods used by extremist groups, as they often
+communicate via private platforms, which makes it difficult
+for authorities to directly observe and identify conversations
+and activities [149].
+J. DATA FUSION IN INTELLIGENCE GATHERING
+The integration of data from different and diverse sources and
+formats is a particularly critical stage of the information gath-
+ering process and aims at extracting accurate, consistent, and
+usable data. In contrast to the possibilities offered by the abil-
+ity to exploit single sources, the process of integrating data
+from multiple sources. amplifies and enhances efforts to iden-
+tify, prevent, and manage extremist threats[150]. An example
+of successful use of such data is the use of advanced tech-
+nologies and tools that process data from autonomous aerial
+vehicles (AA Vs), autonomous ground vehicles (AGVs)[151],
+video surveillance, command and control systems, and sen-
+sors that detect explosives and other hazardous substances.
+The field of application extends to public spaces, such as
+the metro or airports, and significantly improves the flow of
+moving citizens and at the same time enhances the security
+of soft and hard-to-monitor targets [152].
+In addition, EO (Earth Observation), IMINT (image
+intelligence), GEOINT (geospatial intelligence), OSINT
+(open-source intelligence), HUMINT (human intelligence),
+MASINT (measurement and signature intelligence) and SIG-
+INT (signal intelligence) processing [153], [154], using Arti-
+ficial Intelligence algorithms such as SAR time series[155] to
+identify anomalies in affected areas, provides a comprehen-
+sive understanding of high-interest situations, thus enhancing
+decision-making processes. For example, in the Russian-
+Ukrainian conflict, the combination of geographic and social
+media data provides critical information about the military
+activities of the parties involved, thus enhancing decision-
+making processes [156].
+Consequently, data fusion is a valuable and important
+component at every stage of the design of information
+systems to be able to handle complex and sophisticated
+scenarios, such as civil war and counter-terrorism oper-
+ations [157]. In particular, the integration of data from
+multiple sources, and the multi-sensor data fusion approach
+(MSDF) lead to effective target detection and threat assess-
+ment [158], while the combination of location-based social
+media data (LBSM) enhances the security of critical supply
+chains used in times of crisis by the military and law
+enforcement authorities [159]. Particularly with respect to
+military operations, the combination of static and civilian
+data achieved by integrating big data from different sources,
+VOLUME 13, 2025 91751
+--- Page 13 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+such as inter-military (IMD) and extra-military (EMD) data
+within the Military Data Space (MDS) concept, significantly
+enhances decision-making processes by contributing to the
+design of the next generation of military applications [160].
+The contribution of Artificial Intelligence to data fusion
+is expressed through the use of Deep Learning models such
+as Convolutional Neural Networks (CNN) and Recurrent
+Neural Networks (RNN) [142], [161]. These models offer
+significant advantages in information gathering and analysis,
+and their effectiveness lies in their ability to process grid-like
+data structures. This makes them particularly useful for
+the discovery of suspicious objects, patterns, and anomalies
+in image and video analysis processing and, in general,
+in any process where visual data plays a crucial role [162].
+In addition to seamlessly adapting defense systems to
+constantly changing conditions that human capacity is unable
+to perceive and understand, and to enhance real-time threat
+analysis and detection, Natural Language Processing (NLP)
+and machine learning (ML) algorithms are used [163].
+FIGURE 11. The figure illustrates the integration of diverse data
+sources—such as AAVs, ground vehicles, video surveillance, AI algorithms,
+social media, and military data—to enhance situational awareness and
+support threat detection in complex security environments.
+However, despite the obvious advantages of integrating
+data from different sources, challenges arise as the process
+of collecting information to counter terrorism and extremism
+presents difficulties and issues, mainly related to data
+quality. As mentioned in a previous section, data quality is
+closely linked to noise and reliability, and requires particular
+attention, especially when the information comes from social
+networking sites, where the presence of trolls is a common
+and frequent phenomenon. This fact makes it necessary to
+manage and filter heterogeneous data in order to achieve the
+goal of accurate analysis [164].
+It is obvious that in research related to specific forms
+of violence, such as terrorism and extremism, the quality
+of databases must have characteristics such as consistency,
+accuracy of information, and transparency in the origin of the
+data. This will enhance the effectiveness of extracting useful
+information and making the right decisions[165]. In addition,
+challenges related to the infrastructure and general operation
+of organizations are emerging as they are required to
+successfully manage large volumes of data and complex
+models that require powerful computing systems [166].
+At the same time, the lack of skills in their staff prevents
+organizations from making maximum use of modern methods
+and technologies [167].
+FIGURE 12. The figure outlines key barriers including data quality issues,
+skill shortages, infrastructure limitations, and computational constraints.
+These factors hinder the effective integration and utilization of
+multi-source intelligence in security operations.
+K. CROWDSOURCING FOR REAL-TIME INTELLIGENCE
+A particularly interesting area that has not been developed
+and researched to a large extent is the contribution of
+collective intelligence to information gathering. Undoubt-
+edly, if exploited and combined with Artificial Intelligence,
+it will offer added benefits. As a process, information
+gathering through collective intelligence involves the joint
+effort of citizens to share important information, and is
+known as crowdsourced intelligence (Crosint) [168]. The
+development and further improvement of the conditions
+under which such processes take place will provide a
+significant advantage to the authorities involved in the
+fight against terrorism and extremism, as it can lead to
+timely and accurate decision-making in field operations and
+generally enhance national security by providing a more
+comprehensive understanding of complex challenges [169].
+Projects such as Ushahidi, Syria Tracker, and LibyaCri-
+sisMap have provided significant assistance and improved
+business efficiency during crises, demonstrating the potential
+of crowdsourcing in turbulent environments. Mobile users
+feed real-time data, and analysis of this data is instrumental
+in early warning and conflict prediction [170]. It is true that
+in similar cases, and especially in emergency incidents, the
+crowd can act as the main source of data to gather information
+and data from social networking media. Furthermore, the
+crowd can also act as a tool for filtering and verifying infor-
+mation transmitted by news media or social platforms. [171].
+91752 VOLUME 13, 2025
+--- Page 14 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+Successful examples of crowdsourcing, where the public
+actively and directly participates in providing information
+by reporting suspicious activities to the authorities in
+charge of dealing with specific forms of violence, are
+applications such as the AlertCorps of the Spanish security
+authorities and the FBI’s ISIL advisory [172]. In addition,
+crowdsourcing platforms, such as Waze, are good examples
+of how crowd-sourced incident observation reports can
+provide a framework for early detection and response to
+incidents [173]. Another crowdsourcing platform that suc-
+cessfully harnesses the power of the crowd is Europol’s Stop
+Child Abuse-Trace an Object (SCA TO), as through public
+awareness, it aims to gather information to effectively address
+child sexual exploitation online [174]. Similarly, the example
+of Twitter’s Sedition Hunters online community successfully
+aimed to identify the individuals involved in the 2021 US
+Capitol invasion [175]. The importance of crowdsourcing
+technologies is demonstrated by other meteorites and reports.
+For example, projects such as ‘Cibersquad’, ‘MediaGuard’
+and ‘STOP TERROR’ rely exclusively on a framework of
+interaction between authorities and citizens, significantly
+reducing rates of violence and extremist activity among
+young people [176].
+FIGURE 13. The figure illustrates the flow from public data sharing to
+AI-assisted data analysis and decision-making. This layered process
+enhances situational awareness and enables timely threat detection in
+security and crisis response environments.
+What makes the difference in any attempt to detect threats
+on the internet is the large amounts of data that can be
+extracted, in real time, from different social networking
+platforms. Combined with the huge user base and the
+speed of information dissemination, they offer excellent
+opportunities for collecting and processing data and related
+intrusion indicators (IoC) such as IP addresses, URLs,
+file hashes, domain addresses, and CVE identifiers [177].
+In addition, analysis of content from social media users,
+such as multimedia posts, can lead to the identification of
+dangerous events and their timely response [178]. Similarly,
+the analysis of microblogs leads to the assessment of disasters
+and other critical events, thanks to the use of crowdsourcing
+information, a fact that makes it necessary to use Artificial
+Intelligence in the analysis of these aggregated data to ensure
+that the ‘big picture’ is understood and to extract valuable and
+useful information that will significantly improve decision-
+making [179].
+However, the process of information and data mining
+through crowdsourcing also faces significant challenges,
+mainly at the technical level, where there is vulnerability
+to data tampering attacks by malicious users. Their aim
+is, through manipulation and deliberate channeling, in data
+extraction streams, of processed information, to negatively
+and significantly affect its quality and reliability [180].
+Beyond the technical aspect, major challenges arise from
+the lack of interest and reluctance of analysts and policy
+makers to integrate information from sources that depart
+from traditional sources [181]. The issue of the security of
+citizens, especially those involved in war zones and at risk
+of being identified and labelled as informants, should not be
+overlooked, nor should the issue of verifying this information,
+as it is difficult to confirm it completely [182].
+This, in turn, increases the concern that analysts may
+become victims of misinformation [183]. Therefore, it is con-
+sidered essential to provide continuous and lifelong training
+for employees working in the critical area of information
+gathering so that they can recognize signs of corruption and
+the reliability of data through their expertise [184].
+FIGURE 14. The figure outlines critical barriers such as data tampering,
+security concerns, analyst reluctance, and lack of training. These factors
+limit the reliability and operational integration of crowdsourced
+intelligence in counter-terrorism and crisis response.
+L. MISINFORMATION AND DISINFORMATION IN
+INTELLIGENCE GATHERING
+When gathering information, especially in the digital age,
+where data is disseminated rapidly and in large volumes
+VOLUME 13, 2025 91753
+--- Page 15 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+through web-based applications, attention should be focused
+on avoiding the acquisition of incorrect information and
+on countering misinformation. In this way, confusion and
+distorted decisions will be avoided, especially where there is a
+risk of causing serious malfunctions during counter-terrorism
+operations.
+Incorrect information usually comes from individuals who
+unknowingly share inaccurate or misleading information.
+Conversely, misinformation is mainly used by actors, such
+as terrorists and extremist groups, to disrupt intelligence
+gathering processes and thus weaken national security [185].
+It has also been observed that terrorist groups take advantage
+of the advances in technology and the wide reach of
+social networking media, and engage in disinformation
+campaigns and psychological operations, with the aim of
+manipulating the perceptions of unsuspecting citizens [186].
+It is a frequent phenomenon that different groups use false
+narratives that mislead and discredit attempts to distinguish
+between accurate and false information. They use techniques
+and methods such as creating sockpuppet accounts [187] on
+social networking sites, copying and paraphrasing content
+from various platforms and news feeds, and often succeed in
+creating a sense of credibility [51].
+Thus, the phenomenon of legitimization of information is
+observed, which plays a decisive role, especially in times
+of crisis, where the distinction between truth and falsehood
+is often blurred and indistinguishable. Indeed, it has been
+observed that paranoid content is republished through social
+networking media and leads to social polarization and,
+in extreme situations, to radicalization [188]. Under this
+prism, the dual role of AI is clear, as it is used both as a tool
+to identify and combat misinformation and as a tool for its
+dissemination [189].
+To detect misinformation, in real time, on social net-
+working platforms, Artificial Intelligence tools using Natural
+Language Processing (NLP) techniques are used [46].
+In combination with deep learning models such as Convolu-
+tional Neural Networks (CNN), Recurrent Neural Networks
+(RNN), and transformer-based models such as BERT and
+GPT, have shown significant benefits in the fight against
+misinformation [49]. Furthermore, to improve the accuracy
+in detecting misinformation, hybrid deep learning models
+combined with pre-trained text models such as Global
+V ectors (GloV e) and Universal Sentence Encoders (USE) are
+proposed [47].
+Of particular interest are automated event control systems,
+Human-in-the-Loop, which exploit both the capabilities of
+Artificial Intelligence and human judgment, and in this
+combination detect misinformation with high accuracy, once
+they are able to understand and perceive the context in a
+sentence [190].
+In addition to detecting content with misinformation,
+an important activity is to reduce its propagation. Thus,
+algorithms based on matrix factorization (MF) are proposed;
+through this technique, annotations are selected from user
+postings and publications [191].
+Similarly, improved versions of models such as BERT
+and Roberta, which detect content generated by Artificial
+Intelligence through LLMs—a phenomenon that is becoming
+more and more common and complex [72]—provide a partic-
+ular contribution to reducing the spread of misinformation.
+One such case is FakeBert, based on BERT, and combin-
+ing convolutional neural networks (CNN). This approach
+captures semantic dependencies bidirectionally, allows for
+a better understanding of the content, and maximizes the
+probabilities for security systems to detect misinformation
+more accurately [52].
+FIGURE 15. The figure outlines key components including misinformation
+detection, human-AI collaboration, content analysis, and propagation
+reduction. It highlights how AI tools assist in identifying and mitigating
+false information, while also addressing the importance of context
+understanding and human oversight.
+The effectiveness of the use of Artificial Intelligence in the
+timely detection of misinformation, especially during safety
+reviews, is demonstrated by different case studies. Therefore,
+in order to facilitate content analysis, the Italian Digital Media
+Observatory (IDMO) is developing new automated models
+and, through the creation of new datasets, categorizing policy
+decisions and significantly improving the identification of
+texts with misinformation content [192]. Another case study
+had as its main objective the development of an integrated
+set of machine learning algorithms to enhance the ability to
+detect hostile disinformation activities through the analysis
+of social media posts. In this case, tools and algorithms
+like The Dark Crawler, Posit Toolkit, TensorFlow (deep
+neural networks), Random Forest classifier, and the short
+text classification programs known as LibShortText and
+LibLinear [50] were used.
+However, the complexity and diversity of the data coming
+from the different social networking platforms make the
+process of identifying misinformation content difficult. There
+are not a few cases where the high quality of false content
+can mimic and resemble real audiovisual data, thus calling
+into question the use of multimedia as reliable evidence
+of facts [193]. Furthermore, false news detection models,
+as previously mentioned, rely heavily on linguistic features
+91754 VOLUME 13, 2025
+--- Page 16 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+and are thus vulnerable to misclassifications of falsified facts
+and information [194].
+This issue is further compounded when the data collected
+for analysis comes from open-sources, where the reliability
+of the information is often a significant challenge [195].
+In addition to these, a major challenge that emerges during the
+stages of detecting misinformation is the false positives that
+are detected. Thus, the algorithms misidentify some harmful
+content as harmful, resulting in poor interventions and cen-
+sorship phenomena, such as the closure of social networking
+accounts [196]. Undoubtedly, this is a vital issue, because in
+addition to technical challenges, it raises ethical constraints,
+violation of individual rights, and reinforcement of existing
+prejudices [197]. The adoption by the organizations in charge
+of this work of approaches that ensure human oversight
+at every stage of the process of detecting misinformation
+content is a proposed solution to ensure that real threats are
+identified as accurately as possible.
+FIGURE 16. The figure contrasts algorithmic detection—valued for speed
+but prone to false positives—with human oversight, which supports
+accurate identification and ethical accountability. It emphasizes the
+importance of balancing efficiency with reliability and fairness in
+AI-driven misinformation systems.
+IV. ETHICAL, LEGAL, AND GOVERNANCE
+CONSIDERATIONS
+The present research has highlighted the obvious advan-
+tages arising from the development and use of Artificial
+Intelligence in various areas of security, including the
+fight against terrorism, extremism, and manifestations of
+these phenomena [198]. Although the benefits are obvious,
+at the same time, significant ethical concerns and major
+privacy risks arise. This is because systems incorporating
+AI techniques and methods are often operated without the
+explicit consent of the individuals being monitored; therefore,
+the boundaries between necessary security measures and
+privacy violations are blurred [37]. Furthermore, systematic
+biases embedded in training datasets [199] undermine the
+accountability of these systems [200].
+Under these conditions, the application of appropriate
+design techniques for such systems as well as the develop-
+ment of relevant frameworks, such as Explainable Artificial
+Intelligence (XAI) [201], can effectively address such
+phenomena. With a focus on promoting transparency, they
+will help software designers to understand the environment in
+which AI decisions are based. Furthermore, by encouraging
+international cooperation, establishing rules that mitigate the
+ethical implications of the use of advanced AI technologies,
+and involving more and more stakeholders, the aim of
+raising awareness and common decision-making will be
+achieved [60].
+A. STATE LEGISLATIVE FRAMEWORK
+The importance of developing initiatives in order to take
+common decisions on the regulations related to the use of
+AI can be understood by examining the existing legislative
+framework that defines and regulates these regulations.
+Although they vary and are constantly evolving, there are
+significant gaps, and this lack of a single global standard,
+mainly due to the transnational nature of these technologies,
+leads to inconsistencies in safety measures [63].
+In the EU, a step has recently been taken towards the
+creation of comprehensive legal frameworks. The AI Act
+attempts to express the EU’s overall digital strategy, with
+the protection of citizens’ fundamental rights as a key
+approach [64]. The categorization of AI systems character-
+izes the AI Act according to their level of risk [202], and lays
+the foundations for the global governance of AI, with clear
+influences and using elements from the implementation of the
+General Data Protection Regulation (GDPR). Furthermore,
+EU AI law innovates by introducing regulatory ‘‘sandboxes’’,
+so that the testing and development of such technologies can
+take place in a controlled environment in order to comply with
+all the established rules [203].
+On the contrary, the United States prefers a soft adaptation
+of existing legal frameworks, rather than the creation of new
+ones, resulting in an uneven regulatory environment, while
+China has opted for a more centralized regulatory framework,
+integrating AI into public life with a focus on control and
+surveillance [204].
+B. GOVERNANCE AND AI
+Although in different directions, the interest of major states
+in establishing rules to ensure compliance with legal and
+ethical standards in the use of AI is real, but requires the
+development of governance frameworks that ensure oversight
+and continuous regulation and adaptation. This will both
+minimize the risks to public and national security, and
+ensure respect for and protection of human rights [62].
+To counter the threats of competitive AI and to safeguard
+the principles of Explainable Artificial Intelligence [43],
+a series of protective measures must be taken, especially
+in vulnerable AI systems [205], and to strengthen, through
+strong model training, the defense mechanisms. In addition,
+it is right to strike a balance between safety and explainability
+in order to avoid phenomena in which AI goes beyond the
+VOLUME 13, 2025 91755
+--- Page 17 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+FIGURE 17. The figure compares three major regulatory approaches: the
+EU’s risk-based model focusing on citizen protection, the US’s
+sector-specific self-regulation, and China’s centralized control with strong
+government oversight. These divergent strategies shape the global AI
+governance landscape.
+limits and puts security systems at risk. For this reason,
+it is essential to develop appropriate evaluation frameworks
+for XAI methods, ensuring that the necessary standards of
+accuracy and robustness are met [45].
+Key to achieving this is the creation of a multi-level system
+that will enhance AI systems and include governments,
+companies, and citizens [66]. Already, the international
+human rights framework provides a set of standards that can
+be used to ensure that during the critical phases of design
+and development of information systems where Artificial
+Intelligence is widely used, the necessary and foreseen ethical
+and moral standards are respected [59], [61].
+C. CHALLENGES, CONSTRAINTS, AND PROPOSALS
+It is obvious that in order to strike a balance between security
+and privacy, the policymakers are faced with a multifaceted
+set of challenges. The need to ensure algorithmic trans-
+parency, accountability, and the acquisition and maintenance
+of strategic advantages against threats to public and national
+security is pushing information services to rapidly adopt and
+integrate AI into their existing security systems [206].
+The main challenge, as mentioned earlier, is the invasion
+of privacy, as their effective operation requires resources and
+huge amounts of personal data. Thus, the potential lack of
+transparency and accountability further exacerbates concerns
+about holding security systems accountable for the actions
+and processes followed in making a decision [65].
+Another important challenge is the rapid pace of devel-
+opment of Artificial Intelligence, as it makes it difficult for
+the authorities responsible for establishing legal frameworks
+to keep up, with the result that regulations appear outdated
+and inadequate. Furthermore, the use and integration of AI
+into technologies such as facial recognition has been subject
+to considerable criticism, as a number of studies, such as
+Clearview AI and Rite Aid, have shown that there have been
+significant privacy violations [207].
+FIGURE 18. The figure maps four approaches—G20 committee proposal,
+fairness in design framework, algorithmic transparency initiatives, and
+facial recognition.
+Different frameworks have been proposed to address these
+challenges. One of these, Fairness in Design (FID), helps
+those involved in the design of AI systems to identify early
+on and in the early stages different issues and to approach
+the development of such systems in an ethical manner [208].
+Finally, the creation of a G20 committee has been proposed
+in order to address the lack of common standards through a
+globalized governance of AI and multilateral coordination of
+actions [209].
+V. REAL-WORLD CASE STUDIES
+The effective application of Artificial Intelligence for detect-
+ing and countering fake news in social networking media is
+achieved through the use of Deep Learning techniques and
+methods, Natural Language Processing (NLP), and big data
+analysis.
+A. AI APPLICATIONS IN FAKE NEWS DETECTION
+Facebook applies fact-checking mechanisms through part-
+nerships with agencies and third parties in an effective way,
+as the accuracy of the AI tools used in experimental news flow
+environments on the platform has been proven [68]. X (ex.
+Twitter) has been actively involved in fact-checking, particu-
+larly in times of crisis, such as the COVID-19 pandemic, with
+AI-based techniques and methods to contribute and ensure
+that users receive accurate content [210]. Google uses an
+approach based on the verification of claims derived from top
+search data by verifying the credibility of online news using
+scores [67], while in the Iberian Peninsul, a fact-checking
+agencies such as Polígrafo,V erificat,Newtral, and Maldita.es
+verify images and videos presented to users [211].
+91756 VOLUME 13, 2025
+--- Page 18 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+FIGURE 19. The figure highlights real-world uses of Artificial Intelligence
+across global platforms and regions.
+B. AI-POWERED BORDER CONTROL SYSTEMS
+To enhance security and border management, the EU has
+developed tools such as Smart Borders and, through Artifi-
+cial Intelligence technologies using biometric identification,
+automated fingerprint and person recognition, aims at risk
+assessment [212]. This improves the efficiency and accuracy
+of border control procedures. Outside the EU, countries such
+as the USA and China use biometric data to enhance the
+accuracy of decisions, streamline procedures, and minimize
+human error, in relation to risks and individuals crossing
+borders [213].
+VI. CHALLENGES AND OPEN ISSUES
+Despite the significant progress made by the integration of
+Artificial Intelligence (AI) in the security systems tasked
+with counter-terrorism and cybersecurity, critical challenges
+remain in the technical, ethical, and operational domains.
+In summary, the main challenges and issues that need to be
+addressed in order to ensure the responsible and effective
+deployment of AI in security systems are the following:
+• Algorithmic bias and vulnerabilities, as algorithms
+remain vulnerable to attacks by adversaries and affect
+the accuracy of decision making.
+• The quality and heterogeneity of the data sets
+(HUMINT, SIGINT, OSINT) are at risk of misinforma-
+tion and manipulation.
+• Real-time processing, especially in threat detection,
+faces significant limitations.
+• Massive and unmonitored surveillance and moni-
+toring raise concerns about invasion of privacy and
+circumvention of regulatory frameworks.
+• The limited use of explainable AI (XAI) in models
+and algorithms is an inhibiting factor in transparency in
+decision making.
+• Significant divergences are observed in AI governance
+frameworks between states.
+• Organizational reluctance to implement AI-based
+solutions makes it difficult to build trust and provide
+specialized training for their staff.
+• There is a risk that rival entities may exploit
+crowd-sourced intelligence streams, and through imi-
+tation and propaganda, increase the risk of misinforma-
+tion.
+• Cybersecurity preparedness gaps are widened by
+the lack of resources needed to implement advanced
+AI-based security frameworks.
+FIGURE 20. The diagram outlines key barriers to effective AI deployment
+in security contexts.
+VII. CONCLUSION AND FUTURE WORK
+This paper has presented the opportunities and possibilities
+offered by the integration of AI in the fight against terrorism
+and cybersecurity. Improving intelligence gathering pro-
+cesses enhances security frameworks and mitigates emerging
+threats. Through a comprehensive analysis of AI method-
+ologies, such as predictive analytics, Natural Language
+Processing (NLP), and Deep Learning models, the ethical and
+governance challenges that need to be addressed in order to
+develop AI in a responsible manner were highlighted.
+One of the main conclusions of this study is that security
+systems developed based on AI must be combined with
+commitments to ethical principles, operational transparency,
+and international cooperation. Furthermore, ensuring the
+effectiveness of AI requires strong governance frameworks
+that ensure fairness, accountability, and trust. This will
+eliminate the risks of invasion of privacy, abuse by malicious
+actors and algorithmic bias and ensure the responsible
+development of AI.
+It is recognized that extremist activities and threats in
+cyberspace cross national borders, which is why collaborative
+efforts between governments, agencies, and academic insti-
+tutions can harmonize regulatory frameworks, encourage
+VOLUME 13, 2025 91757
+--- Page 19 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+TABLE 1. Glossary of frequently used terms and acronyms.
+knowledge sharing, and establish best practices in AI-
+based security. An additional benefit of international col-
+laborations is the establishment of guidelines for explain-
+able Artificial Intelligence (XAI), and the mitigation of
+adversarial threats, thus strengthening the defense against
+cyber-attacks.
+Beyond technological advances, the benefits of this study
+are far-reaching, as it provides important insights for policy-
+makers, security analysts, and researchers studying the latest
+developments in AI. Specifically, this research bridges the
+gap between security solutions incorporating AI technologies
+and ethical challenges, highlighting the need to balance the
+development of AI with human rights. It proposes techniques
+and methods based on AI to combat misinformation,
+extremist content detection, and crowd-sourced information
+(Crosint). At the same time, it identifies key challenges such
+as the global governance of AI and the fragmentation of
+regulatory frameworks and outlines future research directions
+that include improving interpretability, improving collabo-
+ration between authorities, and incorporating socio-political
+variables for risk assessment.
+Future research should focus on further developing
+explainable AI models, encouraging interdisciplinary collab-
+oration, and ensuring privacy and compliance with regulatory
+frameworks. Furthermore, future research should focus
+on and investigate the economic impact of cybersecurity
+measures, and at the same time assess the efficacy of security
+policies.
+CONFLICTS OF INTEREST
+The authors declare no conflict of interest.
+APPENDIX A
+GLOSSARY OF FREQUENTLY USED TERMS AND
+ACRONYMS
+This appendix provides a concise glossary of only the most
+frequently used acronyms and technical terms that appear
+throughout the study. Less common acronyms are defined
+locally within the text where they appear.
+REFERENCES
+[1] M. Ozkan-Okay, E. Akin, Ö. Aslan, S. Kosunalp, T. Iliev, I. Stoyanov,
+and I. Beloev, ‘‘A comprehensive survey: Evaluating the efficiency
+of artificial intelligence and machine learning techniques on cyber
+security solutions,’’ IEEE Access, vol. 12, pp. 12229–12256, 2024, doi:
+10.1109/ACCESS.2024.3355547.
+[2] M. Sharma, A. Dixit, and P . Rawat, ‘‘The use of AI in surveillance
+to identify the potential threat of terrorist attacks,’’ in Proc. IEEE
+1st Karachi Sect. Humanitarian Technol. Conf. (KHI-HTC), Jan. 2024,
+pp. 1–7, doi: 10.1109/khi-htc60760.2024.10482367.
+[3] M. Pešec, ‘‘Impact of artificial intelligence development on national
+security,’’Contemp. Mil. Challenges, vol. 2020, pp. 109–128, May 2020,
+doi: 10.33179/bsv.99.svi.11.cmc.22.1.7.
+91758 VOLUME 13, 2025
+--- Page 20 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+[4] N. Sfetcu, in Artificial Intelligence in Intelligence Agencies, Defense
+and National Security. Bucharest, Romania: MultiMedia Publishing,
+May 2024, doi: 10.58679/mm72104.
+[5] A. Jha, R. Bahuguna, S. Kathuria, G. Sunil, M. Gupta, and V . Pachouri,
+‘‘Role of AI in combating cyber terrorism,’’ in Proc. 4th Int. Conf.
+Smart Electron. Commun. (ICOSEC), Sep. 2023, pp. 1156–1160, doi:
+10.1109/icosec58147.2023.10275910.
+[6] F. A. Khan, G. Li, A. N. Khan, Q. W. Khan, M. Hadjouni, and
+H. Elmannai, ‘‘AI-driven counter-terrorism: Enhancing global secu-
+rity through advanced predictive analytics,’’ IEEE Access, vol. 11,
+pp. 135864–135879, 2023, doi: 10.1109/ACCESS.2023.3336811.
+[7] A. Halbouni, T. S. Gunawan, M. H. Habaebi, M. Halbouni, M. Kartiwi,
+and R. Ahmad, ‘‘Machine learning and deep learning approaches for
+CyberSecurity: A review,’’IEEE Access, vol. 10, pp. 19572–19585, 2022,
+doi: 10.1109/ACCESS.2022.3151248.
+[8] Z. Zhang, H. A. Hamadi, E. Damiani, C. Y . Y eun, and F. Taher,
+‘‘Explainable artificial intelligence applications in cyber security: State-
+of-the-Art in research,’’ IEEE Access, vol. 10, pp. 93104–93139, 2022,
+doi: 10.1109/ACCESS.2022.3204051.
+[9] M. Al-Hawawreh, N. Moustafa, S. Garg, and M. S. Hossain, ‘‘Deep
+learning-enabled threat intelligence scheme in the Internet of Things
+networks,’’ IEEE Trans. Netw. Sci. Eng., vol. 8, no. 4, pp. 2968–2981,
+Oct. 2021, doi: 10.1109/TNSE.2020.3032415.
+[10] B. Collins, D. T. Hoang, N. T. Nguyen, and D. Hwang,
+‘‘A new model for predicting and dismantling a complex terrorist
+network,’’ IEEE Access, vol. 10, pp. 126466–126478, 2022, doi:
+10.1109/ACCESS.2022.3224603.
+[11] M. Mudassar Y amin, E. Hashmi, M. Ullah, and B. Katt,
+‘‘Applications of LLMs for generating cyber security exercise
+scenarios,’’ IEEE Access, vol. 12, pp. 143806–143822, 2024, doi:
+10.1109/ACCESS.2024.3468914.
+[12] M. Bezzi, ‘‘Large language models and security,’’ IEEE Secur . Privacy,
+vol. 22, no. 2, pp. 60–68, Mar. 2024, doi: 10.1109/MSEC.2023.3345568.
+[13] C. Patsakis, F. Casino, and N. Lykousas, ‘‘Assessing LLMs in mali-
+cious code deobfuscation of real-world malware campaigns,’’ 2024,
+arXiv:2404.19715.
+[14] M. Adil, H. Song, S. Mastorakis, H. Abulkasim, A. Farouk, and
+Z. Jin, ‘‘UA V -assisted IoT applications, cybersecurity threats, AI-enabled
+solutions, open challenges with future research directions,’’ IEEE
+Trans. Intell. V ehicles, vol. 9, no. 4, pp. 4583–4605, Apr. 2024, doi:
+10.1109/TIV .2023.3309548.
+[15] Z. B. Akhtar and A. Tajbiul Rawol, ‘‘Enhancing cybersecurity through
+AI-powered security mechanisms,’’ IT J. Res. Develop., vol. 9, no. 1,
+pp. 50–67, Oct. 2024, doi: 10.25299/itjrd.2024.16852.
+[16] I. H. Sarker, M. H. Furhad, and R. Nowrozy, ‘‘AI-driven cybersecurity:
+An overview, security intelligence modeling and research directions,’’
+Social Netw. Comput. Sci., vol. 2, no. 3, Mar. 2021, doi: 10.1007/s42979-
+021-00557-0.
+[17] E. Egho-Promise, E. Lyada, and F. Aina, ‘‘Towards improved vulnera-
+bility management in digital environments: A comprehensive framework
+for cyber security enhancement,’’ Int. Res. J. Comput. Sci., vol. 11, no. 5,
+pp. 441–449, May 2024, doi: 10.26562/irjcs.2024.v1105.01.
+[18] R. Ebrahimi, Y . Chai, W. Li, J. Pacheco, and H. Chen, ‘‘RADAR:
+A framework for developing adversarially robust cyber defense AI agents
+with deep reinforcement learning,’’ MIS Quart., vol. 2024, pp. 1–58,
+Jan. 2024, doi: 10.25300/misq/2024/17339.
+[19] W. Saeed and C. Omlin, ‘‘Explainable AI (XAI): A systematic
+meta-survey of current challenges and future opportunities,’’
+Knowledge-Based Syst., vol. 263, Mar. 2023, Art. no. 110273, doi:
+10.1016/j.knosys.2023.110273.
+[20] G. Rjoub, J. Bentahar, O. A. Wahab, R. Mizouni, A. Song, R. Cohen,
+H. Otrok, and A. Mourad, ‘‘A survey on explainable artificial intelligence
+for cybersecurity,’’ IEEE Trans. Netw. Service Manage., vol. 20, no. 4,
+pp. 5115–5140, Dec. 2023, doi: 10.1109/TNSM.2023.3282740.
+[21] J. Zhang, L. Pan, Q.-L. Han, C. Chen, S. Wen, and Y . Xiang, ‘‘Deep
+learning based attack detection for cyber-physical system cybersecurity:
+A survey,’’ IEEE/CAA J. Autom. Sinica, vol. 9, no. 3, pp. 377–391,
+Mar. 2022, doi: 10.1109/JAS.2021.1004261.
+[22] N. Moustafa, N. Koroniotis, M. Keshk, A. Y . Zomaya, and Z.
+Tari, ‘‘Explainable intrusion detection for cyber defences in the
+Internet of Things: Opportunities and solutions,’’ IEEE Commun.
+Surveys Tuts., vol. 25, no. 3, pp. 1775–1807, 3rd Quart., 2023, doi:
+10.1109/COMST.2023.3280465.
+[23] Y . Hu, W. Kuang, Z. Qin, K. Li, J. Zhang, Y . Gao, W. Li, and K. Li,
+‘‘Artificial intelligence security: Threats and countermeasures,’’ ACM
+Comput. Surv., vol. 55, no. 1, pp. 1–36, Nov. 2021, doi:10.1145/3487890.
+[24] E. A. M. S. Zahoor, ‘‘Security challenges and solutions in AI-enhanced
+cloud platforms: A comprehensive study,’’ Power Syst. Technol., vol. 47,
+no. 4, pp. 103–118, Dec. 2023, doi: 10.52783/pst.161.
+[25] R. Hamon, H. Junklewitz, J. Soler Garrido, and I. Sanchez,
+‘‘Three challenges to secure AI systems in the context of AI
+regulations,’’ IEEE Access, vol. 12, pp. 61022–61035, 2024, doi:
+10.1109/ACCESS.2024.3391021.
+[26] S. Neupane, J. Ables, W. Anderson, S. Mittal, S. Rahimi, I. Banicescu, and
+M. Seale, ‘‘Explainable intrusion detection systems (X-IDS): A survey of
+current methods, challenges, and opportunities,’’ IEEE Access, vol. 10,
+pp. 112392–112415, 2022, doi: 10.1109/ACCESS.2022.3216617.
+[27] I. Rosenberg, A. Shabtai, Y . Elovici, and L. Rokach, ‘‘Adversarial
+machine learning attacks and defense methods in the cyber security
+domain,’’ ACM Comput. Surv., vol. 54, no. 5, pp. 1–36, May 2021, doi:
+10.1145/3453158.
+[28] Y . A. Al-Khassawneh, ‘‘A review of artificial intelligence in security and
+privacy: Research advances, applications, opportunities, and challenges,’’
+Indonesian J. Sci. Technol., vol. 8, no. 1, pp. 79–96, Sep. 2022, doi:
+10.17509/ijost.v8i1.52709.
+[29] D. Smith, S. Khorsandroo, and K. Roy, ‘‘Machine learning algorithms
+and frameworks in ransomware detection,’’ IEEE Access, vol. 10,
+pp. 117597–117610, 2022, doi: 10.1109/ACCESS.2022.3218779.
+[30] I. Almomani, A. Alkhayer, and W. El-Shafai, ‘‘E2E-RDS: Efficient
+end-to-end ransomware detection system based on static-based ML and
+vision-based DL approaches,’’Sensors, vol. 23, no. 9, p. 4467, May 2023,
+doi: 10.3390/s23094467.
+[31] I. Bello, H. Chiroma, U. A. Abdullahi, A. Y . Gital, F. Jauro, A. Khan,
+J. O. Okesola, and S. M. Abdulhamid, ‘‘Detecting ransomware attacks
+using intelligent algorithms: Recent development and next direction from
+deep learning and big data perspectives,’’ J. Ambient Intell. Humanized
+Comput., vol. 12, no. 9, pp. 8699–8717, Nov. 2020, doi: 10.1007/s12652-
+020-02630-7.
+[32] Y . A. Ahmed, B. Koçer, S. Huda, B. A. S. Al-Rimy, and M. M. Hassan,
+‘‘A system call refinement-based enhanced minimum redundancy
+maximum relevance method for ransomware early detection,’’
+J. Netw. Comput. Appl., vol. 167, Oct. 2020, Art. no. 102753, doi:
+10.1016/j.jnca.2020.102753.
+[33] N. A. Malik, A. M. Delshadi, M. Ibrar, K. Hamid, M. Aamir, F. Ahmed,
+and G. Ahmad, ‘‘Behavior and characteristics of ransomware—A
+survey,’’ in Proc. 2nd Int. Conf. Cyber Resilience (ICCR), Feb. 2024,
+pp. 1–5, doi: 10.1109/iccr61006.2024.10532983.
+[34] J. Huang, Z. Chen, S.-Z. Liu, H. Zhang, and H.-X. Long, ‘‘Improved
+intrusion detection based on hybrid deep learning models and fed-
+erated learning,’’ Sensors, vol. 24, no. 12, p. 4002, Jun. 2024, doi:
+10.3390/s24124002.
+[35] J. Zhou, Y . Zhang, Q. Luo, A. G. Parker, and M. De Choudhury, ‘‘Syn-
+thetic lies: Understanding AI-generated misinformation and evaluating
+algorithmic and human solutions,’’ in Proc. CHI Conf. Hum. Factors
+Comput. Syst., Apr. 2023, pp. 1–20, doi: 10.1145/3544548.3581318.
+[36] H.-W. Lee, T.-H. Han, and T.-J. Lee, ‘‘Reference-based AI decision sup-
+port for cybersecurity,’’IEEE Access, vol. 11, pp. 143324–143339, 2023,
+doi: 10.1109/ACCESS.2023.3342868.
+[37] J. R. Saura, D. Ribeiro-Soriano, and D. Palacios-Marqués, ‘‘Assessing
+behavioral data science privacy issues in government artificial intelli-
+gence deployment,’’ Government Inf. Quart., vol. 39, no. 4, Oct. 2022,
+Art. no. 101679, doi: 10.1016/j.giq.2022.101679.
+[38] A. Skraparlis, K. S. Ntalianis, and N. E. Mastorakis, ‘‘Real time threat
+assessment of truck cargos carrying dangerous goods for preventing
+terrorism attacks on neighboring critical infrastructures,’’ IEEE Access,
+vol. 10, pp. 76547–76562, 2022, doi: 10.1109/ACCESS.2022.3189674.
+[39] V . R. Saddi, S. K. Gopal, A. S. Mohammed, S. Dhanasekaran, and
+M. S. Naruka, ‘‘Examine the role of generative AI in enhancing
+threat intelligence and cyber security measures,’’ in Proc. 2nd Int.
+Conf. Disruptive Technol. (ICDT), Mar. 2024, pp. 537–542, doi:
+10.1109/icdt61202.2024.10489766.
+[40] A. Shahana, R. Hasan, S. F. Farabi, J. Akter, M. A. A. Mahmud,
+F. T. Johora, and G. Suzer, ‘‘AI-driven cybersecurity: Balancing advance-
+ments and safeguards,’’ J. Comput. Sci. Technol. Stud., vol. 6, no. 2,
+pp. 76–85, May 2024, doi: 10.32996/jcsts.2024.6.2.9.
+VOLUME 13, 2025 91759
+--- Page 21 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+[41] N. Capuano, G. Fenza, V . Loia, and C. Stanzione, ‘‘Explainable
+artificial intelligence in CyberSecurity: A survey,’’ IEEE Access, vol. 10,
+pp. 93575–93600, 2022, doi: 10.1109/ACCESS.2022.3204171.
+[42] D. Gaspar, P . Silva, and C. Silva, ‘‘Explainable AI for intrusion
+detection systems: LIME and SHAP applicability on multi-layer
+perceptron,’’ IEEE Access, vol. 12, pp. 30164–30175, 2024, doi:
+10.1109/ACCESS.2024.3368377.
+[43] A. Kuppa and N.-A. Le-Khac, ‘‘Adversarial XAI methods in cybersecu-
+rity,’’IEEE Trans. Inf. F orensics Security, vol. 16, pp. 4924–4938, 2021,
+doi: 10.1109/TIFS.2021.3117075.
+[44] M. Zolanvari, Z. Y ang, K. Khan, R. Jain, and N. Meskin, ‘‘TRUST XAI:
+Model-agnostic explanations for AI with a case study on IIoT security,’’
+IEEE Internet Things J., vol. 10, no. 4, pp. 2967–2978, Feb. 2023, doi:
+10.1109/JIOT.2021.3122019.
+[45] O. Arreche, T. R. Guntur, J. W. Roberts, and M. Abdallah, ‘‘E-
+XAI: Evaluating black-box explainable AI frameworks for network
+intrusion detection,’’ IEEE Access, vol. 12, pp. 23954–23988, 2024, doi:
+10.1109/ACCESS.2024.3365140.
+[46] S. Patil, ‘‘Misinformation detection on social media using AI and machine
+learning,’’Int. J. Sci. Res., vol. 13, no. 5, pp. 1013–1015, May 2024, doi:
+10.21275/sr24516171319.
+[47] A. Alzahrani, T. Baabdullah, A. Almotairi, and D. B. Rawat, ‘‘A hybrid
+deep learning architecture for misinformation detection on social media,’’
+in Proc. IEEE 24th Int. Conf. Inf. Reuse Integr . Data Sci. (IRI), Aug. 2023,
+pp. 199–204, doi: 10.1109/iri58017.2023.00040.
+[48] O. Berjawi, G. Fenza, and V . Loia, ‘‘A comprehensive survey of detection
+and prevention approaches for online radicalization: Identifying gaps and
+future directions,’’ IEEE Access, vol. 11, pp. 120463–120491, 2023, doi:
+10.1109/ACCESS.2023.3326995.
+[49] R. Raman, V . K. Nair, P . Nedungadi, A. K. Sahu, R. Kowalski,
+S. Ramanathan, and K. Achuthan, ‘‘Fake news research trends, link-
+ages to generative artificial intelligence and sustainable development
+goals,’’ Heliyon, vol. 10, no. 3, Feb. 2024, Art. no. e24727, doi:
+10.1016/j.heliyon.2024.e24727.
+[50] B. Cartwright, R. Frank, G. Weir, and K. Padda, ‘‘Detecting and
+responding to hostile disinformation activities on social media using
+machine learning and deep neural networks,’’ Neural Comput. Appl.,
+vol. 34, no. 18, pp. 15141–15163, Jun. 2022, doi: 10.1007/s00521-022-
+07296-0.
+[51] D. Pacheco, A. Flammini, and F. Menczer, ‘‘Unveiling coordinated
+groups behind white helmets disinformation,’’ in Companion Proc. Web
+Conf., Apr. 2020, pp. 611–616, doi: 10.1145/3366424.3385775.
+[52] R. K. Kaliyar, A. Goswami, and P . Narang, ‘‘FakeBERT: Fake news
+detection in social media with a BERT-based deep learning approach,’’
+Multimedia Tools Appl., vol. 80, no. 8, pp. 11765–11788, Jan. 2021, doi:
+10.1007/s11042-020-10183-2.
+[53] F. Ahmed, S. Abbas, A. Athar, T. Shahzad, W. A. Khan, M. Alharbi,
+M. A. Khan, and A. Ahmed, ‘‘Identification of kidney stones in KUB
+X-ray images using VGG16 empowered with explainable artificial
+intelligence,’’ Sci. Rep., vol. 14, no. 1, Mar. 2024, doi: 10.1038/s41598-
+024-56478-4.
+[54] B. Ionescu, M. Ghenescu, F. Rastoceanu, R. Roman, and M. Buric,
+‘‘Artificial intelligence fights crime and terrorism at a new level,’’
+IEEE MultimediaMag., vol. 27, no. 2, pp. 55–61, Apr. 2020, doi:
+10.1109/MMUL.2020.2994403.
+[55] R. Bridgelall, ‘‘Applying unsupervised machine learning to counterter-
+rorism,’’ J. Comput. Social Sci., vol. 5, no. 2, pp. 1099–1128, Apr. 2022,
+doi: 10.1007/s42001-022-00164-w.
+[56] R. Montasari, Machine Learning and Deep Learning Techniques in Coun-
+tering Cyberterrorism. Cham, Switzerland: Springer, 2024, pp. 135–158,
+doi: 10.1007/978-3-031-50454-9_8.
+[57] N. Zhang, C. Liu, and J. Ba, ‘‘Decomposing FANET to counter
+massive UA V swarm based on reinforcement learning,’’ IEEE
+Commun. Lett., vol. 27, no. 7, pp. 1784–1788, Jul. 2023, doi:
+10.1109/LCOMM.2023.3269221.
+[58] J. Hou, X. Li, R. Zhu, C. Zhu, Z. Wei, and C. Zhang, ‘‘A
+neural relation extraction model for distant supervision in counter-
+terrorism scenario,’’IEEE Access, vol. 8, pp. 225088–225096, 2020, doi:
+10.1109/ACCESS.2020.3042672.
+[59] M. Taddeo, D. McNeish, A. Blanchard, and E. Edgar, ‘‘Ethical principles
+for artificial intelligence in national defence,’’ Philosophy Technol.,
+vol. 34, no. 4, pp. 1707–1729, Oct. 2021, doi: 10.1007/s13347-021-
+00482-3.
+[60] D. J. Gervais, ‘‘Towards an effective transnational regulation of AI,’’ AI
+Soc., vol. 38, no. 1, pp. 391–410, Nov. 2021, doi: 10.1007/s00146-021-
+01310-0.
+[61] K. Y eung, A. Howes, and G. Pogrebna, ‘‘AI governance by human
+rights-centred design, deliberation and oversight: An end to ethics
+washing,’’ in The Oxford Handbook of Ethics of AI, M. D. Dubber,
+F. Pasquale, and S. Das, Eds., London, U.K.: Oxford Univ. Press,
+2020, pp. 77–97. [Online]. Available: https://academic.oup.com/edited-
+volume/34287/chapter/290657408
+[62] V . Almeida, L. S. Mendes, and D. Doneda, ‘‘On the development of
+AI governance frameworks,’’ IEEE Internet Comput., vol. 27, no. 1,
+pp. 70–74, Jan. 2023, doi: 10.1109/MIC.2022.3186030.
+[63] C. N. Pehlivan, ‘‘Report: The EU artificial intelligence (AI) act:
+An introduction,’’ Global Privacy Law Rev., vol. 5, no. 1, pp. 31–42,
+2024. Accessed: Mar. 24, 2025. [Online]. Available: https://kluwerlaw
+online.com/journalarticle/Global+Privacy+Law+Review/5.1/GPLR2024
+004
+[64] K. Kalodanis, P . Rizomiliotis, and D. Anagnostopoulos, ‘‘European
+artificial intelligence act: An AI security approach,’’ Inf. Comput. Secur .,
+vol. 32, no. 3, pp. 265–281, Nov. 2023, doi: 10.1108/ics-10-2022-0165.
+[65] N. Díaz-Rodríguez, J. D. Ser, M. Coeckelbergh, M. L. de Prado,
+E. Herrera-Viedma, and F. Herrera, ‘‘Connecting the dots in trustworthy
+artificial intelligence: From AI principles, ethics, and key requirements
+to responsible AI systems and regulation,’’ 2023, arXiv:2305.02231.
+[66] H. Choung, P . David, and J. S. Seberger, ‘‘A multilevel framework for AI
+governance,’’ 2023, arXiv:2307.03198.
+[67] H. Hammouchi and M. Ghogho, ‘‘Evidence-aware multilingual fake
+news detection,’’ IEEE Access, vol. 10, pp. 116808–116818, 2022, doi:
+10.1109/ACCESS.2022.3220690.
+[68] E. Porter and T. J. Wood, ‘‘Political misinformation and factual
+corrections on the Facebook news feed: Experimental evidence,’’ J.
+Politics, vol. 84, no. 3, pp. 1812–1817, Jul. 2022, doi: 10.1086/719271.
+[69] F. Ding, Q. Ge, D. Jiang, J. Fu, and M. Hao, ‘‘Understanding the dynamics
+of terrorism events with multiple-discipline datasets and machine learning
+approach,’’PLoS ONE, vol. 12, no. 6, Jun. 2017, Art. no. e0179057, doi:
+10.1371/journal.pone.0179057.
+[70] O. A. Olabanjo, B. S. Aribisala, M. Mazzara, and A. S. Wusu,
+‘‘An ensemble machine learning model for the prediction of danger
+zones: Towards a global counter-terrorism,’’ Soft Comput. Lett., vol. 3,
+Dec. 2021, Art. no. 100020, doi: 10.1016/j.socl.2021.100020.
+[71] Y . Wang, X. Cui, and P . He, ‘‘Winning the war on terror: Using ‘top-K’
+algorithm and CNN to assess the risk of terrorists,’’ Int. J. Inf. Technol.
+Web Eng., vol. 17, no. 1, pp. 1–15, Sep. 2021, doi: 10.4018/ijitwe.
+288038.
+[72] Y . Wang, ‘‘Machine learning based terrorist attacks prediction algo-
+rithm,’’ Appl. Comput. Eng. , vol. 2, no. 1, pp. 391–397, Mar. 2023, doi:
+10.54254/2755-2721/2/20220537.
+[73] B. A. Salau, A. Rawal, and D. B. Rawat, ‘‘Recent advances in artificial
+intelligence for wireless Internet of Things and cyber–physical systems:
+A comprehensive survey,’’ IEEE Internet Things J., vol. 9, no. 15,
+pp. 12916–12930, Aug. 2022, doi: 10.1109/JIOT.2022.3170449.
+[74] S. Aldera, A. Emam, M. Al-Qurishi, M. Alrubaian, and A. Alothaim,
+‘‘Online extremism detection in textual content: A systematic lit-
+erature review,’’ IEEE Access, vol. 9, pp. 42384–42396, 2021, doi:
+10.1109/ACCESS.2021.3064178.
+[75] S. Salloum, T. Gaber, S. V adera, and K. Shaalan, ‘‘A systematic
+literature review on phishing email detection using natural language
+processing techniques,’’ IEEE Access, vol. 10, pp. 65703–65727, 2022,
+doi: 10.1109/ACCESS.2022.3183083.
+[76] C. S. Adigwe, N. R. Mayeke, S. O. Olabanji, O. J. Okunleye, P . Joeaneke,
+and O. O. Olaniyi, ‘‘The evolution of terrorism in the digital age:
+Investigating the adaptation of terrorist groups to cyber technologies for
+recruitment, propaganda, and cyberattacks,’’SSRN Electron. J., vol. 2024,
+pp. 1–20, Feb. 2024, doi: 10.2139/ssrn.4756964.
+[77] D. Tatawat, ‘‘A review on automated counter measures to filter radicalized
+content from social media applications,’’ Int. J. Sci. Res. Eng. Manage.,
+vol. 6, no. 12, Dec. 2022, doi: 10.55041/ijsrem17289.
+[78] G. M. Campedelli, M. Bartulovic, and K. M. Carley, ‘‘Learning future
+terrorist targets through temporal meta-graphs,’’ Sci. Rep., vol. 11, no. 1,
+Apr. 2021, doi: 10.1038/s41598-021-87709-7.
+[79] P . Dr. Aftab Ahmad Malik, ‘‘The modern electronic and other tech-
+nologies to combat new wave of terrorism and criminal activities: Prof
+Dr. Aftab ahmad malik, Dr. Waqar azeem and Dr. Mujtaba asad,’’
+Int. J. Electron. Crime Invest., vol. 7, no. 3, p. 8, Sep. 2023, doi:
+10.54692/ijeci.2023.0703156.
+91760 VOLUME 13, 2025
+--- Page 22 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+[80] A. N. Skraparlis, K. S. Ntalianis, and N. Tsapatsoulis, ‘‘A novel
+framework to intercept GPS-denied, bomb-carrying, non-military,
+kamikaze drones: Towards protecting critical infrastructures,’’
+Defence Technol., vol. 40, pp. 225–241, Oct. 2024, doi: 10.1016/j.dt.
+2024.05.001.
+[81] M. J. Pappaterra and F. Flammini, Bayesian Networks for Online Cyber-
+security Threat Detection . Cham, Switzerland: Springer, Dec. 2020,
+pp. 129–159, doi: 10.1007/978-3-030-57024-8_6.
+[82] E. O. Udeh, P . Amajuoyi, K. B. Adeusi, and A. O. Scott, ‘‘The integration
+of artificial intelligence in cybersecurity measures for sustainable finance
+platforms: An analysis,’’ Comput. Sci. IT Res. J., vol. 5, no. 6,
+pp. 1221–1246, Jun. 2024, doi: 10.51594/csitrj.v5i6.1195.
+[83] D. Dai and S. Boroomand, ‘‘A review of artificial intelligence to
+enhance the security of big data systems: State-of-art, methodologies,
+applications, and challenges,’’ Arch. Comput. Methods Eng., vol. 29,
+no. 2, pp. 1291–1309, Jul. 2021, doi: 10.1007/s11831-021-09628-0.
+[84] D. Arp, E. Quiring, F. Pendlebury, A. Warnecke, F. Pierazzi,
+C. Wressnegger, L. Cavallaro, and K. Rieck, ‘‘Pitfalls in machine
+learning for computer security,’’ Commun. ACM, vol. 67, no. 11,
+pp. 104–112, Oct. 2024, doi: 10.1145/3643456.
+[85] S. Thapaliya and A. Bokani, ‘‘Leveraging artificial intelligence for
+enhanced cybersecurity: Insights and innovations,’’SADGAMAYA, vol. 1,
+no. 1, pp. 46–52, Jun. 2024, doi: 10.3126/sadgamaya.v1i1.66888.
+[86] V . Hnamte, H. Nhung-Nguyen, J. Hussain, and Y . Hwa-Kim,
+‘‘A novel two-stage deep learning model for network intrusion detection:
+LSTM-AE,’’ IEEE Access, vol. 11, pp. 37131–37148, 2023, doi:
+10.1109/ACCESS.2023.3266979.
+[87] A. Ali, A. Zia, A. Razzaque, H. Shahid, H. T. Sheikh, M. Saleem,
+F. Y ousaf, and S. Muneer, ‘‘Enhancing cybersecurity with artificial neural
+networks: A study on threat detection and mitigation strategies,’’ in
+Proc. 2nd Int. Conf. Cyber Resilience (ICCR), Feb. 2024, pp. 1–5, doi:
+10.1109/iccr61006.2024.10533152.
+[88] S. Abbas, F. Ahmed, W. A. Khan, M. Ahmad, M. A. Khan, and
+T. M. Ghazal, ‘‘Intelligent skin disease prediction system using transfer
+learning and explainable artificial intelligence,’’ Sci. Rep., vol. 15, no. 1,
+Jan. 2025, doi: 10.1038/s41598-024-83966-4.
+[89] M. Andreoni, W. T. Lunardi, G. Lawton, and S. Thakkar, ‘‘Enhancing
+autonomous system security and resilience with generative AI: A
+comprehensive survey,’’IEEE Access, vol. 12, pp. 109470–109493, 2024,
+doi: 10.1109/ACCESS.2024.3439363.
+[90] F. Heiding, B. Schneier, A. Vishwanath, J. Bernstein, and P . S. Park,
+‘‘Devising and detecting phishing emails using large language
+models,’’ IEEE Access, vol. 12, pp. 42131–42146, 2024, doi:
+10.1109/ACCESS.2024.3375882.
+[91] M. A. Ferrag, M. Ndhlovu, N. Tihanyi, L. C. Cordeiro, M. Debbah,
+T. Lestable, and N. S. Thandi, ‘‘Revolutionizing cyber threat
+detection with large language models: A privacy-preserving BERT-
+based lightweight model for IoT/IIoT devices,’’ IEEE Access,
+vol. 12, pp. 23733–23750, 2024, doi: 10.1109/ACCESS.2024.
+3363469.
+[92] D. Deng, C. Zhang, H. Zheng, Y . Pu, S. Ji, and Y . Wu, ‘‘AdversaFlow:
+Visual red teaming for large language models with multi-level adversarial
+flow,’’ IEEE Trans. Vis. Comput. Graph., vol. 31, no. 1, pp. 492–502,
+Jan. 2025, doi: 10.1109/TVCG.2024.3456150.
+[93] V . Choudhary, A. Marchetti, Y . R. Shrestha, and P . Puranam, ‘‘Human-
+AI ensembles: When can they work?’’ J. Manage., vol. 51, no. 2,
+pp. 536–569, Oct. 2023, doi: 10.1177/01492063231194968.
+[94] M. C. Horowitz and E. Lin-Greenberg, ‘‘Algorithms and influence
+artificial intelligence and crisis decision-making,’’ Int. Stud. Quart.,
+vol. 66, no. 4, Oct. 2022, doi: 10.1093/isq/sqac069.
+[95] European Union Agency for Cybersecurity (ENISA). (2023). Artificial
+Intelligence and Cybersecurity Research. Accessed: Mar. 24, 2025.
+[Online]. Available: https://www.enisa.europa.eu/publications/artificial-
+intelligence-and-cybersecurity-research
+[96] A. Khot, ‘‘Artificial intelligence in cybersecurity,’’
+Int. J. Res. Appl. Sci. Eng. Technol., vol. 12, no. 6, pp. 2025–2029,
+Jun. 2024, doi: 10.22214/ijraset.2024.63434.
+[97] A. Marsoof, A. Luco, H. Tan, and S. Joty, ‘‘Content-filtering AI
+systems–limitations, challenges and regulatory approaches,’’ Inf. Com-
+mun. Technol. Law, vol. 32, no. 1, pp. 64–101, May 2022, doi:
+10.1080/13600834.2022.2078395.
+[98] H. M. V erhelst, A. W. Stannat, and G. Mecacci, ‘‘Machine learning
+against terrorism: How big data collection and analysis influences
+the privacy-security dilemma,’’ Sci. Eng. Ethics, vol. 26, no. 6,
+pp. 2975–2984, Jul. 2020, doi: 10.1007/s11948-020-00254-w.
+[99] J. Ammar, ‘‘Cyber gremlin: Social networking, machine learning and the
+global war on Al-qaida-and IS-inspired terrorism,’’ Int. J. Law Inf. Tech-
+nol., vol. 27, no. 3, pp. 238–265, Sep. 2019, doi: 10.1093/ijlit/eaz006.
+[100] C. Konold, M. Geuss, J. Butner, M. Whitaker, R. Murdock, J. Stefanucci,
+S. Creem-Regehr, and T. Drew, ‘‘Unintended consequences of trying to
+help: Augmented target recognition cues bias perception,’’J. Vis., vol. 22,
+no. 14, p. 3362, Dec. 2022, doi: 10.1167/jov.22.14.3362.
+[101] Z. Liu, J. Hu, Y . Liu, K. Roy, X. Y uan, and J. Xu, ‘‘Anomaly-
+based intrusion on IoT networks using AIGAN—A generative adver-
+sarial network,’’ IEEE Access, vol. 11, pp. 91116–91132, 2023, doi:
+10.1109/ACCESS.2023.3307463.
+[102] L. Pajola and M. Conti, ‘‘Lights toward adversarial machine learning: The
+Achilles heel of artificial intelligence,’’ IEEE Intell. Syst., vol. 39, no. 5,
+pp. 20–24, Sep. 2024, doi: 10.1109/MIS.2024.3441137.
+[103] S. P . Xu, K. Wang, M. R. Hassan, M. M. Hassan, and C.-M. Chen,
+‘‘An interpretive perspective: Adversarial trojaning attack on
+neural-architecture-search enabled edge AI systems,’’ IEEE
+Trans. Ind. Informat., vol. 19, no. 1, pp. 503–510, Jan. 2023, doi:
+10.1109/TII.2022.3177442.
+[104] D. S. C. V enkateswarlu and D. S. Palanivel, Deploying Artificial
+Intelligence Into Daily Life: Artificial Intelligence for Cyber Security With
+More Opportunities. Karnataka, India: Iterative International Publishers,
+Mar. 2024, pp. 1–19, doi: 10.58532/nbennurch336.
+[105] S. Shahriar, S. Allana, S. M. Hazratifard, and R. Dara, ‘‘A survey
+of privacy risks and mitigation strategies in the artificial intelligence
+life cycle,’’ IEEE Access, vol. 11, pp. 61829–61854, 2023, doi:
+10.1109/ACCESS.2023.3287195.
+[106] K. Michael, R. Abbas, and G. Roussos, ‘‘AI in cybersecurity: The
+paradox,’’ IEEE Trans. Technol. Soc., vol. 4, no. 2, pp. 104–109,
+Jun. 2023, doi: 10.1109/TTS.2023.3280109.
+[107] J. Ren, ‘‘Research on financial investment decision based on arti-
+ficial intelligence algorithm,’’ IEEE Sensors J., vol. 21, no. 22,
+pp. 25190–25197, Nov. 2021, doi: 10.1109/JSEN.2021.3104038.
+[108] Y . Peng, S. F. Ahmad, A. Y . A. B. Ahmad, M. S. Al Shaikh,
+M. K. Daoud, and F. M. H. Alhamdi, ‘‘Riding the waves of artificial
+intelligence in advancing accounting and its implications for sustainable
+development goals,’’ Sustainability, vol. 15, no. 19, p. 14165, Sep. 2023,
+doi: 10.3390/su151914165.
+[109] M. Szczepanski. (2019). Economic Impacts of Artificial Intelligence
+(AI). Accessed: Mar. 24, 2025. [Online]. Available: https://www.europarl.
+europa.eu/thinktank/en/document/EPRSBRI(2019)637967
+[110] J. Bughin, J. Seong, J. Manyika, M. Chui, and R. Joshi. (2018). Notes
+From the AI Frontier: Modeling the Impact of AI on the World
+Economy. Accessed: Mar. 24, 2025. [Online]. Available: https://www.
+mckinsey.com/mgi/overview/in-the-news/notes-from-the-ai-frontier-
+modeling-the-impact-of-ai-on-the-world-economy
+[111] Capgemini Research Institute. (2019). Reinventing Cybersecurity
+With Artificial Intelligence: The New Frontier in Digital
+Security. Accessed: Mar. 24, 2025. [Online]. Available: https://www.
+capgemini.com/research/ai-in-cybersecurity/
+[112] S. D. Jankovic and D. M. Curovic, ‘‘Strategic integration of artificial
+intelligence for sustainable businesses: Implications for data management
+and human user engagement in the digital era,’’ Sustainability, vol. 15,
+no. 21, p. 15208, Oct. 2023, doi: 10.3390/su152115208.
+[113] D. Puthal, A. Kumar Mishra, and S. Sharma, ‘‘AI-driven security
+solutions for the Internet of Everything,’’ IEEE Consum. Electron. Mag.,
+vol. 10, no. 5, pp. 70–71, Sep. 2021, doi: 10.1109/MCE.2021.3071676.
+[114] S. Mishra and A. R. Tripathi, ‘‘AI business model: An integrative business
+approach,’’ J. Innov. Entrepreneurship, vol. 10, no. 1, Jul. 2021, doi:
+10.1186/s13731-021-00157-5.
+[115] S. Rangaraju, ‘‘Secure by intelligence: Enhancing products with AI-
+driven security measures,’’EPH-Int. J. Sci. Eng., vol. 9, no. 3, pp. 36–41,
+Dec. 2023, doi: 10.53555/ephijse.v9i3.212.
+[116] T. Babatunde Adeyeri, ‘‘Economic impacts of AI-driven automation in
+financial services,’’ Int. J. Sci. Res. Manage. (IJSRM), vol. 12, no. 7,
+pp. 6779–6791, Jul. 2024, doi: 10.18535/ijsrm/v12i07.em07.
+[117] M. Hina, M. Ali, A. R. Javed, F. Ghabban, L. A. Khan, and
+Z. Jalil, ‘‘SeFACED: Semantic-based forensic analysis and classifi-
+cation of e-mail data using deep learning,’’ IEEE Access, vol. 9,
+pp. 98398–98411, 2021, doi: 10.1109/ACCESS.2021.3095730.
+[118] European Commission: Directorate-General for Migration and Home
+Affairs. (2020). Opportunities and Challenges for the Use of Arti-
+ficial Intelligence in Border Control, Migration and Security. V ol-
+ume 1, Main Report. Accessed: Mar. 24, 2025. [Online]. Available:
+https://data.europa.eu/doi/10.2837/9236101
+VOLUME 13, 2025 91761
+--- Page 23 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+[119] United Nations Office of Counter-Terrorism (UNOCT) and United
+Nations Interregional Crime and Justice Research Institute (UNI-
+CRI). (2021). Countering Terrorism Online With Artificial Intelligence:
+An Overview for Law Enforcement and Counter-terrorism Agencies in
+South Asia and South-east Asia. Accessed: Mar. 24, 2025. [Online]. Avail-
+able: https://www.un.org/counterterrorism/ai-counter-terrorism-report
+[120] W. Rashid, ‘‘Artificial intelligence to combat extremism,’’ Pakistan J. Ter-
+rorism Res., vol. 5, no. 2, pp. 21–31, 2023. Accessed: 24-. [Online]. Avail-
+able: https://nacta.gov.pk/wp-content/uploads/2024/01/Using-Artificial-
+Intelligence-to-Combat-Extremism.pdf
+[121] L. Gule, ‘‘Hate and identity—A social philosophical attempt to under-
+stand extremism,’’FLEKS-Scandin. J. Intercultural Theory Pract., vol. 6,
+no. 1, pp. 5–23, Mar. 2019, doi: 10.7577/fleks.3307.
+[122] M. Asif, A. Ishtiaq, H. Ahmad, H. Aljuaid, and J. Shah, ‘‘Senti-
+ment analysis of extremism in social media from textual informa-
+tion,’’ Telematics Informat., vol. 48, May 2020, Art. no. 101345, doi:
+10.1016/j.tele.2020.101345.
+[123] S. Agarwal, A. Sonawane, and C. R. Chowdary, ‘‘Accelerating
+automatic hate speech detection using parallelized ensemble learning
+models,’’ Expert Syst. Appl., vol. 230, Nov. 2023, Art. no. 120564, doi:
+10.1016/j.eswa.2023.120564.
+[124] M. S. Jahan and M. Oussalah, ‘‘A systematic review of hate
+speech automatic detection using natural language processing,’’
+Neurocomputing, vol. 546, Aug. 2023, Art. no. 126232, doi:
+10.1016/j.neucom.2023.126232.
+[125] M. Fazil, S. Khan, B. M. Albahlal, R. M. Alotaibi, T. Siddiqui, and
+M. A. Shah, ‘‘Attentional multi-channel convolution with bidirectional
+LSTM cell toward hate speech prediction,’’ IEEE Access, vol. 11,
+pp. 16801–16811, 2023, doi: 10.1109/ACCESS.2023.3246388.
+[126] T. Wullach, A. Adler, and E. Minkov, ‘‘Character-level HyperNetworks
+for hate speech detection,’’ Expert Syst. Appl., vol. 205, Nov. 2022,
+Art. no. 117571, doi: 10.1016/j.eswa.2022.117571.
+[127] P . Sharmila, K. S. M. Anbananthen, D. Chelliah, S. Parthasarathy,
+and S. Kannan, ‘‘PDHS: Pattern-based deep hate speech detec-
+tion with improved tweet representation,’’ IEEE Access, vol. 10,
+pp. 105366–105376, 2022, doi: 10.1109/ACCESS.2022.3210177.
+[128] D. R. Beddiar, M. S. Jahan, and M. Oussalah, ‘‘Data expansion
+using back translation and paraphrasing for hate speech detection,’’
+Online Social Netw. Media, vol. 24, Jul. 2021, Art. no. 100153, doi:
+10.1016/j.osnem.2021.100153.
+[129] C. Arcila-Calderón, J. J. Amores, P . Sánchez-Holgado, L. Vrysis,
+N. Vryzas, and M. O. Alonso, ‘‘How to detect online hate towards
+migrants and refugees? Developing and evaluating a classifier of
+racist and xenophobic hate speech using shallow and deep learning,’’
+Sustainability, vol. 14, no. 20, p. 13094, Oct. 2022, doi: 10.3390/
+su142013094.
+[130] N. A. M. Razali, N. A. Malizan, N. A. Hasbullah, M. Wook,
+N. M. Zainuddin, K. K. Ishak, S. Ramli, and S. Sukardi, ‘‘Politi-
+cal security threat prediction framework using hybrid lexicon-based
+approach and machine learning technique,’’ IEEE Access, vol. 11,
+pp. 17151–17164, 2023, doi: 10.1109/ACCESS.2023.3246162.
+[131] M. Subramanian, V . E. Sathishkumar, G. Deepalakshmi, J. Cho, and
+G. Manikandan, ‘‘Corrigendum to ‘A survey on hate speech detection
+and sentiment analysis using machine learning and deep learning models’
+[Alex. Eng. J. 80 (2023) 110–121],’’ Alexandria Eng. J., vol. 82, p. 167,
+Nov. 2023, doi: 10.1016/j.aej.2023.09.068.
+[132] A. Arango, J. Pérez, and B. Poblete, ‘‘Hate speech detection is
+not as easy as you may think: A closer look at model validation
+(extended version),’’Inf. Syst., vol. 105, Mar. 2022, Art. no. 101584, doi:
+10.1016/j.is.2020.101584.
+[133] A. Rajendran, V . S. Sahithi, C. Gupta, M. Y adav, S. Ahirrao, K. Kotecha,
+M. Gaikwad, A. Abraham, N. Ahmed, and S. M. Alhammad, ‘‘Detecting
+extremism on Twitter during U.S. capitol riot using deep learning
+techniques,’’ IEEE Access, vol. 10, pp. 133052–133077, 2022, doi:
+10.1109/ACCESS.2022.3227962.
+[134] U.K. Government, Department for Science, Innovation, and Tech-
+nology. (2023). Safety and Security Risks of Generative Artificial
+Intelligence to 2025 (Annex B). Accessed: Mar. 25, 2025. [Online].
+Available: https://assets.publishing.service.gov.uk/media/653932db8088
+4d0013f71b15/generative-ai-safety-security-risks-2025-annex-b.pdf
+[135] M. Lakomy, ‘‘Artificial intelligence as a terrorism enabler? Under-
+standing the potential impact of chatbots and image generators on
+online terrorist activities,’’ Stud. Conflict Terrorism, vol. 2023, pp. 1–21,
+Sep. 2023, doi: 10.1080/1057610X.2023.2259195.
+[136] A. R. Jafari, G. Li, P . Rajapaksha, R. Farahbakhsh, and N. Crespi,
+‘‘Fine-grained emotions influence on implicit hate speech
+detection,’’ IEEE Access, vol. 11, pp. 105330–105343, 2023, doi:
+10.1109/ACCESS.2023.3318863.
+[137] J. R. DeCook and J. Forestal, ‘‘Of humans, machines, and extrem-
+ism: The role of platforms in facilitating undemocratic cognition,’’
+Amer . Behav. Scientist, vol. 67, no. 5, pp. 629–648, Jun. 2022, doi:
+10.1177/00027642221103186.
+[138] Y . T. Chua, ‘‘‘We want you!’ Applying social network analysis to
+online extremist communities,’’ Terrorism Political Violence, vol. 2024,
+pp. 1–15, Feb. 2024, doi: 10.1080/09546553.2024.2304800.
+[139] L. Luo, B. Li, and C. Qi, ‘‘Spatiotemporal multi-graph convolu-
+tional network-based provincial-day-level terrorism risk prediction,’’
+Risk Anal. , vol. 44, no. 6, pp. 1514–1534, Oct. 2023, doi: 10.1111/
+risa.14241.
+[140] P .-C. Wang and C.-T. Li, ‘‘Spotting terrorists by learning behavior-
+aware heterogeneous network embedding,’’ in Proc. 28th ACM
+Int. Conf. Inf. Knowl. Manage. , Nov. 2019, pp. 2097–2100, doi:
+10.1145/3357384.3358078.
+[141] L. Clever, T. Schatto-Eckrodt, N. C. Clever, and L. Frischlich, ‘‘Behind
+blue skies: A multimodal automated content analysis of Islamic extremist
+propaganda on Instagram,’’ Social Media Soc., vol. 9, no. 1, pp. 1–15,
+Jan. 2023, doi: 10.1177/20563051221150404.
+[142] N. K. Singh, A. K. Tangirala, and L. D. V anajakshi, ‘‘A multivari-
+ate analysis framework for vehicle detection from loop data under
+heterogeneous and less lane disciplined traffic,’’ IEEE Access, vol. 9,
+pp. 143580–143591, 2021, doi: 10.1109/ACCESS.2021.3120470.
+[143] Y . Chen, C. Gao, D. Gartenstein-Ross, K. T. Greene, K. Kalif,
+S. Kraus, F. Parisi, C. Pulice, A. Subasic, and V . S. Subrahmanian,
+‘‘Linking terrorist network structure to lethality: Algorithms and
+analysis of al qaeda and ISIS,’’ IEEE Trans. Computat. Social Syst.,
+vol. 10, no. 5, pp. 2814–2826, Oct. 2023, doi: 10.1109/TCSS.2022.
+3198820.
+[144] C. S. van Nassau, T. Diviák, and C. J. de Poot, ‘‘Structure, positions
+and mechanisms: A case study of two Dutch salafi-jihadi networks,’’
+Eur . J. Criminol., vol. 21, no. 3, pp. 431–451, Nov. 2023, doi:
+10.1177/14773708231207559.
+[145] J. Uyheng and K. M. Carley, ‘‘Characterizing network dynamics of online
+hate communities around the COVID-19 pandemic,’’ Appl. Netw. Sci. ,
+vol. 6, no. 1, Mar. 2021, doi: 10.1007/s41109-021-00362-x.
+[146] B. Rottweiler and P . Gill, ‘‘Individual differences in personality
+moderate the effects of perceived group deprivation on violent
+extremism: Evidence from a united kingdom nationally representative
+survey,’’ Frontiers Psychol., vol. 13, Feb. 2022, doi: 10.3389/fpsyg.
+2022.790770.
+[147] E. A. López Werner, ‘‘Typology of terrorist profiling using centrality
+metrics: Hinge figures, influential operatives and trusted assets,’’ in
+Terrorism Political Violence. Routledge, U.K.: Taylor, & Francis Group,
+May 2024, pp. 1–16, doi: 10.1080/09546553.2024.2342866.
+[148] J. Govers, P . Feldman, A. Dant, and P . Patros, ‘‘Down the rabbit
+hole: Detecting online extremism, radicalisation, and politicised hate
+speech,’’ ACM Comput. Surv., vol. 55, no. 14s, pp. 1–35, Jul. 2023, doi:
+10.1145/3583067.
+[149] Y . V eilleux-Lepage and E. Archambault, ‘‘Mapping transnational extrem-
+ist networks: An exploratory study of the soldiers of Odin’s Facebook
+network, using integrated social network analysis,’’ Perspect. Ter-
+rorism, vol. 13, no. 2, pp. 21–38, 2019. Accessed: Mar. 24, 2025.
+[Online]. Available: https://www.universiteitleiden.nl/perspectives-on-
+terrorism/archives/2019#volume-xiii-issue-2
+[150] J. Hartley-Binns, ‘‘Data at your fingertips: How the integrated data service
+is helping to promote collaboration and efficient decision-making in
+the U.K.,’’ Int. J. Population Data Sci., vol. 8, no. 2, Sep. 2023, doi:
+10.23889/ijpds.v8i2.2349.
+[151] L. Heng. (2024). Strategic Overview of Applying Artificial
+Intelligence on the Future Battlefield. [Online]. Available:
+https://jyx.jyu.fi/handle/123456789/75321
+[152] H. Bouma, M. L. Villani, A. van Rooijen, P . Räsänen, J. Peltola,
+S. Toivonen, A. De Nicola, M. Guarneri, C. Stifini, and L. De Dominicis,
+‘‘An integrated fusion engine for early threat detection demonstrated
+in public-space trials,’’ Sensors, vol. 23, no. 1, p. 440, Dec. 2022, doi:
+10.3390/s23010440.
+[153] J. Slesinski, D. Wierzbicki, and M. Kedzierski, ‘‘Application of multitem-
+poral change detection in radar satellite imagery using REACTIV -based
+method for geospatial intelligence,’’ Sensors, vol. 23, no. 10, p. 4922,
+May 2023, doi: 10.3390/s23104922.
+91762 VOLUME 13, 2025
+--- Page 24 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+[154] P . Y ue, B. Shangguan, L. Hu, L. Jiang, C. Zhang, Z. Cao, and
+Y . Pan, ‘‘Towards a training data model for artificial intelligence in
+Earth observation,’’ Int. J. Geographical Inf. Sci., vol. 36, no. 11,
+pp. 2113–2137, Jun. 2022, doi: 10.1080/13658816.2022.2087223.
+[155] Z. Zhu, J. Kang, T. Ji, Z. Zhang, and R. Fernandez-Beltran, ‘‘SAR
+time-series despeckling via nonlocal total variation regularized robust
+PCA,’’ IEEE Geosci. Remote Sens. Lett., vol. 19, pp. 1–5, 2022, doi:
+10.1109/LGRS.2022.3227187.
+[156] I. Kotaridis and G. Benekos, ‘‘Integrating Earth observation IMINT with
+OSINT data to create added-value multisource intelligence information:
+A case study of the Ukraine–Russia war,’’ Secur . Defence Quart., vol. 43,
+no. 3, pp. 1–21, Sep. 2023, doi: 10.35467/sdq/170901.
+[157] Z. Dawood and C. V an ’t Wout, ‘‘An ontology towards predicting
+terrorism events,’’ Int. J. Cyber Warfare Terrorism, vol. 12, no. 1,
+pp. 1–13, Oct. 2022, doi: 10.4018/ijcwt.311421.
+[158] J. Zou, H. Zheng, and F. Wang, ‘‘Real-time target detection system for
+intelligent vehicles based on multi-source data fusion,’’ Sensors, vol. 23,
+no. 4, p. 1823, Feb. 2023, doi: 10.3390/s23041823.
+[159] R. Nithya, J. J. A. Sundari, B. R. Kanna, M. S. Balamurugan, R. Sindhuja,
+and A. Srivastava, ‘‘Multimodal sensor data fusion based cyberattack
+detection in industrial Internet of Things environment,’’ in Proc. 7th
+Int. Conf. Electron., Commun. Aerosp. Technol. (ICECA), Nov. 2023,
+pp. 1656–1661, doi: 10.1109/iceca58529.2023.10395001.
+[160] P . H. L. Rettore, P . Zißner, M. Alkhowaiter, C. Zou, and P . Sevenich,
+‘‘Military data space: Challenges, opportunities, and use cases,’’
+IEEE Commun. Mag., vol. 62, no. 1, pp. 70–76, Jan. 2024, doi:
+10.1109/MCOM.001.2300396.
+[161] F. Zhao, C. Zhang, and B. Geng, ‘‘Deep multimodal data fusion,’’
+ACM Comput. Surveys, vol. 56, no. 9, pp. 1–36, Apr. 2024, doi:
+10.1145/3649447.
+[162] Y . Weng and J. Wu, ‘‘Big data and machine learning in defence,’’
+Int. J. Comput. Sci. Inf. Technol., vol. 16, no. 2, pp. 25–35, Apr. 2024,
+doi: 10.5121/ijcsit.2024.16203.
+[163] R. Kumar Jha, ‘‘Strengthening smart grid cybersecurity: An in-
+depth investigation into the fusion of machine learning and nat-
+ural language processing,’’ J. Trends Comput. Sci. Smart Tech-
+nol., vol. 5, no. 3, pp. 284–301, Sep. 2023, doi: 10.36548/jtcsst.
+2023.3.005.
+[164] D. Murashov, ‘‘A review and proposal for developing of data
+fusion models and frameworks for decision making systems,’’ in
+Proc. 33rd Eur . Modelling Simulation Symp., 2021, pp. 116–125, doi:
+10.46354/i3m.2021.emss.016.
+[165] S. Johnson and G. A. Ackerman, Terrorism Databases: Problems and
+Solutions. Cheltenham, U.K.: Edward Elgar Publishing, Feb. 2023,
+pp. 159–176, doi: 10.4337/9781789909104.00017.
+Edward Elgar Publishing, Cheltenham, Gloucestershire, UK
+[166] H. Li, X. Wang, Y . Feng, Y . Qi, and J. Tian, ‘‘Integration methods
+and advantages of machine learning with cloud data warehouses,’’
+Int. J. Comput. Sci. Inf. Technol., vol. 2, no. 1, pp. 348–358, Mar. 2024,
+doi: 10.62051/ijcsit.v2n1.36.
+[167] D. Leff and K. T. K. Lim, The Key to Leveraging AI at Scale. Cham,
+Switzerland: Springer, 2023, pp. 171–175, doi: 10.1007/978-3-031-
+25456-7_14.
+[168] J. Zhang, ‘‘Knowledge learning with crowdsourcing: A brief review
+and systematic perspective,’’ IEEE/CAA J. Autom. Sinica, vol. 9, no. 5,
+pp. 749–762, May 2022, doi: 10.1109/JAS.2022.105434.
+[169] A. Brosnan, F. Cox, D. Hemmingway, and L. Ren, ‘‘Leveraging
+the wisdom of crowds: An exploration of open innovation and
+crowdsourcing as mechanisms to combat terrorism-related challenges,’’
+in Proc. Irish Acad. Manage. Annu. Conf. Doctoral Colloq.,
+2021, pp. 1–43. [Online]. Available: https://www.researchgate.net/
+publication/354144592LeveragingTheWisdomofCrowdsAnExploration
+ofOpenInnovationandCrowdsourcingasMechanismsToCombatTerrorism-
+RelatedChallenges
+[170] J. Esberg and C. Mikulaschek. (2021). Digital Technologies, Peace,
+and Security: Challenges and Opportunities for United Nations
+Peace Operations. Accessed: Mar. 24, 2025. [Online]. Available:
+https://peacekeeping.un.org/sites/default/files/esbergandmikulaschek-
+conflictpeaceanddigitaltechnologies-v3210825.pdf
+[171] J. Ziemke, B. Jayamaha, and M. M. Jahn, ‘‘Crisis mapping and
+crowdsourcing in complex emergencies,’’ in Oxford Research Encyclo-
+pedia of Politics. Oxford Univ. Press, Mar. 2021, doi: 10.1093/acre-
+fore/9780190228637.013.1580.
+[172] E. Estellés-Arolas, ‘‘Law enforcement crowdsourcing initiatives: A
+systematic literature review to identify key design elements,’’ SAGE
+Publishing, Tech. Rep., 2022, doi: 10.31124/advance.19298858.v1.
+[173] Y . Senarath, S. Nannapaneni, H. Purohit, and A. Dubey, ‘‘Emergency
+incident detection from crowdsourced waze data using Bayesian
+information fusion,’’ in Proc. IEEE/WIC/ACM Int. Joint Conf. Web
+Intell. Intell. Agent Technol. (WI-IAT), Dec. 2020, pp. 187–194, doi:
+10.1109/WIIA T50758.2020.00029.
+[174] E. Ilbiz and C. Kaunert, ‘‘Crowdsourcing to tackle online child sexual
+exploitation: Europol’s ‘stop child abuse—Trace an object’ platform,’’
+Policing, J. Policy Pract., vol. 17, Jan. 2023, doi: 10.1093/police/
+paad009.
+[175] T. Y u, S. V enkatagiri, I. Lourentzou, and K. Luther, ‘‘Sedition hunters:
+A quantitative study of the crowdsourced investigation into the 2021
+U.S. capitol attack,’’ inProc. ACM Web Conf., Apr. 2023, pp. 3849–3858,
+doi: 10.1145/3543507.3583514.
+[176] P . Fantrov, V . Shinkaruk, W. Guhl, and N. Solovyeva, ‘‘Network
+crowdsourcing and youth extremism prevention: Law enforcement
+agencies and civil society,’’ in Proc. SHS Web Conf., vol. 109, Jan. 2021,
+p. 1013, doi: 10.1051/shsconf/202110901013.
+[177] D. R. Arikkat, R. Rehiman K. A., A. Di Sorbo, C. A. Visaggio, and
+M. Conti, ‘‘Can Twitter be used to acquire reliable alerts against novel
+cyber attacks?’’ 2023, arXiv:2306.16087.
+[178] M. L. Jamil, S. Pais, and J. Cordeiro, ‘‘Detection of dangerous events on
+social media: A critical review,’’Social Netw. Anal. Mining, vol. 12, no. 1,
+Oct. 2022, doi: 10.1007/s13278-022-00980-y.
+[179] R. Lamsal, A. Harwood, and M. R. Read, ‘‘Socially enhanced situation
+awareness from microblogs using artificial intelligence: A survey,’’
+ACM Comput. Surveys, vol. 55, no. 4, pp. 1–38, Nov. 2022, doi:
+10.1145/3524498.
+[180] M. Fang, M. Sun, Q. Li, N. Z. Gong, J. Tian, and J. Liu, ‘‘Data poisoning
+attacks and defenses to crowdsourcing systems,’’ in Proc. Web Conf.,
+Apr. 2021, doi: 10.1145/3442381.3450066.
+[181] L. R. Samotin, J. A. Friedman, and M. C. Horowitz, ‘‘Obsta-
+cles to harnessing analytic innovations in foreign policy analysis:
+A case study of crowdsourcing in the U.S. intelligence community,’’
+Intell. Nat. Secur ., vol. 38, no. 4, pp. 558–575, Nov. 2022, doi:
+10.1080/02684527.2022.2142352.
+[182] P . Burke, ‘‘The issues in the collection, verification and actionability
+of citizen-derived and crowdsourced intelligence during the Russian
+invasion of Ukraine, 2022,’’ in Strategic Panorama. Ukraine: National
+Institute for Strategic Studies (NISS), Nov. 2022, pp. 94–103, doi:
+10.53679/2616-9460.specialissue.2022.09.
+[183] A. R. Dennis, P . L. Moravec, and A. Kim, ‘‘Search & verify:
+Misinformation and source evaluations in Internet search results,’’
+Decis. Support Syst., vol. 171, Aug. 2023, Art. no. 113976, doi:
+10.1016/j.dss.2023.113976.
+[184] C. Tauchmann, J. Daxenberger, and M. Mieskes, ‘‘The influence
+of input data complexity on crowdsourcing quality,’’ in Companion
+Proc. 25th Int. Conf. Intell. User Interface, Mar. 2020, pp. 71–72, doi:
+10.1145/3379336.3381499.
+[185] M. Pérez-Escolar, D. Lilleker, and A. Tapia-Frade, ‘‘A systematic
+literature review of the phenomenon of disinformation and mis-
+information,’’ Media Commun., vol. 11, no. 2, Mar. 2023, doi:
+10.17645/mac.v11i2.6453.
+[186] M. Y oungblood, ‘‘Extremist ideology as a complex contagion:
+The spread of far-right radicalization in the United States between
+2005 and 2017,’’ Humanities Social Sci. Commun., vol. 7, no. 1,
+Jul. 2020, doi: 10.1057/s41599-020-00546-3.
+[187] C. Schwartz and R. Overdorf, ‘‘Disinformation from the inside:
+Combining machine learning and journalism to investigate sockpuppet
+campaigns,’’ in Proc. Companion Web Conf., Apr. 2020, pp. 623–628,
+doi: 10.1145/3366424.3385777.
+[188] B. Buechel, S. Klößner, F. Meng, and A. Nassar, ‘‘Misinformation due
+to asymmetric information sharing,’’ J. Econ. Dyn. Control, vol. 150,
+May 2023, Art. no. 104641, doi: 10.1016/j.jedc.2023.104641.
+[189] R. Vinay, G. Spitale, N. Biller-Andorno, and F. Germani, ‘‘Emotional
+manipulation through prompt engineering amplifies disinformation
+generation in AI large language models,’’ 2024, arXiv:2403.03550.
+[190] T. Tran, R. V alecha, and H. R. Rao, ‘‘Machine and human roles
+for mitigation of misinformation harms during crises: An activity
+theory conceptualization and validation,’’ Int. J. Inf. Manage.,
+vol. 70, Jun. 2023, Art. no. 102627, doi: 10.1016/j.ijinfomgt.
+2023.102627.
+VOLUME 13, 2025 91763
+--- Page 25 ---
+I. Syllaidopoulos et al.: Comprehensive Survey on AI in Counter-Terrorism and Cybersecurity
+[191] S. Wojcik, S. Hilgard, N. Judd, D. Mocanu, S. Ragain, M. B. Fallin
+Hunzaker, K. Coleman, and J. Baxter, ‘‘Birdwatch: Crowd wisdom and
+bridging algorithms can inform understanding and reduce the spread of
+misinformation,’’ 2022, arXiv:2210.15723.
+[192] L. Canale and A. Messina. (2023). Experimenting AI Technologies
+for Disinformation Combat: The IDMO Project. Centro Ricerche,
+Innov. Tecnologica e Sperimentazione (CRITS). Accessed:
+Mar. 24, 2025. [Online]. Available: https://www.idmo.it/
+[193] S. Lyu, ‘‘Deepfake detection: Current challenges and next steps,’’ in
+Proc. IEEE Int. Conf. Multimedia Expo Workshops (ICMEW), Jul. 2020,
+pp. 1–6, doi: 10.1109/ICMEW46912.2020.9105991.
+[194] Z. Zhou, H. Guan, M. Bhat, and J. Hsu, ‘‘Fake news detection via
+NLP is vulnerable to adversarial attacks,’’ Proc. 11th Int. Conf. Agents
+Artif. Intell., Jan. 2019, doi: 10.5220/0007566307940800.
+[195] N. Khurana, S. Mittal, A. Piplai, and A. Joshi, ‘‘Preventing poisoning
+attacks on AI based threat intelligence systems,’’ in Proc. IEEE 29th
+Int. Workshop Mach. Learn. Signal Process. (MLSP), Oct. 2019, pp. 1–6,
+doi: 10.1109/MLSP .2019.8918803.
+[196] M. Y ankoski, T. Weninger, and W. Scheirer, ‘‘An AI early warning
+system to monitor online disinformation, stop violence, and protect
+elections,’’ Bull. At. Scientists, vol. 76, no. 2, pp. 85–90, Feb. 2020, doi:
+10.1080/00963402.2020.1728976.
+[197] B. V anderborght and A. Okamura, ‘‘United against racism and a call for
+action [ethical, legal, and societal Issues],’’ IEEE Robot. Autom. Mag.,
+vol. 27, no. 3, pp. 10–11, Sep. 2020, doi: 10.1109/MRA.2020.3009458.
+[198] L. Nalbandian, ‘‘An eye for an ‘I:’ A critical assessment of artificial
+intelligence tools in migration and asylum management,’’ Comparative
+Migration Stud., vol. 10, no. 1, Aug. 2022, doi: 10.1186/s40878-022-
+00305-0.
+[199] M. Hermansyah, A. Najib, A. Farida, R. Sacipto, and B. S. Rintyarna,
+‘‘Artificial intelligence and ethics: Building an artificial intelligence
+system that ensures privacy and social justice,’’ Int. J. Sci. Soc., vol. 5,
+no. 1, pp. 154–168, Feb. 2023, doi: 10.54783/ijsoc.v5i1.644.
+[200] X. Zhou, H. Elfardy, C. Christodoulopoulos, T. Butler, and M. Bansal,
+‘‘Hidden biases in unreliable news detection datasets,’’ in Proc. 16th
+Conf. Eur . Chapter Assoc. Comput. Linguistics: Main V olume, 2021,
+pp. 2482–2492, doi: 10.18653/v1/2021.eacl-main.211.
+[201] W. A. Adah, N. A. Ikumapayi, and H. B. Muhammed, ‘‘The ethical
+implications of advanced artificial general intelligence: Ensuring respon-
+sible AI development and deployment,’’ SSRN Electron. J., 2023, doi:
+10.2139/ssrn.4457301.
+[202] I. Kusche, ‘‘Possible harms of artificial intelligence and the EU AI act:
+Fundamental rights and risk,’’ J. Risk Res., pp. 1–14, May 2024, doi:
+10.1080/13669877.2024.2350720.
+[203] M. Boura, ‘‘The digital regulatory framework through EU AI act:
+The regulatory Sandboxes’ approach,’’ Athens J. Law, vol. 10, no. 3,
+pp. 385–398, Jun. 2024, doi: 10.30958/ajl.10-3-8.
+[204] J. Zeng, ‘‘Artificial intelligence and China’s authoritarian gover-
+nance,’’ Int. Affairs, vol. 96, no. 6, pp. 1441–1459, Oct. 2020, doi:
+10.1093/ia/iiaa172.
+[205] C. Berghoff, M. Neu, and A. von Twickel, ‘‘Vulnerabilities of connection-
+ist AI applications: Evaluation and defense,’’ Frontiers Big Data, vol. 3,
+Jul. 2020, doi: 10.3389/fdata.2020.00023.
+[206] B. Li, P . Qi, B. Liu, S. Di, J. Liu, J. Pei, J. Yi, and B. Zhou, ‘‘Trustworthy
+AI: From principles to practices,’’ ACM Comput. Surveys, vol. 55, no. 9,
+pp. 1–46, Jan. 2023, doi: 10.1145/3555803.
+[207] I. E. Nwafor, ‘‘Artificial iintelligence facial recognition surveillance
+and the breach of privacy rights: The‘clearview AI’ and ‘Rite Aid’
+case studies,’’ South Afr . Intellectual Property Law J., vol. 11, no. 1,
+pp. 88–92, 2023, doi: 10.47348/saipl/v11/a5.
+[208] J. Zhang, Y . Shu, and H. Y u, ‘‘Fairness in design: A framework for
+facilitating ethical artificial intelligence designs,’’ Int. J. Crowd Sci.,
+vol. 7, no. 1, pp. 32–39, Mar. 2023, doi: 10.26599/IJCS.2022.9100033.
+[209] T. Jelinek, W. Wallach, and D. Kerimi, ‘‘Policy brief: The creation of a
+G20 coordinating committee for the governance of artificial intelligence,’’
+AI Ethics, vol. 1, no. 2, pp. 141–150, Oct. 2020, doi:10.1007/s43681-020-
+00019-y.
+[210] W. Ceron, G. G. Sanseverino, M.-F. de-Lima-Santos, and M. G. Quiles,
+‘‘COVID-19 fake news diffusion across Latin America,’’ Social
+Netw. Anal. Mining, vol. 11, no. 1, May 2021, doi: 10.1007/s13278-021-
+00753-z.
+[211] A. Gonçalves, L. Torre, F. Oliveira, and P . Jerónimo, ‘‘AI and
+automation’s role in Iberian fact-checking agencies,’’ Profesional de la
+información, vol. 33, no. 2, 2024, doi: 10.3145/epi.2024.0212.
+[212] A. Andreou, ‘‘E-securing the EU borders: AI in European integrated
+border management,’’ J. Politics Ethics New Technol. AI, vol. 2, no. 1,
+Apr. 2023, doi: 10.12681/jpentai.34287.
+[213] P . Seuferling, ‘‘Smart ellis island? Tracing techniques of automating
+border control,’’ New Media Soc., vol. 26, no. 9, pp. 5039–5058,
+Aug. 2024, doi: 10.1177/14614448241251802.
+IOANNIS SYLLAIDOPOULOS is currently pur-
+suing the Ph.D. degree with the University of
+West Attica, specializing in the integration of
+artificial intelligence and emerging technologies
+into security and intelligence processes. With over
+25 years of experience in intelligence, counter-
+terrorism, and extremism, he has developed exper-
+tise in leveraging advanced methodologies, includ-
+ing AI and open-source intelligence (OSINT),
+to address complex global security challenges. His
+research focuses on data-driven decision-making, predictive frameworks,
+and innovative intelligence gathering and risk assessment approaches.
+He has contributed to academic publications and international projects,
+emphasizing the application of cutting-edge technologies in enhancing
+security frameworks and strategic operations.
+KLIMIS S. NTALIANIS received the Diploma and
+Ph.D. degrees from the Electrical and Computer
+Engineering Department, National Technical Uni-
+versity of Athens (NTUA), in 1998 and 2003,
+respectively. From 2004 to 2009, he was a Senior
+Researcher and a Projects Coordinator with the
+Image, Video and Multimedia Laboratory, NTUA.
+In 2020, he became a Professor with the University
+of West Attica. Since 1998, he has participated in
+more than 25 research and development projects
+in different frameworks. He has published more than 160 scientific
+articles (IEEE, ACM, Springer, and Elsevier) and has received more than
+1300 citations. He was a Research Evaluator of several international journals
+and conferences as well as of various agencies and foundations, such
+as European Union, Romanian Executive Agency for Higher Education
+Research Development and Innovation Funding, Greek Secretariat of
+Research and Technology, Cyprus Promotion Foundation, the Polish
+National Science Center, the Natural Sciences and Engineering Research
+Council of Canada, the University of Jeddah, Saudi Arabia, the University
+of Magdeburg, Germany, the Sant Longowal Institute of Engineering Tech-
+nology, India, Cyprus University of Technology, and other organizations.
+His main research interests include multimedia analysis, social computing,
+and new technologies for disruptive business and innovation. He has
+served as the General Executive Chair for the Third IEEE Cyber Science
+and Technology Congress, the 16th IEEE International Conference on
+Dependable, Autonomic Secure Computing, the 16th IEEE International
+Conference on Pervasive Intelligence and Computing, and the Fourth IEEE
+International Conference on Big Data Intelligence and Computing.
+IOANNIS SALMON received the Ph.D. degree
+in change management and human resource
+development from the National and Kapodis-
+trian University of Athens. He is currently an
+Associate Professor of business administration
+with the University of West Attica. He is the
+author or co-author of articles in prestigious
+international journals and conference proceedings.
+He has participated in a number of European and
+national research programs. His research interests
+include information and communication technologies (ICT)-enabled change
+management, computer-aided human resource development, and digital
+knowledge representation management for strategic business.
+91764 VOLUME 13, 2025
