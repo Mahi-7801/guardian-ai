@@ -10,7 +10,7 @@ services:
         fromService:
           type: web
           name: guardian-ai-backend
-          property: url
+          property: host
 
   # Backend Service (Python)
   - type: web

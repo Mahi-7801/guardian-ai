@@ -12,7 +12,8 @@ const AdminPanel = () => {
     const [showFullLedger, setShowFullLedger] = useState(false);
 
     const fetchData = async () => {
-        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const envUrl = import.meta.env.VITE_API_URL;
+        const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
         try {
             const [usersRes, logsRes] = await Promise.all([
                 fetch(`${API_BASE}/api/admin/users`),
@@ -29,7 +30,8 @@ const AdminPanel = () => {
     const handleLockdown = async () => {
         if (!confirm("WARNING: This will disrupt all active sessions. Confirm execution?")) return;
 
-        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const envUrl = import.meta.env.VITE_API_URL;
+        const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
         try {
             const res = await fetch(`${API_BASE}/api/admin/lockdown`, { method: 'POST' });
             if (res.ok) {
@@ -60,7 +62,8 @@ const AdminPanel = () => {
 
     const handleBan = async (id: number) => {
         try {
-            const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const envUrl = import.meta.env.VITE_API_URL;
+            const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
             const res = await fetch(`${API_BASE}/api/admin/users/${id}/ban`, { method: 'POST' });
             if (res.ok) {
                 toast.success("User access revoked via central command.");
@@ -75,7 +78,8 @@ const AdminPanel = () => {
 
     const handleApprove = async (id: number) => {
         try {
-            const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const envUrl = import.meta.env.VITE_API_URL;
+            const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
             const res = await fetch(`${API_BASE}/api/admin/users/${id}/approve`, { method: 'POST' });
             if (res.ok) {
                 toast.success("User clearance level upgraded.");
