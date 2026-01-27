@@ -1,0 +1,24 @@
+services:
+  # Frontend Service (Container)
+  - type: web
+    name: guardian-ai-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: guardian-ai-backend
+          property: url
+
+  # Backend Service (Python)
+  - type: web
+    name: guardian-ai-backend
+    env: python
+    region: singapore
+    buildCommand: pip install -r backend_python/requirements.txt
+    startCommand: gunicorn --chdir backend_python app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0

@@ -12,10 +12,11 @@ const AdminPanel = () => {
     const [showFullLedger, setShowFullLedger] = useState(false);
 
     const fetchData = async () => {
+        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
         try {
             const [usersRes, logsRes] = await Promise.all([
-                fetch('http://localhost:5000/api/admin/users'),
-                fetch('http://localhost:5000/api/admin/logs')
+                fetch(`${API_BASE}/api/admin/users`),
+                fetch(`${API_BASE}/api/admin/logs`)
             ]);
 
             if (usersRes.ok) setUsers(await usersRes.json());
@@ -28,8 +29,9 @@ const AdminPanel = () => {
     const handleLockdown = async () => {
         if (!confirm("WARNING: This will disrupt all active sessions. Confirm execution?")) return;
 
+        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
         try {
-            const res = await fetch('http://localhost:5000/api/admin/lockdown', { method: 'POST' });
+            const res = await fetch(`${API_BASE}/api/admin/lockdown`, { method: 'POST' });
             if (res.ok) {
                 toast.error("SYSTEM WIDE LOCKDOWN INITIATED", {
                     description: "All non-admin protocols suspended.",
@@ -58,7 +60,8 @@ const AdminPanel = () => {
 
     const handleBan = async (id: number) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/users/${id}/ban`, { method: 'POST' });
+            const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${API_BASE}/api/admin/users/${id}/ban`, { method: 'POST' });
             if (res.ok) {
                 toast.success("User access revoked via central command.");
                 fetchData();
@@ -72,7 +75,8 @@ const AdminPanel = () => {
 
     const handleApprove = async (id: number) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/users/${id}/approve`, { method: 'POST' });
+            const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${API_BASE}/api/admin/users/${id}/approve`, { method: 'POST' });
             if (res.ok) {
                 toast.success("User clearance level upgraded.");
                 fetchData();
