@@ -48,8 +48,14 @@ export function Header({ onMenuClick }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isAiOnline = AI_STATUS.isOnline;
+  const [userRole, setUserRole] = useState("user");
 
-  const navItems = [
+  useEffect(() => {
+    const role = localStorage.getItem('user_role') || 'user';
+    setUserRole(role);
+  }, []);
+
+  const baseNavItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
     { icon: AlertTriangle, label: "Threats", path: "/intrusion-detection" },
     { icon: Activity, label: "Predictive", path: "/predictive-analytics" },
@@ -62,6 +68,10 @@ export function Header({ onMenuClick }: HeaderProps) {
     { icon: Users, label: "Crosint Portal", path: "/crosint-portal" },
     { icon: FileText, label: "Reports", path: "/reports" },
   ];
+
+  const navItems = userRole === 'admin'
+    ? [{ icon: Shield, label: "Admin Console", path: "/admin" }, ...baseNavItems]
+    : baseNavItems;
 
   // Distinguish between main nav and overflow
   const mainNavItems = navItems.slice(0, 5); // Show first 5 on desktop
@@ -316,15 +326,26 @@ export function Header({ onMenuClick }: HeaderProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 p-1.5 pr-3 rounded-lg hover:bg-secondary transition-colors outline-none cursor-pointer">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-                    <User className="w-4 h-4 text-primary" />
+                  <div className={cn(
+                    "w-8 h-8 rounded-lg border flex items-center justify-center",
+                    userRole === 'admin' ? "bg-primary/10 border-primary/30" : "bg-secondary border-border"
+                  )}>
+                    {userRole === 'admin' ? <Shield className="w-4 h-4 text-primary" /> : <UserCircle className="w-4 h-4 text-muted-foreground" />}
                   </div>
-                  <span className="text-sm font-medium text-foreground">Admin</span>
+                  <div className="flex flex-col items-start leading-none">
+                    <span className="text-sm font-medium text-foreground capitalize">{userRole}</span>
+                    <span className="text-[10px] text-muted-foreground uppercase">{userRole === 'admin' ? 'Command' : 'Unit 42'}</span>
+                  </div>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 bg-card border-border">
                 <DropdownMenuLabel>My Security Profile</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                {userRole === 'admin' && (
+                  <DropdownMenuItem className="gap-2 cursor-pointer text-destructive focus:text-destructive font-bold" onClick={() => navigate("/admin")}>
+                    <Shield className="w-4 h-4" /> Command Center
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => navigate("/settings")}>
                   <Settings className="w-4 h-4" /> Security Settings
                 </DropdownMenuItem>

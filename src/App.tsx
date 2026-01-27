@@ -20,8 +20,8 @@ import CrosintPortal from "./pages/CrosintPortal";
 import Taxonomy from "./pages/Taxonomy";
 import PropagandaMonitoring from "./pages/PropagandaMonitoring";
 import SecurityFramework from "./pages/SecurityFramework";
+import AdminPanel from "./pages/AdminPanel";
 import Reports from "./pages/Reports";
-
 import { useEffect, useState } from "react";
 import { insforge } from "@/lib/insforge";
 
@@ -40,10 +40,23 @@ const App = () => {
           // If it's just a missing token or unauthorized, it means user is logged out.
           // Handle gracefully without a loud error unless it's something unexpected.
           const errorMsg = error.toString().toLowerCase();
-          if (!errorMsg.includes("no refresh token") && !errorMsg.includes("401")) {
+
+          // Handle CSRF errors by clearing session
+          if (errorMsg.includes("invalid csrf token")) {
+            console.warn("Session invalid (CSRF), clearing session...");
+            // Attempt to sign out to clear local storage items
+            try {
+              await insforge.auth.signOut();
+            } catch (e) {
+              console.warn("Sign out during error handling failed", e);
+            }
+            setSession(null);
+          } else if (!errorMsg.includes("no refresh token") && !errorMsg.includes("401")) {
             console.error("Session check error:", error);
+            setSession(null);
+          } else {
+            setSession(null);
           }
-          setSession(null);
         } else {
           setSession(data?.session || null);
         }
@@ -113,6 +126,7 @@ const App = () => {
             <Route path="/taxonomy" element={session ? <Taxonomy /> : <Navigate to="/auth" />} />
             <Route path="/propaganda-monitoring" element={session ? <PropagandaMonitoring /> : <Navigate to="/auth" />} />
             <Route path="/security-framework" element={session ? <SecurityFramework /> : <Navigate to="/auth" />} />
+            <Route path="/admin" element={session ? <AdminPanel /> : <Navigate to="/auth" />} />
             <Route path="/reports" element={session ? <Reports /> : <Navigate to="/auth" />} />
 
             {/* Catch-all */}

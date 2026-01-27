@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { insforge } from "@/lib/insforge";
+
 import { Shield, Send, MapPin, Clock, Camera, CheckCircle2, AlertCircle, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";

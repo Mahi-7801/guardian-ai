@@ -54,11 +54,31 @@ const Reports = () => {
         fetchReports();
     }, []);
 
-    const filteredReports = reports.filter(r =>
-        r.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.id.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const [statusFilter, setStatusFilter] = useState<'all' | 'verified' | 'pending' | 'investigating'>('all');
+
+    const filteredReports = reports.filter(r => {
+        const matchesSearch =
+            r.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            r.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            r.id.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesStatus = statusFilter === 'all' || r.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+    });
+
+    const handleExport = () => {
+        const dataStr = JSON.stringify(filteredReports, null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `guardian_intel_reports_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.success(`Exported ${filteredReports.length} reports successfully.`);
+    };
 
     return (
         <DashboardLayout>
@@ -69,10 +89,7 @@ const Reports = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     <button
-                        onClick={() => {
-                            toast.info("Preparing intelligence bundle for export...");
-                            setTimeout(() => toast.success("Intel bundle exported successfully."), 1500);
-                        }}
+                        onClick={handleExport}
                         className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-bold hover:glow-primary transition-all"
                     >
                         <Download className="w-4 h-4" />
@@ -94,9 +111,18 @@ const Reports = () => {
                                 className="w-full bg-transparent border-none focus:ring-0 text-sm pl-10 h-10"
                             />
                         </div>
-                        <button className="px-3 py-2 bg-background border border-border rounded-lg text-xs font-bold hover:bg-secondary transition-all flex items-center gap-2">
-                            <Filter className="w-3 h-3" /> Filter
-                        </button>
+                        <div className="flex items-center gap-2">
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value as any)}
+                                className="bg-background border border-border rounded-lg text-xs font-bold px-3 py-2 outline-none focus:border-primary cursor-pointer"
+                            >
+                                <option value="all">All Status</option>
+                                <option value="verified">Verified</option>
+                                <option value="pending">Pending</option>
+                                <option value="investigating">Investigating</option>
+                            </select>
+                        </div>
                     </div>
 
                     {loading ? (

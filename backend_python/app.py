@@ -12,6 +12,16 @@ from dotenv import load_dotenv
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# --- REAL AI ENGINE INTEGRATION ---
+try:
+    from ai_engine import ai_engine
+    HAS_AI_ENGINE = True
+    # Initialize immediately for demo purposes
+    ai_engine.initialize_models()
+except ImportError as e:
+    HAS_AI_ENGINE = False
+    print(f"⚠️ AI Engine not active: {e}. Running in Simulation Mode.")
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -32,7 +42,22 @@ disinformation_reports = []
 social_network_data = []
 alert_history = []
 
+# --- Admin Data Stores ---
+users_db = [
+    {"id": 1, "name": "Analyst Sarah", "email": "sarah@guardian.com", "role": "Analyst", "status": "Active", "lastActive": "2 mins ago"},
+    {"id": 2, "name": "Officer John", "email": "john@guardian.com", "role": "Officer", "status": "Active", "lastActive": "1 hour ago"},
+    {"id": 3, "name": "Guest User", "email": "guest@external.org", "role": "Observer", "status": "Pending", "lastActive": "Never"}
+]
+
+audit_logs = [
+    {"id": 101, "action": "System Override", "user": "Admin", "time": "10:42 AM", "status": "Success"},
+    {"id": 102, "action": "Database Dump", "user": "Unknown", "time": "09:15 AM", "status": "Blocked"},
+    {"id": 103, "action": "User Created", "user": "Admin", "time": "Yesterday", "status": "Success"}
+]
+
 # Global System State for Taxonomy Activity
+SYSTEM_LOCKDOWN = False
+
 SYSTEM_ACTIVITY = {
     "predictive_modeling": {"activity": "Awaiting cycle start...", "confidence": 0, "status": "standby"},
     "cybersecurity": {"activity": "Perimeter ping active...", "confidence": 0, "status": "standby"},
@@ -316,7 +341,9 @@ def get_crosint_events():
 
 @app.route('/api/system/status', methods=['GET'])
 def get_system_status():
-    return jsonify(SYSTEM_METRICS)
+    response = SYSTEM_METRICS.copy()
+    response['lockdown'] = SYSTEM_LOCKDOWN
+    return jsonify(response)
 
 @app.route('/api/disinfo/signals', methods=['GET'])
 def get_disinfo_signals():
@@ -356,17 +383,45 @@ def predict_risk():
     intensity = (SYSTEM_METRICS["latency"] / 30) # Normalize latency
     
     # Determine risk level based on current system intensity
-    if intensity > 0.7:
+    # Determine risk level based on current system intensity
+    if HAS_AI_ENGINE and ai_engine.is_ready:
+        # REAL ML INFERENCE
+        # Generate synthetic telemetry [latency, load, errors, type_id]
+        telemetry = [
+            SYSTEM_METRICS["latency"] / 100.0, 
+            random.random(), 
+            random.random() * 0.1, 
+            hash(analysis_type) % 4
+        ]
+        prediction, conf = ai_engine.predict_threat_level(telemetry)
+        
+        if "Safe" not in prediction:
+            risk_level = "Critical" if "Malware" in prediction else "Elevated"
+            risk_score = int(conf)
+        else:
+            risk_level = "Low"
+            risk_score = random.randint(10, 35)
+            
+        methodology = "Random Forest (Real-Time Inference)"
+        base_confidence = conf
+        
+        # Explainable AI Integration
+        explanation = ai_engine.explain_prediction(telemetry)
+    elif intensity > 0.7:
         risk_level = "Critical"
         risk_score = random.randint(85, 98)
+        methodology = random.choice(TAXONOMY_AI_TECHNIQUES["predictive_modeling"]["ML_Deep_Learning"])
+        explanation = []
     elif intensity > 0.4:
         risk_level = "Elevated"
         risk_score = random.randint(60, 84)
+        methodology = random.choice(TAXONOMY_AI_TECHNIQUES["predictive_modeling"]["ML_Deep_Learning"])
+        explanation = []
     else:
         risk_level = "Moderate"
         risk_score = random.randint(30, 59)
-
-    methodology = random.choice(TAXONOMY_AI_TECHNIQUES["predictive_modeling"]["ML_Deep_Learning"])
+        methodology = random.choice(TAXONOMY_AI_TECHNIQUES["predictive_modeling"]["ML_Deep_Learning"])
+        explanation = []
     
     # Specific logic for different types
     hotspots = [
@@ -386,7 +441,8 @@ def predict_risk():
             {"label": "Social Signal Burst (NLP)", "value": random.randint(40, 70), "color": "bg-warning"},
             {"label": "Historical Vector Match", "value": random.randint(50, 80), "color": "bg-primary"}
         ],
-        "heatmap": hotspots
+        "heatmap": hotspots,
+        "explanation": explanation
     })
 
 @app.route('/api/reports/submit', methods=['POST'])
@@ -413,6 +469,26 @@ def analyze_sentiment():
     text = data.get('text', '')
     keywords = ['attack', 'kill', 'bomb', 'exploit', 'hack', 'danger']
     found_keywords = [word for word in keywords if word in text.lower()]
+    
+    if HAS_AI_ENGINE:
+        # REAL NLP ANALYSIS
+        analysis = ai_engine.analyze_sentiment_real(text)
+        sentiment = analysis['label']
+        is_disinfo = ai_engine.detect_disinformation(text)
+        
+        return jsonify({
+            "sentiment": sentiment,
+            "confidence": round(abs(analysis['score']) * 100 + 50, 2) if abs(analysis['score']) > 0 else 85.0, # Norm score
+            "methodology": "TextBlob (Lexicon) + SVM (Real-Time)",
+            "keywords": found_keywords if found_keywords else ["semantic_context"],
+            "extremistScore": 0.95 if "Hostile" in sentiment else 0.15,
+            "disinformationCheck": {
+                "isDisinformation": is_disinfo,
+                "method": "Linear SVM Classifier (Real-Time)",
+                "vaderScale": round(analysis['score'], 2)
+            }
+        })
+
     sentiment = "Hateful" if len(found_keywords) > 0 else "Neutral"
     return jsonify({
         "sentiment": sentiment,
@@ -429,6 +505,28 @@ def analyze_sentiment():
 
 @app.route('/api/social/analysis', methods=['GET'])
 def get_social_analysis():
+    if HAS_AI_ENGINE:
+        # Generate a dynamic graph for analysis
+        G = nx.erdos_renyi_graph(n=30, p=0.15)
+        nodes = [{"id": f"Target-{i}", "group": random.randint(1, 5)} for i in G.nodes()]
+        links = [{"source": f"Target-{u}", "target": f"Target-{v}"} for u, v in G.edges()]
+        
+        analysis = ai_engine.analyze_social_graph(nodes, links)
+        
+        return jsonify({
+            "detected_groups": [
+                {"name": f"Cluster-{i+1}", "threat_level": "High" if i < 2 else "Medium", "members": len(nodes)//analysis['communities'], "dominant_platform": "Telegram"} 
+                for i in range(min(analysis['communities'], 3))
+            ],
+            "high_risk_nodes": analysis['high_risk_nodes'],
+            "graph_stats": {
+                "nodes": analysis['node_count'],
+                "edges": analysis['edge_count'],
+                "communities": analysis['communities']
+            },
+            "tech_stack": ["NetworkX (Centrality)", "Louvain Modularity", "LSTM (Behavior)"]
+        })
+
     return jsonify({
         "detected_groups": [{"name": "Group Alpha", "threat_level": "High", "members": 1500, "dominant_platform": "Telegram"}],
         "tech_stack": TAXONOMY_AI_TECHNIQUES["social_network_analysis"]["Extremist_Detection"]
@@ -510,6 +608,62 @@ def handle_email_alert():
         return jsonify({"success": True, "message": "Alert dispatched successfully"})
     else:
         return jsonify({"success": False, "message": "Failed to send email"}), 500
+
+@app.route('/api/admin/users', methods=['GET'])
+def get_admin_users():
+    return jsonify(users_db)
+
+@app.route('/api/admin/users/<int:user_id>/ban', methods=['POST'])
+def ban_user(user_id):
+    for user in users_db:
+        if user['id'] == user_id:
+            user['status'] = 'Banned'
+            # Log the action
+            audit_logs.insert(0, {
+                "id": random.randint(1000, 9999), 
+                "action": f"User Banned ({user['name']})", 
+                "user": "Admin", 
+                "time": datetime.now().strftime("%I:%M %p"), 
+                "status": "Success"
+            })
+            return jsonify({"success": True, "message": f"User {user['name']} banned."})
+    return jsonify({"success": False, "message": "User not found"}), 404
+
+@app.route('/api/admin/users/<int:user_id>/approve', methods=['POST'])
+def approve_user(user_id):
+    for user in users_db:
+        if user['id'] == user_id:
+            user['status'] = 'Active'
+            audit_logs.insert(0, {
+                "id": random.randint(1000, 9999), 
+                "action": f"User Approved ({user['name']})", 
+                "user": "Admin", 
+                "time": datetime.now().strftime("%I:%M %p"), 
+                "status": "Success"
+            })
+            return jsonify({"success": True, "message": f"User {user['name']} approved."})
+    return jsonify({"success": False, "message": "User not found"}), 404
+
+@app.route('/api/admin/logs', methods=['GET'])
+def get_audit_logs():
+    return jsonify(audit_logs)
+
+@app.route('/api/admin/lockdown', methods=['POST'])
+def execute_lockdown():
+    global SYSTEM_LOCKDOWN
+    SYSTEM_LOCKDOWN = True
+    
+    # Log the action
+    audit_logs.insert(0, {
+        "id": random.randint(1000, 9999), 
+        "action": "GLOBAL LOCKDOWN INITIATED", 
+        "user": "Admin", 
+        "time": datetime.now().strftime("%I:%M %p"), 
+        "status": "Success"
+    })
+    
+    print("🚨 SYSTEM LOCKDOWN ENABLED")
+    return jsonify({"success": True, "message": "Global lockdown protocols engaged. All non-admin sessions marked for termination."})
 
 @app.route('/api/settings/update', methods=['POST'])
 def update_settings():

@@ -124,7 +124,10 @@ const Intelligence = () => {
                         <p className="text-muted-foreground">Global threat gathering and AI-driven intelligence synthesis.</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
-                        <button className="px-4 py-2 bg-secondary border border-border rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-secondary/80 transition-all">
+                        <button
+                            onClick={() => navigate('/network-analysis')}
+                            className="px-4 py-2 bg-secondary border border-border rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-secondary/80 transition-all"
+                        >
                             <Globe className="w-4 h-4" /> Global Node Map
                         </button>
                         <button

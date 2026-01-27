@@ -37,12 +37,18 @@ interface NetworkGraphProps {
   nodes?: Node[];
   edges?: Edge[];
   refreshInterval?: number;
+  viewMode?: 'default' | 'heatmap';
+  zoomLevel?: number;
+  onNodeClick?: (node: Node) => void;
 }
 
 export function NetworkGraph({
   nodes: initialNodes = defaultNodes,
   edges: initialEdges = defaultEdges,
-  refreshInterval
+  refreshInterval,
+  viewMode = 'default',
+  zoomLevel = 1,
+  onNodeClick
 }: NetworkGraphProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<{ nodes: Node[], edges: Edge[] }>({ nodes: initialNodes, edges: initialEdges });
@@ -118,7 +124,13 @@ export function NetworkGraph({
 
         {/* Nodes */}
         {data.nodes.map((node) => (
-          <NetworkNode key={node.id} node={node} />
+          <NetworkNode
+            key={node.id}
+            node={node}
+            viewMode={viewMode}
+            zoomLevel={zoomLevel}
+            onClick={() => onNodeClick && onNodeClick(node)}
+          />
         ))}
 
         {/* Gradient overlay */}
@@ -144,7 +156,7 @@ export function NetworkGraph({
   );
 }
 
-function NetworkNode({ node }: { node: Node }) {
+function NetworkNode({ node, viewMode, zoomLevel, onClick }: { node: Node, viewMode: 'default' | 'heatmap', zoomLevel: number, onClick: () => void }) {
   const colors = {
     hub: 'bg-primary border-primary/50 glow-primary',
     node: 'bg-secondary border-border',
@@ -154,15 +166,19 @@ function NetworkNode({ node }: { node: Node }) {
   return (
     <div
       className={`absolute rounded-full border-2 transition-transform hover:scale-150 cursor-pointer ${colors[node.type]}`}
+      onClick={onClick}
       style={{
         left: `${node.x}%`,
         top: `${node.y}%`,
-        width: node.size,
-        height: node.size,
+        width: node.size * zoomLevel * (viewMode === 'heatmap' ? 2.5 : 1),
+        height: node.size * zoomLevel * (viewMode === 'heatmap' ? 2.5 : 1),
         transform: 'translate(-50%, -50%)',
+        opacity: viewMode === 'heatmap' ? 0.6 : 1,
+        filter: viewMode === 'heatmap' ? 'blur(4px)' : 'none',
+        zIndex: 10
       }}
     >
-      {node.type === 'threat' && (
+      {node.type === 'threat' && viewMode === 'default' && (
         <div className="absolute inset-0 rounded-full bg-destructive animate-pulse-ring" />
       )}
     </div>

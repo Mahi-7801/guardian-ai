@@ -46,6 +46,7 @@ const PredictiveAnalytics = () => {
     const [timeline, setTimeline] = useState<number[]>([]);
     const [factors, setFactors] = useState<Factor[]>([]);
     const [hotspots, setHotspots] = useState<Hotspot[]>([]);
+    const [explanation, setExplanation] = useState<any[]>([]);
     const [methodology, setMethodology] = useState<string>("");
 
     const ANALYSIS_TYPES = [
@@ -88,6 +89,20 @@ const PredictiveAnalytics = () => {
                 color: r.risk > 70 ? "text-destructive" : r.risk > 40 ? "text-warning" : "text-success"
             })) || []);
 
+            // Handle Explainable AI data
+            if (data.explanation && data.explanation.length > 0) {
+                setExplanation(data.explanation.map((e: any) => ({
+                    label: e.feature,
+                    value: Math.floor(e.importance * 100), // Scale 0-1 to 0-100
+                    color: e.value > 0.5 ? "bg-destructive" : "bg-primary"
+                })));
+            } else {
+                setExplanation([
+                    { label: "Temporal Proximity (Heuristic)", value: 88, color: "bg-success" },
+                    { label: "Geographical Context (Heuristic)", value: 72, color: "bg-primary" }
+                ]);
+            }
+
             setMethodology(data.methodology || "Heuristic Analysis");
             toast.success("Prediction generated successfully via Neural Engine.");
 
@@ -99,6 +114,7 @@ const PredictiveAnalytics = () => {
         }
     };
 
+    // ... (Simulation handler needs update too but less critical)
     const handleSimulation = () => {
         setStats({ risk: "Moderate", predicted: "2", confidence: "68%", hotspots: "4" });
         setTimeline(Array.from({ length: 12 }, () => Math.random() * 100));
@@ -110,6 +126,10 @@ const PredictiveAnalytics = () => {
             { location: "Sector 7G", risk: "Critical", color: "text-destructive" },
             { location: "Node Alpha", risk: "Medium", color: "text-warning" }
         ]);
+        setExplanation([
+            { label: "Simulated Heuristic 1", value: 50, color: "bg-primary" },
+            { label: "Simulated Heuristic 2", value: 30, color: "bg-secondary" }
+        ]);
         setMethodology("Simulation Mode: Heuristic Projection (Offline)");
         toast.info("Backend offline. Running heuristic simulation.");
     };
@@ -117,6 +137,24 @@ const PredictiveAnalytics = () => {
     const handleDownload = () => {
         toast.success("Intelligence report compiled and downloaded.");
     };
+
+    // ... (render steps)
+
+    // ... inside renderStep3, around line 315
+    <div className="space-y-3">
+        {explanation.map((x, i) => (
+            <div key={i} className="space-y-1">
+                <div className="flex justify-between text-[9px] font-mono">
+                    <span className="text-foreground/70">{x.label}</span>
+                    <span className="text-foreground font-bold">+{x.value}% Impact</span>
+                </div>
+                <div className="h-1 w-full bg-sidebar-accent rounded-full overflow-hidden">
+                    <div className={cn("h-full rounded-full transition-all duration-1000", x.color)} style={{ width: `${x.value}%` }} />
+                </div>
+            </div>
+        ))}
+    </div>
+
 
     const renderStep1 = () => (
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
