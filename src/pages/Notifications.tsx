@@ -3,6 +3,7 @@ import { Bell, AlertTriangle, Shield, CheckCircle2, Trash2, MoreVertical, Filter
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface Notification {
     id: number;
@@ -21,7 +22,7 @@ const Notifications = () => {
         setLoading(true);
         try {
             // Fetch threats
-            const resAlerts = await fetch('http://localhost:5000/api/alerts/history');
+            const resAlerts = await fetch(`${API_BASE_URL}/api/alerts/history`);
             const alerts = await resAlerts.json();
 
             // Map alerts to notifications

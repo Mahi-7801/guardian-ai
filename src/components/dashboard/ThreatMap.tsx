@@ -4,6 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { Globe, Activity, Loader2, Zap as ZapIcon, Target } from "lucide-react";
 import { insforge } from "@/lib/insforge";
 import { toast } from "sonner";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface ThreatLocation {
   id: string;
@@ -86,8 +87,8 @@ export function ThreatMap() {
       try {
         // Parallel fetch for Threats and CROSINT Reports
         const [threatsRes, reportsRes] = await Promise.all([
-          fetch('http://localhost:5000/api/threats'),
-          fetch('http://localhost:5000/api/reports')
+          fetch(`${API_BASE_URL}/api/threats`),
+          fetch(`${API_BASE_URL}/api/reports`)
         ]);
 
         let combinedData: ThreatLocation[] = [];

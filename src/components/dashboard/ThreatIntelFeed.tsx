@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Brain, Send, User, Clock, Loader2, Sparkles, ExternalLink, ShieldAlert } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface IntelItem {
     id: string;
@@ -23,7 +24,7 @@ export const ThreatIntelFeed = () => {
     const fetchFeed = async () => {
         setIsLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/intelligence/feed');
+            const res = await fetch(`${API_BASE_URL}/api/intelligence/feed`);
             if (res.ok) {
                 const data = await res.json();
                 setFeed(data);
@@ -49,7 +50,7 @@ export const ThreatIntelFeed = () => {
     const generateIntelligence = async () => {
         setIsGenerating(true);
         try {
-            const res = await fetch('http://localhost:5000/api/intelligence/generate');
+            const res = await fetch(`${API_BASE_URL}/api/intelligence/generate`);
             if (res.ok) {
                 const data = await res.json();
                 setTitle(data.title);

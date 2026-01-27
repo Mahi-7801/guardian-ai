@@ -2,6 +2,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { BookOpen, Search, Code2, Network, Shield, Brain, Layers, Users, MessageSquare } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api-config";
 
 const Taxonomy = () => {
     const [taxonomy, setTaxonomy] = useState<any>(null);
@@ -15,7 +16,7 @@ const Taxonomy = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/taxonomy')
+        fetch(`${API_BASE_URL}/api/taxonomy`)
             .then(res => res.json())
             .then(data => setTaxonomy(data))
             .catch(err => console.error("Failed to load taxonomy"));
@@ -23,19 +24,19 @@ const Taxonomy = () => {
 
     useEffect(() => {
         const fetchActivity = () => {
-            fetch(`http://localhost:5000/api/taxonomy/activity?section=${activeSection}`)
+            fetch(`${API_BASE_URL}/api/taxonomy/activity?section=${activeSection}`)
                 .then(res => res.json())
                 .then(data => setActivity(data));
 
             if (activeSection === 'crosint') {
-                fetch('http://localhost:5000/api/crosint/events')
+                fetch(`${API_BASE_URL}/api/crosint/events`)
                     .then(res => res.json())
                     .then(data => setSignals(data.slice(0, 3)));
             }
         };
 
         const fetchSystemStatus = () => {
-            fetch('http://localhost:5000/api/system/status')
+            fetch(`${API_BASE_URL}/api/system/status`)
                 .then(res => res.json())
                 .then(data => setSystemStatus(data));
         };

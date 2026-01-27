@@ -3,6 +3,7 @@ import { Settings as SettingsIcon, Shield, Bell, Lock, User, RefreshCw, Trash2, 
 import { toast } from "sonner";
 import { AI_STATUS } from "@/lib/insforge";
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "@/lib/api-config";
 
 const Settings = () => {
     const [systemStatus, setSystemStatus] = useState({ status: 'ONLINE', latency: '24ms' });
@@ -10,7 +11,7 @@ const Settings = () => {
     useEffect(() => {
         const fetchHealth = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/dashboard/stats');
+                const res = await fetch(`${API_BASE_URL}/api/dashboard/stats`);
                 if (res.ok) {
                     const data = await res.json();
                     setSystemStatus({
@@ -30,7 +31,7 @@ const Settings = () => {
 
     const handleResetAll = async () => {
         try {
-            await fetch('http://localhost:5000/api/settings/update', {
+            await fetch(`${API_BASE_URL}/api/settings/update`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ reset: true, timestamp: Date.now() })

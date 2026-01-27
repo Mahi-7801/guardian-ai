@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { insforge, AI_MODEL, AI_STATUS } from "@/lib/insforge";
 import { toast } from "sonner";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface SentimentRecord {
     id: number;
@@ -40,7 +41,7 @@ const SentimentAnalysis = () => {
         toast.info("Scouring global social feeds for radicalization patterns...");
         try {
             // Use the real backend API
-            const response = await fetch('http://localhost:5000/api/analyze/sentiment', {
+            const response = await fetch(`${API_BASE_URL}/api/analyze/sentiment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: "Monitoring social feeds for extremist content..." }) // Trigger backend simulation

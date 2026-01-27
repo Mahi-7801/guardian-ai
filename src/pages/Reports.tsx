@@ -3,6 +3,7 @@ import { FileText, Download, Filter, Search, MoreVertical, Eye, Trash2, Clock, C
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface IntelReport {
     id: string;
@@ -22,7 +23,7 @@ const Reports = () => {
     const fetchReports = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/crosint/events');
+            const res = await fetch(`${API_BASE_URL}/api/crosint/events`);
             const data = await res.json();
 
             // Transform crosint events into reports for visualization

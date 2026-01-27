@@ -19,6 +19,7 @@ import {
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface NavItem {
   icon: React.ElementType;
@@ -51,7 +52,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
   useEffect(() => {
     const fetchBadges = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/dashboard/stats');
+        const res = await fetch(`${API_BASE_URL}/api/dashboard/stats`);
         if (res.ok) {
           const data = await res.json();
           setBadges({

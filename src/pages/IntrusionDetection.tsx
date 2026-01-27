@@ -4,6 +4,7 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { cn } from "@/lib/utils";
 import { sendAlertEmail } from "@/lib/emailService";
 import { toast } from "sonner";
+import { API_BASE_URL } from "@/lib/api-config";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { insforge, AI_MODEL, AI_STATUS } from "@/lib/insforge";
@@ -66,8 +67,8 @@ const IntrusionDetection = () => {
 
         try {
             const [threatsRes, statsRes] = await Promise.all([
-                fetch('http://localhost:5000/api/threats'),
-                fetch('http://localhost:5000/api/dashboard/stats')
+                fetch(`${API_BASE_URL}/api/threats`),
+                fetch(`${API_BASE_URL}/api/dashboard/stats`)
             ]);
 
             if (threatsRes.ok && statsRes.ok) {
@@ -369,7 +370,7 @@ const IntrusionDetection = () => {
                     <button
                         onClick={async () => {
                             try {
-                                const res = await fetch('http://localhost:5000/api/settings/update', {
+                                const res = await fetch(`${API_BASE_URL}/api/settings/update`, {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ lockdown: true, severity: 'CRITICAL' })

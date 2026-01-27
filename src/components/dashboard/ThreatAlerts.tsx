@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface Alert {
   id: string;
@@ -28,7 +29,7 @@ export function ThreatAlerts({ onSelectAlert }: ThreatAlertsProps) {
     if (alerts.length === 0) setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/threats');
+      const res = await fetch(`${API_BASE_URL}/api/threats`);
       if (res.ok) {
         const data = await res.json();
         const mappedAlerts = data.map((t: any) => ({

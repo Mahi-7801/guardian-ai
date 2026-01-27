@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { insforge, AI_STATUS } from "@/lib/insforge";
+import { API_BASE_URL } from "@/lib/api-config";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -143,7 +144,7 @@ export function Header({ onMenuClick }: HeaderProps) {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/threats');
+        const res = await fetch(`${API_BASE_URL}/api/threats`);
         if (res.ok) {
           const data = await res.json();
           setNotifications(data.slice(0, 5));

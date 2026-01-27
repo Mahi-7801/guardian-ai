@@ -4,6 +4,7 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface Report {
     id: string;
@@ -30,7 +31,7 @@ const CrosintPortal = () => {
 
     const fetchReports = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/reports');
+            const response = await fetch(`${API_BASE_URL}/api/reports`);
             if (response.ok) {
                 const data = await response.json();
                 setReports(data.reverse()); // Show latest first

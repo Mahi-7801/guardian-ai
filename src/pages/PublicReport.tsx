@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Shield, Send, MapPin, Clock, Camera, CheckCircle2, AlertCircle, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "@/lib/api-config";
 
 const PublicReport = () => {
     const [submitted, setSubmitted] = useState(false);
@@ -21,7 +22,7 @@ const PublicReport = () => {
 
         try {
             // Send report to local backend intelligence gathering node
-            const response = await fetch('http://localhost:5000/api/reports/submit', {
+            const response = await fetch(`${API_BASE_URL}/api/reports/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

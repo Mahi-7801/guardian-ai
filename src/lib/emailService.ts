@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { insforge } from "@/lib/insforge";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface EmailConfig {
     to: string;
@@ -44,7 +45,7 @@ export const sendAlertEmail = async (alertDetails: any) => {
 
     try {
         // CALL LOCAL BACKEND INSTEAD OF SDK
-        const response = await fetch('http://localhost:5000/api/email/alert', {
+        const response = await fetch(`${API_BASE_URL}/api/email/alert`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

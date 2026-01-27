@@ -5,6 +5,7 @@ import { NetworkGraph, Node, Edge } from "@/components/dashboard/NetworkGraph";
 import { useState, useEffect } from "react";
 import { insforge, AI_MODEL, AI_STATUS } from "@/lib/insforge";
 import { toast } from "sonner";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface Influencer {
     name: string;
@@ -34,8 +35,8 @@ const NetworkAnalysis = () => {
 
         try {
             const [graphRes, socialRes] = await Promise.all([
-                fetch('http://localhost:5000/api/network/graph'),
-                fetch('http://localhost:5000/api/social/analysis')
+                fetch(`${API_BASE_URL}/api/network/graph`),
+                fetch(`${API_BASE_URL}/api/social/analysis`)
             ]);
 
             if (graphRes.ok && socialRes.ok) {
@@ -285,7 +286,7 @@ const NetworkAnalysis = () => {
                         <div className="mt-2 space-y-2">
                             <button
                                 onClick={async () => {
-                                    const nodeIsolationPromise = fetch('http://localhost:5000/api/network/isolate', {
+                                    const nodeIsolationPromise = fetch(`${API_BASE_URL}/api/network/isolate`, {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ node_id: "n0" })

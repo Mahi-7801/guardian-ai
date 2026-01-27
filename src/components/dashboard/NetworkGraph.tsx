@@ -1,5 +1,6 @@
 import { Network, Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { API_BASE_URL } from "@/lib/api-config";
 
 export interface Node {
   id: string;
@@ -56,7 +57,7 @@ export function NetworkGraph({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/network/graph');
+        const res = await fetch(`${API_BASE_URL}/api/network/graph`);
         if (res.ok) {
           const json = await res.json();
           const mappedNodes = json.nodes.map((n: any) => ({

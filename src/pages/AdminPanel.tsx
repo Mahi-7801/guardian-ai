@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
+import { API_BASE_URL } from "@/lib/api-config";
+
 const AdminPanel = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState<any[]>([]);
@@ -12,12 +14,11 @@ const AdminPanel = () => {
     const [showFullLedger, setShowFullLedger] = useState(false);
 
     const fetchData = async () => {
-        const envUrl = import.meta.env.VITE_API_URL;
-        const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
+        // API_BASE_URL imported from config
         try {
             const [usersRes, logsRes] = await Promise.all([
-                fetch(`${API_BASE}/api/admin/users`),
-                fetch(`${API_BASE}/api/admin/logs`)
+                fetch(`${API_BASE_URL}/api/admin/users`),
+                fetch(`${API_BASE_URL}/api/admin/logs`)
             ]);
 
             if (usersRes.ok) setUsers(await usersRes.json());
@@ -30,10 +31,8 @@ const AdminPanel = () => {
     const handleLockdown = async () => {
         if (!confirm("WARNING: This will disrupt all active sessions. Confirm execution?")) return;
 
-        const envUrl = import.meta.env.VITE_API_URL;
-        const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
         try {
-            const res = await fetch(`${API_BASE}/api/admin/lockdown`, { method: 'POST' });
+            const res = await fetch(`${API_BASE_URL}/api/admin/lockdown`, { method: 'POST' });
             if (res.ok) {
                 toast.error("SYSTEM WIDE LOCKDOWN INITIATED", {
                     description: "All non-admin protocols suspended.",
@@ -62,9 +61,7 @@ const AdminPanel = () => {
 
     const handleBan = async (id: number) => {
         try {
-            const envUrl = import.meta.env.VITE_API_URL;
-            const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
-            const res = await fetch(`${API_BASE}/api/admin/users/${id}/ban`, { method: 'POST' });
+            const res = await fetch(`${API_BASE_URL}/api/admin/users/${id}/ban`, { method: 'POST' });
             if (res.ok) {
                 toast.success("User access revoked via central command.");
                 fetchData();
@@ -78,9 +75,7 @@ const AdminPanel = () => {
 
     const handleApprove = async (id: number) => {
         try {
-            const envUrl = import.meta.env.VITE_API_URL;
-            const API_BASE = envUrl ? (envUrl.startsWith('http') ? envUrl : `https://${envUrl}`) : 'http://localhost:5000';
-            const res = await fetch(`${API_BASE}/api/admin/users/${id}/approve`, { method: 'POST' });
+            const res = await fetch(`${API_BASE_URL}/api/admin/users/${id}/approve`, { method: 'POST' });
             if (res.ok) {
                 toast.success("User clearance level upgraded.");
                 fetchData();

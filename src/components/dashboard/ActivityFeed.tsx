@@ -1,6 +1,7 @@
 import { Activity, Shield, AlertTriangle, CheckCircle, XCircle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface ActivityItem {
   id: string;
@@ -15,7 +16,7 @@ export function ActivityFeed() {
   useEffect(() => {
     const fetchActivity = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/threats');
+        const res = await fetch(`${API_BASE_URL}/api/threats`);
         if (res.ok) {
           const threats = await res.json();
           // Transform threats into a varied activity feed
