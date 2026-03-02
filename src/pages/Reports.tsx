@@ -81,6 +81,25 @@ const Reports = () => {
         toast.success(`Exported ${filteredReports.length} reports successfully.`);
     };
 
+    const handlePDFExport = () => {
+        const printContent = document.createElement("div");
+        printContent.innerHTML = `
+            <style>body{font-family:sans-serif;padding:20px} table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px} th{background:#f0f0f0} h1{font-size:18px}</style>
+            <h1>Guardian AI — Intelligence Reports</h1>
+            <p style="font-size:11px;color:#666">Generated: ${new Date().toLocaleString()} | Total: ${filteredReports.length} reports</p>
+            <table>
+                <thead><tr><th>ID</th><th>Description</th><th>Location</th><th>Source</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody>${filteredReports.map(r => `<tr><td>${r.id}</td><td>${r.description}</td><td>${r.location}</td><td>${r.source}</td><td>${r.status.toUpperCase()}</td><td>${new Date(r.timestamp).toLocaleDateString()}</td></tr>`).join('')}</tbody>
+            </table>`;
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+            printWindow.document.body.appendChild(printContent);
+            printWindow.print();
+            toast.success("PDF export dialog opened.");
+        }
+    };
+
+
     return (
         <DashboardLayout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -90,11 +109,18 @@ const Reports = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     <button
+                        onClick={handlePDFExport}
+                        className="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all"
+                    >
+                        <Download className="w-4 h-4" />
+                        PDF Export
+                    </button>
+                    <button
                         onClick={handleExport}
                         className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-bold hover:glow-primary transition-all"
                     >
                         <Download className="w-4 h-4" />
-                        Export All
+                        JSON Export
                     </button>
                 </div>
             </div>

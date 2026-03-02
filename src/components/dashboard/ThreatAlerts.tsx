@@ -32,8 +32,8 @@ export function ThreatAlerts({ onSelectAlert }: ThreatAlertsProps) {
       const res = await fetch(`${API_BASE_URL}/api/threats`);
       if (res.ok) {
         const data = await res.json();
-        const mappedAlerts = data.map((t: any) => ({
-          id: t.id,
+        const mappedAlerts = data.map((t: any, idx: number) => ({
+          id: `threat-alert-${t.id}-${idx}`,
           type: t.severity === 'critical' ? 'critical' : t.severity === 'high' ? 'warning' : 'info',
           title: t.type,
           description: `Detected suspicious behavior from ${t.source_ip}`,

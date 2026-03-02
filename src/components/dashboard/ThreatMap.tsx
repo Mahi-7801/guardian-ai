@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Map, { Marker, NavigationControl } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Globe, Activity, Loader2, Zap as ZapIcon, Target } from "lucide-react";
-import { insforge } from "@/lib/insforge";
 import { toast } from "sonner";
 import { API_BASE_URL } from "@/lib/api-config";
 
@@ -95,8 +94,8 @@ export function ThreatMap() {
 
         if (threatsRes.ok) {
           const threats = await threatsRes.json();
-          const mappedThreats = threats.map((t: any) => ({
-            id: t.id,
+          const mappedThreats = (threats || []).map((t: any, idx: number) => ({
+            id: `threat-${t.id || 'err'}-${idx}`,
             latitude: t.latitude || 0,
             longitude: t.longitude || 0,
             severity: t.severity,
@@ -108,9 +107,7 @@ export function ThreatMap() {
 
         if (reportsRes.ok) {
           const reports = await reportsRes.json();
-          // Map reports to map if they have coordinates (simulated or parsed)
-          // For now, we only show reports that we can geolocate or use the default Guntur/Hyderabad logic
-          const mappedReports = reports.map((r: any) => {
+          const mappedReports = (reports || []).map((r: any, idx: number) => {
             const loc = r.data.location.toLowerCase();
             let coords = { lat: 0, lng: 0 };
             if (loc.includes('guntur')) coords = { lat: 16.3067, lng: 80.4365 };
@@ -119,12 +116,12 @@ export function ThreatMap() {
 
             if (coords.lat !== 0) {
               return {
-                id: r.id,
-                latitude: coords.lat + (Math.random() * 0.1), // Add slight jitter for multiple reports in same city
+                id: `report-${r.id || 'rpt'}-${idx}`,
+                latitude: coords.lat + (Math.random() * 0.1),
                 longitude: coords.lng + (Math.random() * 0.1),
                 severity: 'info',
                 count: 1,
-                label: `INTEL: ${r.id.slice(0, 6)}`
+                label: `INTEL: ${(r.id || '').slice(0, 6)}`
               };
             }
             return null;
@@ -146,40 +143,38 @@ export function ThreatMap() {
 
   return (
     <div className="glass-card p-5 h-full flex flex-col">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-        <div className="flex items-center gap-2">
-          <Globe className="w-5 h-5 text-primary" />
-          <h2 className="text-lg font-semibold text-foreground">Global Threat Map (OSM)</h2>
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 border border-success/30 ml-2">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+        <div className="flex items-center flex-wrap gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <Globe className="w-5 h-5 text-primary flex-shrink-0" />
+            <h2 className="text-lg font-semibold text-foreground truncate">Global Threat Map</h2>
+          </div>
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 border border-success/30">
             <Activity className="w-3 h-3 text-success animate-pulse-glow" />
-            <span className="text-[10px] text-success font-bold uppercase tracking-tighter">Live Uplink</span>
+            <span className="text-[10px] text-success font-bold uppercase tracking-tighter whitespace-nowrap">Live Uplink</span>
           </div>
         </div>
 
-        {/* Manual Ingestion Form */}
-        <form onSubmit={handleManualIngest} className="flex items-center gap-2">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Target IP..."
-              value={targetIp}
-              onChange={(e) => setTargetIp(e.target.value)}
-              className="h-8 w-32 px-3 rounded bg-secondary/50 border border-border text-[10px] focus:border-primary outline-none transition-all font-mono"
-            />
-          </div>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Identity..."
-              value={targetName}
-              onChange={(e) => setTargetName(e.target.value)}
-              className="h-8 w-32 px-3 rounded bg-secondary/50 border border-border text-[10px] focus:border-primary outline-none transition-all font-mono"
-            />
-          </div>
+        {/* Manual Ingestion Form - Responsive */}
+        <form onSubmit={handleManualIngest} className="flex flex-wrap items-center gap-2">
+          <input
+            type="text"
+            placeholder="Target IP..."
+            value={targetIp}
+            onChange={(e) => setTargetIp(e.target.value)}
+            className="h-8 flex-1 min-w-[100px] max-w-[140px] px-3 rounded bg-secondary/50 border border-border text-[10px] focus:border-primary outline-none transition-all font-mono"
+          />
+          <input
+            type="text"
+            placeholder="Identity..."
+            value={targetName}
+            onChange={(e) => setTargetName(e.target.value)}
+            className="h-8 flex-1 min-w-[100px] max-w-[140px] px-3 rounded bg-secondary/50 border border-border text-[10px] focus:border-primary outline-none transition-all font-mono"
+          />
           <button
             type="submit"
             disabled={isIngesting || !targetIp}
-            className="h-8 px-3 bg-primary text-primary-foreground rounded text-[10px] font-bold hover:glow-primary transition-all disabled:opacity-50 flex items-center gap-2"
+            className="h-8 px-4 bg-primary text-primary-foreground rounded text-[10px] font-bold hover:glow-primary transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap"
           >
             {isIngesting ? <Loader2 className="w-3 h-3 animate-spin" /> : <ZapIcon className="w-3 h-3" />} TRACK
           </button>

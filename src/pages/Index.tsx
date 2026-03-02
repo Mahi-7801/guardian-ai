@@ -7,14 +7,18 @@ import { SystemStatus } from "@/components/dashboard/SystemStatus";
 import { ThreatIntelFeed } from "@/components/dashboard/ThreatIntelFeed";
 import { TacticalCommandFeed } from "@/components/dashboard/TacticalCommandFeed";
 import { AIAssistantWidget } from "@/components/dashboard/AIAssistantWidget";
-import { Shield, AlertTriangle, Activity, Zap, Network, X, Info, CheckCircle, Brain } from "lucide-react";
+import { LiveThreatTicker } from "@/components/dashboard/LiveThreatTicker";
+import { VoiceAlert } from "@/components/dashboard/VoiceAlert";
+import { useLang } from "@/context/LanguageContext";
+import { Shield, AlertTriangle, Activity, Zap, Network, X, Info, CheckCircle, Brain, Database, Cpu } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-const Index = () => {
-  const [selectedThreat, setSelectedThreat] = useState<any>(null);
+export default function Index() {
   const navigate = useNavigate();
+  const { t } = useLang();
+  const [selectedThreat, setSelectedThreat] = useState<any>(null);
 
   const handleStatClick = (title: string) => {
     switch (title) {
@@ -27,7 +31,7 @@ const Index = () => {
         toast.info("Showing attack history...");
         navigate('/reports');
         break;
-      case "Network Anomalies":
+      case "Network Nodes":
         navigate('/network-analysis');
         break;
       case "System Health":
@@ -46,12 +50,45 @@ const Index = () => {
 
   return (
     <DashboardLayout>
+      <LiveThreatTicker />
+
+      {/* AI Core Framework Status (Research Paper Alignment) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="glass-card p-4 border-primary/20 bg-primary/5 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+            <Cpu className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-primary/70">Framework</h3>
+            <p className="text-sm font-bold text-foreground">RADAR v2.4 Active</p>
+          </div>
+        </div>
+        <div className="glass-card p-4 border-blue-500/20 bg-blue-500/5 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
+            <Database className="w-5 h-5 text-blue-400" />
+          </div>
+          <div>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-blue-400/70">Learning Mode</h3>
+            <p className="text-sm font-bold text-foreground">Federated Learning Sync</p>
+          </div>
+        </div>
+        <div className="glass-card p-4 border-emerald-500/20 bg-emerald-500/5 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
+            <Brain className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-emerald-400/70">AI Ethics</h3>
+            <p className="text-sm font-bold text-foreground">Bias Shield Enabled</p>
+          </div>
+        </div>
+      </div>
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div onClick={() => handleStatClick("Active Threats")}>
           <StatCard
-            title="Active Threats"
-            value={23}
+            title={t("threats")}
+            value="23"
             icon={AlertTriangle}
             variant="critical"
             change="+12%"
@@ -60,21 +97,22 @@ const Index = () => {
         </div>
         <div onClick={() => handleStatClick("Blocked Attacks")}>
           <StatCard
-            title="Blocked Attacks"
-            value={142}
+            title={t("blocked")}
+            value="142"
             icon={Shield}
             variant="success"
             change="+5%"
             changeType="decrease"
           />
         </div>
-        <div onClick={() => handleStatClick("Network Anomalies")}>
+        <div onClick={() => handleStatClick("Network Nodes")}>
           <StatCard
-            title="Network Anomalies"
-            value={7}
+            title={t("network")}
+            value="1,284"
             icon={Network}
-            variant="warning"
-            change="Stable"
+            variant="default"
+            change="+2"
+            changeType="increase"
           />
         </div>
         <div onClick={() => handleStatClick("System Health")}>
@@ -83,6 +121,8 @@ const Index = () => {
             value="98.2%"
             icon={Activity}
             variant="default"
+            change="Stable"
+            changeType="neutral"
           />
         </div>
       </div>
@@ -112,6 +152,7 @@ const Index = () => {
       </div>
 
       <AIAssistantWidget />
+      <VoiceAlert />
 
       {/* Threat Detail Modal */}
       {selectedThreat && (
@@ -172,7 +213,7 @@ const Index = () => {
                 </div>
                 <div className="p-3 rounded-lg border border-border bg-card/50">
                   <div className="text-[10px] text-muted-foreground uppercase font-black mb-1">Status</div>
-                  <div className="text-sm font-bold text-warning animate-pulse">ACTIVE</div>
+                  <div className="text-sm font-bold text-warning animate-pulse">{t("active")}</div>
                 </div>
               </div>
 
@@ -202,6 +243,4 @@ const Index = () => {
       )}
     </DashboardLayout>
   );
-};
-
-export default Index;
+}

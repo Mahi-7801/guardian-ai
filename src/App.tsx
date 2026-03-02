@@ -22,8 +22,15 @@ import PropagandaMonitoring from "./pages/PropagandaMonitoring";
 import SecurityFramework from "./pages/SecurityFramework";
 import AdminPanel from "./pages/AdminPanel";
 import Reports from "./pages/Reports";
+import AIPipeline from "./pages/AIPipeline";
+import DarkWebMonitor from "./pages/DarkWebMonitor";
+import RiskCalculator from "./pages/RiskCalculator";
+import ThreatTimeline from "./pages/ThreatTimeline";
+import IncidentResponse from "./pages/IncidentResponse";
+import BiometricScan from "./pages/BiometricScan";
+import { LanguageProvider } from "./context/LanguageContext";
 import { useEffect, useState } from "react";
-import { insforge } from "@/lib/insforge";
+import { supabase } from "@/lib/insforge";
 
 const queryClient = new QueryClient();
 
@@ -32,61 +39,16 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check current session on mount
-    const checkSession = async () => {
-      try {
-        const { data, error } = await insforge.auth.getCurrentSession();
-        if (error) {
-          // If it's just a missing token or unauthorized, it means user is logged out.
-          // Handle gracefully without a loud error unless it's something unexpected.
-          const errorMsg = error.toString().toLowerCase();
-
-          // Handle CSRF errors by clearing session
-          if (errorMsg.includes("invalid csrf token")) {
-            console.warn("Session invalid (CSRF), clearing session...");
-            // Attempt to sign out to clear local storage items
-            try {
-              await insforge.auth.signOut();
-            } catch (e) {
-              console.warn("Sign out during error handling failed", e);
-            }
-            setSession(null);
-          } else if (!errorMsg.includes("no refresh token") && !errorMsg.includes("401")) {
-            console.error("Session check error:", error);
-            setSession(null);
-          } else {
-            setSession(null);
-          }
-        } else {
-          setSession(data?.session || null);
-        }
-      } catch (err: any) {
-        const errMsg = err.toString().toLowerCase();
-        if (!errMsg.includes("no refresh token") && !errMsg.includes("401")) {
-          console.error("Session check failed:", err);
-        }
-        setSession(null);
-      } finally {
+    // Supabase fires this immediately with the current session, then on every
+    // sign-in / sign-out event — no manual polling needed.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
         setLoading(false);
       }
-    };
+    );
 
-    checkSession();
-
-    // Listen for auth changes via our bridge in lib/insforge.ts
-    const authListener = () => {
-      console.log("Auth change detected, re-checking session...");
-      checkSession();
-    };
-
-    insforge.realtime.on('auth', authListener);
-
-    return () => {
-      // Cleanup listener if possible (though realtime.off might not be implemented exactly)
-      if (typeof (insforge.realtime as any).off === 'function') {
-        (insforge.realtime as any).off('auth', authListener);
-      }
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   if (loading) {
@@ -99,42 +61,50 @@ const App = () => {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={session ? <Navigate to="/dashboard" replace /> : <Landing />} />
-            <Route path="/report" element={<PublicReport />} />
-            <Route path="/auth" element={session ? <Navigate to="/dashboard" replace /> : <Auth />} />
+    <LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={session ? <Navigate to="/dashboard" replace /> : <Landing />} />
+              <Route path="/report" element={<PublicReport />} />
+              <Route path="/auth" element={session ? <Navigate to="/dashboard" replace /> : <Auth />} />
 
-            {/* Protected Routes */}
-            <Route
-              path="/dashboard"
-              element={session ? <Index /> : <Navigate to="/auth" replace />}
-            />
-            <Route path="/intrusion-detection" element={session ? <IntrusionDetection /> : <Navigate to="/auth" />} />
-            <Route path="/sentiment-analysis" element={session ? <SentimentAnalysis /> : <Navigate to="/auth" />} />
-            <Route path="/network-analysis" element={session ? <NetworkAnalysis /> : <Navigate to="/auth" />} />
-            <Route path="/predictive-analytics" element={session ? <PredictiveAnalytics /> : <Navigate to="/auth" />} />
-            <Route path="/settings" element={session ? <Settings /> : <Navigate to="/auth" />} />
-            <Route path="/intelligence" element={session ? <Intelligence /> : <Navigate to="/auth" />} />
-            <Route path="/notifications" element={session ? <Notifications /> : <Navigate to="/auth" />} />
-            <Route path="/crosint-portal" element={session ? <CrosintPortal /> : <Navigate to="/auth" />} />
-            <Route path="/taxonomy" element={session ? <Taxonomy /> : <Navigate to="/auth" />} />
-            <Route path="/propaganda-monitoring" element={session ? <PropagandaMonitoring /> : <Navigate to="/auth" />} />
-            <Route path="/security-framework" element={session ? <SecurityFramework /> : <Navigate to="/auth" />} />
-            <Route path="/admin" element={session ? <AdminPanel /> : <Navigate to="/auth" />} />
-            <Route path="/reports" element={session ? <Reports /> : <Navigate to="/auth" />} />
+              {/* Protected Routes */}
+              <Route
+                path="/dashboard"
+                element={session ? <Index /> : <Navigate to="/auth" replace />}
+              />
+              <Route path="/intrusion-detection" element={session ? <IntrusionDetection /> : <Navigate to="/auth" />} />
+              <Route path="/sentiment-analysis" element={session ? <SentimentAnalysis /> : <Navigate to="/auth" />} />
+              <Route path="/network-analysis" element={session ? <NetworkAnalysis /> : <Navigate to="/auth" />} />
+              <Route path="/predictive-analytics" element={session ? <PredictiveAnalytics /> : <Navigate to="/auth" />} />
+              <Route path="/settings" element={session ? <Settings /> : <Navigate to="/auth" />} />
+              <Route path="/intelligence" element={session ? <Intelligence /> : <Navigate to="/auth" />} />
+              <Route path="/notifications" element={session ? <Notifications /> : <Navigate to="/auth" />} />
+              <Route path="/crosint-portal" element={session ? <CrosintPortal /> : <Navigate to="/auth" />} />
+              <Route path="/taxonomy" element={session ? <Taxonomy /> : <Navigate to="/auth" />} />
+              <Route path="/propaganda-monitoring" element={session ? <PropagandaMonitoring /> : <Navigate to="/auth" />} />
+              <Route path="/security-framework" element={session ? <SecurityFramework /> : <Navigate to="/auth" />} />
+              <Route path="/admin" element={session ? <AdminPanel /> : <Navigate to="/auth" />} />
+              <Route path="/reports" element={session ? <Reports /> : <Navigate to="/auth" />} />
+              <Route path="/ai-pipeline" element={session ? <AIPipeline /> : <Navigate to="/auth" />} />
+              <Route path="/darkweb-monitor" element={session ? <DarkWebMonitor /> : <Navigate to="/auth" />} />
+              <Route path="/risk-calculator" element={session ? <RiskCalculator /> : <Navigate to="/auth" />} />
+              <Route path="/threat-timeline" element={session ? <ThreatTimeline /> : <Navigate to="/auth" />} />
+              <Route path="/incident-response" element={session ? <IncidentResponse /> : <Navigate to="/auth" />} />
+              <Route path="/biometric" element={session ? <BiometricScan /> : <Navigate to="/auth" />} />
 
-            {/* Catch-all */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+              {/* Catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </LanguageProvider>
   );
 };
 

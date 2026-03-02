@@ -11,6 +11,7 @@ const Auth = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [role, setRole] = useState<'admin' | 'user'>('user');
+    const [signupDone, setSignupDone] = useState(false);
     const navigate = useNavigate();
 
     const handleAuth = async (e: React.FormEvent) => {
@@ -19,27 +20,22 @@ const Auth = () => {
 
         try {
             if (isLogin) {
-                const { data, error } = await insforge.auth.signInWithPassword({
-                    email,
-                    password,
-                });
-                if (error) throw error;
-
-                // Save role for UI context (Demo purpose)
-                // In production, this would come from user_metadata or claims
+                const { data, error } = await insforge.auth.signInWithPassword({ email, password });
+                if (error) {
+                    if (error.message?.includes('Email not confirmed')) {
+                        toast.error("Please confirm your email first. Check your inbox for the verification link.", { duration: 7000 });
+                    } else {
+                        throw error;
+                    }
+                    return;
+                }
                 localStorage.setItem('user_role', role);
-
                 toast.success(`Access granted: ${role.toUpperCase()}`);
-                // Small delay to ensure App.tsx session state is synchronized
                 setTimeout(() => navigate("/dashboard", { replace: true }), 100);
             } else {
-                const { data, error } = await insforge.auth.signUp({
-                    email,
-                    password,
-                    // Note: We're not saving metadata here as we don't know the schema support
-                });
+                const { error } = await insforge.auth.signUp({ email, password });
                 if (error) throw error;
-                toast.success("Signup successful! Please confirm via email.");
+                setSignupDone(true);
             }
         } catch (error: any) {
             toast.error(error.message || "An error occurred");
@@ -47,6 +43,33 @@ const Auth = () => {
             setLoading(false);
         }
     };
+
+    // ── Email confirmation waiting screen ─────────────────────────────────
+    if (signupDone) {
+        return (
+            <div className="min-h-screen bg-background flex items-center justify-center p-4 cyber-grid">
+                <div className="w-full max-w-md glass-card p-8 space-y-6 border-glow text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-success/10 border border-success/30 flex items-center justify-center mx-auto">
+                        <Shield className="w-8 h-8 text-success" />
+                    </div>
+                    <h1 className="text-2xl font-bold">Credentials Registered</h1>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                        A verification link has been sent to <strong className="text-foreground">{email}</strong>.
+                        Please open that email and click the confirm link before signing in.
+                    </p>
+                    <p className="text-xs text-muted-foreground font-mono bg-secondary/50 p-3 rounded-lg">
+                        📌 Tip: If you don't see it, check your spam/junk folder.
+                    </p>
+                    <button
+                        onClick={() => { setSignupDone(false); setIsLogin(true); }}
+                        className="w-full py-3 rounded-lg font-bold bg-primary text-primary-foreground hover:glow-primary transition-all uppercase tracking-widest text-sm flex items-center justify-center gap-2"
+                    >
+                        <LogIn className="w-4 h-4" /> Go to Sign In
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-background flex items-center justify-center p-4 cyber-grid">

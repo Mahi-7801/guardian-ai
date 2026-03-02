@@ -1,24 +1,25 @@
 services:
-  # Frontend Service (Container)
-  - type: web
-    name: guardian-ai-frontend
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: npm run preview
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: guardian-ai-backend
-          property: host
-
-  # Backend Service (Python)
+  # ─────────────────────────────────────────────────────────
+  # BACKEND — Python / Flask (Deploy to Render)
+  # ─────────────────────────────────────────────────────────
   - type: web
     name: guardian-ai-backend
     env: python
     region: singapore
-    buildCommand: pip install -r backend_python/requirements.txt
-    startCommand: gunicorn --chdir backend_python app:app --bind 0.0.0.0:$PORT
+    buildCommand: >
+      pip install -r backend_python/requirements.txt &&
+      python -c "import textblob; textblob.download_corpora()"
+    startCommand: gunicorn --chdir backend_python app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     envVars:
       - key: PYTHON_VERSION
-        value: 3.9.0
+        value: "3.11.0"
+      - key: SHOULD_SEND_REAL_EMAIL
+        value: "True"
+      - key: SMTP_EMAIL
+        value: pandumahi939@gmail.com
+      - key: SMTP_PASSWORD
+        sync: false          # Set this manually in Render dashboard
+      - key: TARGET_EMAIL
+        value: pmahi7801@gmail.com
+      - key: FLASK_ENV
+        value: production
