@@ -6,23 +6,22 @@ services:
     name: guardian-ai-backend
     env: python
     region: singapore
-    buildCommand: >
-      pip install -r backend_python/requirements.txt &&
-      python -c "import textblob; textblob.download_corpora()"
-    startCommand: gunicorn --chdir backend_python app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    rootDir: backend_python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.0"
+      - key: FLASK_ENV
+        value: production
       - key: SHOULD_SEND_REAL_EMAIL
-        value: "True"
+        value: "False"
       - key: SMTP_EMAIL
         value: pandumahi939@gmail.com
       - key: SMTP_PASSWORD
-        sync: false          # Set this manually in Render dashboard
+        sync: false
       - key: TARGET_EMAIL
         value: pmahi7801@gmail.com
-      - key: FLASK_ENV
-        value: production
 
   # ─────────────────────────────────────────────────────────
   # CRON JOB — Ping backend every 14 minutes to prevent sleep
@@ -31,6 +30,6 @@ services:
     name: guardian-ai-keep-alive
     env: python
     region: singapore
-    schedule: "*/14 * * * *"    # Every 14 minutes
+    schedule: "*/14 * * * *"
     buildCommand: pip install requests
     startCommand: python -c "import requests; r = requests.get('https://guardian-ai-backend.onrender.com/api/health'); print('Ping OK:', r.status_code)"
