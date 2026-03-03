@@ -39,6 +39,13 @@ SMTP_EMAIL = os.getenv("SMTP_EMAIL")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 TARGET_EMAIL = os.getenv("TARGET_EMAIL", "")
 
+# ── Health check endpoint (used by Render cron job to keep backend alive) ──
+@app.route("/api/health")
+def health():
+    return jsonify({"status": "ok", "timestamp": datetime.utcnow().isoformat(), "service": "Guardian AI Backend"})
+
+
+
 # --- Data Stores ---
 active_threats = []
 reports = []

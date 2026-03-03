@@ -23,3 +23,14 @@ services:
         value: pmahi7801@gmail.com
       - key: FLASK_ENV
         value: production
+
+  # ─────────────────────────────────────────────────────────
+  # CRON JOB — Ping backend every 14 minutes to prevent sleep
+  # ─────────────────────────────────────────────────────────
+  - type: cron
+    name: guardian-ai-keep-alive
+    env: python
+    region: singapore
+    schedule: "*/14 * * * *"    # Every 14 minutes
+    buildCommand: pip install requests
+    startCommand: python -c "import requests; r = requests.get('https://guardian-ai-backend.onrender.com/api/health'); print('Ping OK:', r.status_code)"
